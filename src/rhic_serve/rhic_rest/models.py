@@ -15,10 +15,51 @@
 # mognoengine, it's easiest to just use import *
 from mongoengine import *
 
-class RHIC(Document):
+import uuid
+
+class Account(Document):
+    # Unique account identifier
     account_id = StringField()
+    # List of contracts associated with the account.
     contracts = ListField()
+
+
+class RHIC(Document):
+
+    meta = {
+        # Override collection name, otherwise we get r_h_i_c.
+        'collection': 'rhic',
+    }
+
+    # Unique account identifier tying the RHIC to an account.
+    account_id = StringField()
+    # Contract associated with the RHIC.
+    contract = StringField()
+    # Support Level associated with the RHIC.
     support_level = StringField()
+    # SLA (service level availability) associated with the RHIC.
     sla = StringField()
+    # UUID associated with the RHIC.
+    uuid = UUIDField()
+    # List of Products associated with the RHIC.
     products = ListField()
+    # Public cert portion of the RHIC.
+    public_cert = StringField()
+    # Private key portion of the RHIC.
+    private_key = StringField()
+
+    def save(self, *args, **kwargs):
+        """
+        Verify a UUID is always set before we save.  If one is not, generate a
+        new one and set it.
+        """
+        if not self.uuid:
+            self.uuid = self._generate_uuid()
+        Document.save(self, *args, **kwargs)
+
+    def _generate_uuid(self):
+        """
+        Generate a random UUID.
+        """
+        return uuid.uuid4()
 
