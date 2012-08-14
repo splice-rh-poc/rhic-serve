@@ -39,7 +39,4 @@ class RestResource(MongoEngineResource):
             if 'objects' in data:
                 data = data['objects']
 
-            return data
-
-
-
+        return data
