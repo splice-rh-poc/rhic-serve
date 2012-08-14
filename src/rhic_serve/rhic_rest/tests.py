@@ -1,16 +1,27 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+# -*- coding: utf-8 -*-
+#
+# Copyright © 2012 Red Hat, Inc.
+#
+# This software is licensed to you under the GNU General Public
+# License as published by the Free Software Foundation; either version
+# 2 of the License (GPLv2) or (at your option) any later version.
+# There is NO WARRANTY for this software, express or implied,
+# including the implied warranties of MERCHANTABILITY,
+# NON-INFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. You should
+# have received a copy of GPLv2 along with this software; if not, see
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-Replace this with more appropriate tests for your application.
-"""
 
 from django.test import TestCase
 
+from rhic_rest.models import RHIC
 
-class SimpleTest(TestCase):
-    def test_basic_addition(self):
+class RHICTest(TestCase):
+    def test_rhic_uuid_on_save(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Tests that a rhic gets a uuid generated when it's saved.
         """
-        self.assertEqual(1 + 1, 2)
+        r = RHIC()
+        r.account_id('test')
+        r.save()
+
