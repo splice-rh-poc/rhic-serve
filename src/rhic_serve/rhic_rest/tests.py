@@ -32,7 +32,7 @@ class MongoTestCase(testcases.TestCase):
         pass
 
 
-class RHICTest(MongoTestCase):
+class RHICModelTest(MongoTestCase):
     def test_rhic_uuid_on_save(self):
         """
         Tests that a rhic gets a uuid generated when it's saved.
