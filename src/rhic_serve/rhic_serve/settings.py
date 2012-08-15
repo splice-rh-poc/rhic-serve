@@ -2,9 +2,12 @@
 
 from mongoengine import connect
 
-MONGO_DB_NAME = 'rhic_serve'
+MONGO_DATABASE_NAME = 'rhic_serve'
 # Connect to the mongo db
-connect(MONGO_DB_NAME)
+connect(MONGO_DATABASE_NAME)
+
+# Custom test runner to work with Mongo
+TEST_RUNNER = 'rhic_rest.tests.MongoTestRunner'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -158,3 +161,4 @@ LOGGING = {
         },
     }
 }
+

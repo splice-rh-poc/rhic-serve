@@ -11,17 +11,39 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-
-from django.test import TestCase
+from django.test import client, simple, testcases
 
 from rhic_rest.models import RHIC
 
-class RHICTest(TestCase):
+class MongoTestRunner(simple.DjangoTestSuiteRunner):
+
+    def setup_databases(self, *args, **kwargs):
+        pass
+
+    def teardown_databases(self, *args, **kwargs):
+        pass
+
+    def _fixture_setup(self, *args, **kwargs):
+        pass
+
+    def _fixture_teardown(self, *args, **kwargs):
+        pass
+
+class MongoTestCase(testcases.TestCase):
+    def _fixture_setup(self, *args, **kwargs):
+        pass
+
+    def _fixture_teardown(self, *args, **kwargs):
+        pass
+
+
+class RHICTest(MongoTestCase):
     def test_rhic_uuid_on_save(self):
         """
         Tests that a rhic gets a uuid generated when it's saved.
         """
         r = RHIC()
-        r.account_id('test')
+        r.account_id = 'test'
         r.save()
+        self.assertEquals(32, len(r.uuid.hex))
 
