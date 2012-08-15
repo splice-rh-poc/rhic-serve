@@ -11,17 +11,29 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
+from django.conf import settings
 from django.test import client, simple, testcases
 
+from mongoengine import connection
+
 from rhic_rest.models import RHIC
+
+MONGO_TEST_DATABASE_NAME = 'test_%s' % settings.MONGO_DATABASE_NAME
 
 class MongoTestRunner(simple.DjangoTestSuiteRunner):
 
     def setup_databases(self, *args, **kwargs):
-        pass
+        # Disconnect from the default mongo db, and use a test db instead.
+        connection.disconnect()
+        connection.connect(MONGO_TEST_DATABASE_NAME)
+
 
     def teardown_databases(self, *args, **kwargs):
-        pass
+        connection.disconnect()
+
+        # Do we want to drop the test database as well?
+        # Might as well keep it around for now.
+        # connection.drop_database(MONGO_TEST_DATABASE_NAME)
 
 
 class MongoTestCase(testcases.TestCase):
