@@ -23,11 +23,6 @@ class MongoTestRunner(simple.DjangoTestSuiteRunner):
     def teardown_databases(self, *args, **kwargs):
         pass
 
-    def _fixture_setup(self, *args, **kwargs):
-        pass
-
-    def _fixture_teardown(self, *args, **kwargs):
-        pass
 
 class MongoTestCase(testcases.TestCase):
     def _fixture_setup(self, *args, **kwargs):
