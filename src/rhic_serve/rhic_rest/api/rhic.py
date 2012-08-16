@@ -12,11 +12,39 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
 
-from rhic_rest.models import RHIC
-from rhic_rest.api import base
+from rhic_rest.models import RHIC, Account
+from rhic_rest.api.base import RestResource
 
-class RHICResource(base.RestResource):
+from tastypie.authorization import Authorization
 
-    class Meta:
+class RHICResource(RestResource):
+
+    class Meta(RestResource.Meta):
         queryset = RHIC.objects.all()
+        authorization = Authorization()
+
+    def dehydrate_public_cert(self, bundle):
+        """
+        Convert public cert field (FileField using GridFS) into the actual
+        string of the public cert of this RHIC.
+        """
+        if bundle.obj.public_cert:
+            return bundle.obj.public_cert.read()
+        else:
+            return None
+    
+    def dehydrate(self, bundle):
+        """
+        Private key isn't stored as a field on the document, but if it's set as
+        an attribute, then we just created the cert/key pair for this RHIC.
+        Return the contents of the private key, and cert and key concatenated
+        together in PEM format.
+        """
+        if hasattr(bundle.obj, 'private_key'):
+            if bundle.obj.private_key:
+                bundle.data['private_key'] = bundle.obj.private_key
+                bundle.data['cert_pem'] = (bundle.data['public_cert'] +
+                    bundle.data['private_key'])
+
+        return bundle
 

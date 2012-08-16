@@ -18,6 +18,8 @@ from django.conf import settings
 from mongoengine import *
 from mongoengine import signals
 
+from rhic_rest.common import cert_utils
+
 import uuid
 
 class Account(Document):
@@ -58,19 +60,22 @@ class RHIC(Document):
         """
         # Verify a UUID is always set before we save.  If one is not, generate a
         # new one and set it.
-        if not self.uuid:
-            self.uuid = self._generate_uuid()
+        if not document.uuid:
+            document.uuid = cls._generate_uuid()
 
         # Generate a certificate and private key for this RHIC.
-        if not self.public_cert:
+        if not document.public_cert:
             public_cert, private_key = cert_utils.generate(
-                self.uuid, settings.CA_CERT_PATH, settings.CA_CERT_KEY,
+                str(document.uuid), settings.CA_CERT_PATH, settings.CA_KEY_PATH,
                 settings.CERT_DAYS)
-            self.public_cert.new_file()
-            self.public_cert.write(public_cert)
-            self.public_cert.close()
+            document.public_cert.new_file()
+            document.public_cert.write(public_cert)
+            document.public_cert.close()
 
-    def _generate_uuid(self):
+            document.private_key = private_key
+
+    @classmethod
+    def _generate_uuid(cls):
         """
         Generate a random UUID.
         """

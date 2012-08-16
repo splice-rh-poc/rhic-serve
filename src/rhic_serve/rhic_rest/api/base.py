@@ -20,6 +20,14 @@ class RestResource(MongoEngineResource):
     Will override some functionality from MongoEngineResource.
     """
 
+    class Meta:
+        """
+        Common base Rest Resource options.
+        """
+        # Make sure we always get back the representation of the resource back
+        # on a POST.
+        always_return_data = True
+
     def alter_list_data_to_serialize(self, request, data):
         """
         While the meta dictionary in the standard MongoEngineResource is
