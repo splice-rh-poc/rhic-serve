@@ -9,6 +9,10 @@ connect(MONGO_DATABASE_NAME)
 # Custom test runner to work with Mongo
 TEST_RUNNER = 'rhic_rest.tests.MongoTestRunner'
 
+CA_CERT_PATH = '/tmp/ca.crt' 
+CA_KEY_PATH = '/tmp/ca.key'
+CERT_DAYS = 10000
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
