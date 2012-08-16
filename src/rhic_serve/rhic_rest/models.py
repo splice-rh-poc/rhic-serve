@@ -82,5 +82,6 @@ class RHIC(Document):
         return uuid.uuid4()
 
 
+# Signals
 signals.pre_save.connect(RHIC.pre_save, sender=RHIC)
 
