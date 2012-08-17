@@ -52,13 +52,26 @@ class BaseQuerySet(QuerySet):
 class Account(Document):
     # Unique account identifier
     account_id = StringField()
+    # Human readable account name
+    name = StringField()
     # List of contracts associated with the account.
     contracts = ListField()
 
-
 class Contract(Document):
-    pass
+    # Unique Contract identifier
+    contract_id = StringField()
+    # List of products associated with this contract
+    products = ListField()
+    # Contract support level
+    support_level = StringField()
+    # Contract sla
+    sla = StringField()
 
+class Product(Document):
+    # Unique product identifier
+    sku = StringField()
+    # Product name
+    name = StringField()
 
 class RHIC(Document):
 
