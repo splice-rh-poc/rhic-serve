@@ -11,7 +11,8 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
-from tastypie.authentication import BasicAuthentication
+from tastypie.authentication import (BasicAuthentication, 
+    MultiAuthentication, SessionAuthentication)
 from tastypie.authorization import Authorization
 from tastypie_mongoengine.resources import MongoEngineResource
 
@@ -31,7 +32,8 @@ class RestResource(MongoEngineResource):
         always_return_data = True
 
         # All Resources require basic authentication (for now).
-        authentication = BasicAuthentication()
+        authentication = MultiAuthentication(SessionAuthentication(),
+            BasicAuthentication())
 
     def alter_list_data_to_serialize(self, request, data):
         """

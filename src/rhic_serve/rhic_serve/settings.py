@@ -17,6 +17,10 @@ AUTHENTICATION_BACKENDS = (
     'mongoengine.django.auth.MongoEngineBackend',
 )
 
+SESSION_ENGINE = 'mongoengine.django.sessions'
+
+TASTYPIE_FULL_DEBUG = True
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -112,6 +116,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'rhic_rest.middleware.RestLoginMiddleware',
 )
 
 ROOT_URLCONF = 'rhic_serve.urls'

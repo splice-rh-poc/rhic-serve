@@ -17,10 +17,37 @@ from django.conf import settings
 # mognoengine, it's easiest to just use import *
 from mongoengine import *
 from mongoengine import signals
+from mongoengine.queryset import QuerySet
 
 from rhic_rest.common import cert_utils
 
 import uuid
+
+class BaseQuery(object):
+    """
+    BaseQuery and BaseQuerySet are 2 dummy classes to work around a mongoengine
+    incompatibility with tastypie.  tastypie assumes each resources model
+    queryset has a query object associated with it, and that query object has
+    an attribute called query_terms.
+
+    These classes work around that assumption.
+    """
+    query_terms = object()
+
+
+class BaseQuerySet(QuerySet):
+    """
+    BaseQuery and BaseQuerySet are 2 dummy classes to work around a mongoengine
+    incompatibility with tastypie.  tastypie assumes each resources model
+    queryset has a query object associated with it, and that query object has
+    an attribute called query_terms.
+
+    These classes work around that assumption.
+    """
+    def __init__(self, *args, **kwargs):
+        QuerySet.__init__(self, *args, **kwargs)
+        self.query = BaseQuery()
+
 
 class Account(Document):
     # Unique account identifier
@@ -28,14 +55,17 @@ class Account(Document):
     # List of contracts associated with the account.
     contracts = ListField()
 
+
 class Contract(Document):
     pass
+
 
 class RHIC(Document):
 
     meta = {
         # Override collection name, otherwise we get r_h_i_c.
         'collection': 'rhic',
+        'queryset_class': BaseQuerySet,
     }
 
     # Unique account identifier tying the RHIC to an account.
