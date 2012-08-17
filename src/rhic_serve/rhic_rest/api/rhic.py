@@ -13,7 +13,7 @@
 
 
 from rhic_rest.models import RHIC, Account
-from rhic_rest.api.base import RestResource
+from rhic_rest.api.base import RestResource, RHICAuthorization
 
 from tastypie.authorization import Authorization
 
@@ -21,7 +21,7 @@ class RHICResource(RestResource):
 
     class Meta(RestResource.Meta):
         queryset = RHIC.objects.all()
-        authorization = Authorization()
+        authorization = RHICAuthorization()
 
     def dehydrate_public_cert(self, bundle):
         """

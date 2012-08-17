@@ -13,6 +13,10 @@ CA_CERT_PATH = '/tmp/ca.crt'
 CA_KEY_PATH = '/tmp/ca.key'
 CERT_DAYS = 10000
 
+AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend',
+)
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
