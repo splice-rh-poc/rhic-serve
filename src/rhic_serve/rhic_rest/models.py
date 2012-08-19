@@ -49,29 +49,37 @@ class BaseQuerySet(QuerySet):
         self.query = BaseQuery()
 
 
-class Account(Document):
-    # Unique account identifier
-    account_id = StringField()
-    # Human readable account name
+class Product(EmbeddedDocument):
+    # Unique product identifier
+    sku = StringField()
+    # Product name
     name = StringField()
-    # List of contracts associated with the account.
-    contracts = ListField()
 
-class Contract(Document):
+
+class Contract(EmbeddedDocument):
     # Unique Contract identifier
     contract_id = StringField()
     # List of products associated with this contract
-    products = ListField()
+    products = ListField(EmbeddedDocumentField(Product))
     # Contract support level
     support_level = StringField()
     # Contract sla
     sla = StringField()
 
-class Product(Document):
-    # Unique product identifier
-    sku = StringField()
-    # Product name
+
+class Account(Document):
+
+    meta = {
+        'queryset_class': BaseQuerySet,
+    }
+
+    # Unique account identifier
+    account_id = StringField()
+    # Human readable account name
     name = StringField()
+    # List of contracts associated with the account.
+    contracts = ListField(EmbeddedDocumentField(Contract))
+
 
 class RHIC(Document):
 

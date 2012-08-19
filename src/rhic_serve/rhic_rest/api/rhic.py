@@ -12,16 +12,18 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
 
-from rhic_rest.models import RHIC, Account
-from rhic_rest.api.base import RestResource, RHICAuthorization
+from rhic_rest.models import RHIC, Account, Product, Contract
+from rhic_rest.api.base import RestResource, AccountAuthorization
 
 from tastypie.authorization import Authorization
+from tastypie_mongoengine.fields import (EmbeddedDocumentField,
+    EmbeddedListField)
 
 class RHICResource(RestResource):
 
     class Meta(RestResource.Meta):
         queryset = RHIC.objects.all()
-        authorization = RHICAuthorization()
+        authorization = AccountAuthorization()
 
     def dehydrate_public_cert(self, bundle):
         """
@@ -46,5 +48,31 @@ class RHICResource(RestResource):
                 bundle.data['cert_pem'] = (bundle.data['public_cert'] +
                     bundle.data['private_key'])
 
+        return bundle
+
+
+class ProductResource(RestResource):
+
+    class Meta(RestResource.Meta):
+        queryset = object_class = Product
+
+class ContractResource(RestResource):
+
+    products = EmbeddedListField(of='rhic_rest.api.rhic.ProductResource',
+        attribute='products', full=True)
+
+    class Meta(RestResource.Meta):
+        queryset = object_class = Contract
+
+class AccountResource(RestResource):
+
+    contracts = EmbeddedListField(of='rhic_rest.api.rhic.ContractResource', 
+        attribute='contracts', full=True)
+
+    class Meta(RestResource.Meta):
+        queryset = Account.objects.all()
+        authorization = AccountAuthorization()
+
+    def dehydrate(self, bundle):
         return bundle
 
