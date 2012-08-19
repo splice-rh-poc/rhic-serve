@@ -57,22 +57,27 @@ class RestResource(MongoEngineResource):
         return data
 
 
-class RHICAuthorization(Authorization):
+class AccountAuthorization(Authorization):
+    """
+    Authorization base class that can be re-used by any resource that wants to
+    authorize or deny access based on the fact that resource.account_id matches
+    the logged in user's username.
+    """
 
-    def is_authorized(self, request, rhic=None):
+    def is_authorized(self, request, resource=None):
         """
         Check if the user is authorized to see the given RHIC.
 
         If a specific RHIC is not being requested, just return True, and RHIC's
         the user is not authorized to see will be filtered out in apply_limits.
         """
-        if rhic and rhic.account_id != request.user.username:
+        if resource and resource.account_id != request.user.username:
             return False
 
         return True
 
-    def apply_limits(self, request, rhics):
+    def apply_limits(self, request, resources):
         """
         Filter out all rhics that the logged in user is not authorized to see.
         """
-        return rhics.filter(account_id=request.user.username)
+        return resources.filter(account_id=request.user.username)
