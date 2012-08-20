@@ -24,12 +24,13 @@ class RestLoginMiddleware(object):
     reasonable place to do that.
     """
     def process_response(self, request, response):
-        if request.user.is_authenticated():
-            # The login() function requires that request.user.backend has been
-            # set, and the only thing that sets that is
-            # django.contrib.auth.authenticate().  So, effectively, we're only
-            # logging in after authenticating.
-            if hasattr(request.user, 'backend'):
-                login(request, request.user)
+        if hasattr(request, 'user'):
+            if request.user.is_authenticated():
+                # The login() function requires that request.user.backend has been
+                # set, and the only thing that sets that is
+                # django.contrib.auth.authenticate().  So, effectively, we're only
+                # logging in after authenticating.
+                if hasattr(request.user, 'backend'):
+                    login(request, request.user)
 
         return response

@@ -38,4 +38,9 @@ urlpatterns = patterns('',
     url(r'^api/', include(contract_resource.urls)),
     url(r'^api/', include(product_resource.urls)),
 
+    # UI Views
+    url(r'^ui/login$', 'rhic_webui.views.login'),
+    url(r'^ui/logout$', 'rhic_webui.views.logout'),
+    url(r'^ui/base$', 'rhic_webui.views.base'),
+
 )
