@@ -82,7 +82,7 @@ def _generate_cert_request(dest_dir, cert_name, cn):
 
     # This is... ugh, man, this is ugly. Big surprise, M2Crypto doesn't expose a way
     # to convert PKCS8 to RSA format, so shell out to openssl to do it
-    cmd = 'openssl rsa -in %s -out %s' % (priv_key_filename, cert_filename)
+    cmd = 'openssl rsa -in %s -out %s' % (priv_key_filename, priv_key_filename)
     
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     p.wait()
