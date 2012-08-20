@@ -25,6 +25,7 @@ import os
 import shutil
 import subprocess
 import tempfile
+import pdb
 
 from M2Crypto import X509, RSA, EVP, util
 
@@ -69,6 +70,7 @@ def generate(cn, ca_cert_filename, ca_key_filename, days):
 def _generate_cert_request(dest_dir, cert_name, cn):
 
     priv_key_filename = _priv_key_filename(dest_dir, cert_name)
+    cert_filename = _cert_filename(dest_dir, cert_name)
     csr_filename = _csr_filename(dest_dir, cert_name)
 
     # Generate private key
@@ -80,8 +82,8 @@ def _generate_cert_request(dest_dir, cert_name, cn):
 
     # This is... ugh, man, this is ugly. Big surprise, M2Crypto doesn't expose a way
     # to convert PKCS8 to RSA format, so shell out to openssl to do it
-    cmd = 'openssl rsa -in %s -out %s' % (priv_key_filename, priv_key_filename)
-
+    cmd = 'openssl rsa -in %s -out %s' % (priv_key_filename, cert_filename)
+    
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     p.wait()
     exit_code = p.returncode
