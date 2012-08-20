@@ -56,6 +56,14 @@ class RestResource(MongoEngineResource):
 
         return data
 
+    def dehydrate_resource_uri(self, bundle):
+        """
+        Override all resource uri's with their absolute (protocol, host, port,
+        path) counterparts.
+        """
+        resource_uri = super(RestResource, self).dehydrate_resource_uri(bundle)
+        return bundle.request.build_absolute_uri(resource_uri)
+
 
 class AccountAuthorization(Authorization):
     """
