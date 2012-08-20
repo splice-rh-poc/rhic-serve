@@ -1,0 +1,6 @@
+{
+    "account_id": "foo@redhat.com",
+    "contract": "contract1",
+    "sla": "premium",
+    "support_level": "level1"
+}
