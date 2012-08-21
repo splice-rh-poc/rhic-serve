@@ -37,6 +37,6 @@ def logout(request):
     return render_to_response('logout.html', {},
         context_instance=RequestContext(request))
 
-def base(request):
+def index(request):
     return render_to_response('base.html', {},
         context_instance=RequestContext(request))
