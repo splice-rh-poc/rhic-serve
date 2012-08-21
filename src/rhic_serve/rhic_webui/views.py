@@ -13,8 +13,13 @@
 
 from django.contrib.auth import (login as auth_login, 
     logout as auth_logout, authenticate)
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+
+def template_response(request, template_name):
+    return render_to_response(template_name, {},
+        context_instance=RequestContext(request))
 
 def login(request):
     username = request.POST['username']
@@ -23,8 +28,7 @@ def login(request):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            return render_to_response('base.html', {},
-                context_instance=RequestContext(request))
+            return template_response(request, 'base.html')
         else:
             pass
             # Return a 'disabled account' error message
@@ -34,9 +38,13 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return render_to_response('logout.html', {},
-        context_instance=RequestContext(request))
+    return template_response(request, 'logout.html')
 
 def index(request):
-    return render_to_response('base.html', {},
-        context_instance=RequestContext(request))
+    return template_response(request, 'base.html')
+
+@login_required
+def rhic(request):
+    return template_response(request, 'rhic.html')
+
+
