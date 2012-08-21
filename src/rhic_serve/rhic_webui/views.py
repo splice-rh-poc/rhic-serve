@@ -23,7 +23,8 @@ def login(request):
     if user is not None:
         if user.is_active:
             auth_login(request, user)
-            return render_to_response('base.html')
+            return render_to_response('base.html', {},
+                context_instance=RequestContext(request))
         else:
             pass
             # Return a 'disabled account' error message
@@ -33,7 +34,8 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return render_to_response('logout.html')
+    return render_to_response('logout.html', {},
+        context_instance=RequestContext(request))
 
 def base(request):
     return render_to_response('base.html', {},
