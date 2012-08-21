@@ -64,6 +64,12 @@ class RestResource(MongoEngineResource):
         resource_uri = super(RestResource, self).dehydrate_resource_uri(bundle)
         return bundle.request.build_absolute_uri(resource_uri)
 
+    def determine_format(self, request):
+        """
+        Always return json.  Makes it such that sepcifying the format=json
+        query parameter is not required as it typically is by tastypie.
+        """
+        return 'application/json'
 
 class AccountAuthorization(Authorization):
     """
