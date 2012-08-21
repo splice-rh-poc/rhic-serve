@@ -81,7 +81,7 @@
                         $("#logout-button").attr("disabled", true)
 
                         jqxhr.complete(function(){  
-                            location.reload(true)
+                            window.location = "logout"
                         });
                 });
 
@@ -99,9 +99,13 @@
 </head>
 
 {% if user.is_authenticated %}
-<p>
-Welcome {{ user.username }}!
-</p>
+    <p>
+    Welcome {{ user.username }}!
+    </p>
+{% else %}
+    <p>
+    You are not logged in.
+    </p>
 {% endif %}
 
 <!-- Login Button -->
@@ -120,5 +124,9 @@ Welcome {{ user.username }}!
 	</fieldset>
 	</form>
 </div>
+
+{% block content %}
+
+{% endblock %}
 
 </html>

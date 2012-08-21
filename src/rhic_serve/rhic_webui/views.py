@@ -33,7 +33,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return render_to_response('base.html')
+    return render_to_response('logout.html')
 
 def base(request):
     return render_to_response('base.html', {},
