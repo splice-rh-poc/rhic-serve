@@ -14,11 +14,59 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 {% endcomment %}
 
-
 {% block content %}
 
 <p>
-Here's your RHICS:
+Current Certificates:
 </p>
 
+<div>
+    <table id="rhic-table">
+        <thead>
+            <tr>
+                <th><input type="checkbox" name="check-all"/></th>
+                <th>Name</th>
+                <th>Date Created</th>
+                <th>Contract</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}
+
+{% block scripts %}
+
+    var rhicData = []
+    var rhicTableData = []
+
+
+    var jqxhr = $.get("/api/rhic/", 
+        function(data) {
+            rhicData = data;
+            for (key = 0; key < data.length; key++) {
+                var rhic = data[key];
+                rhicTableData.push(["<input type=checkbox>", rhic["uuid"], rhic["uuid"], rhic["uuid"]]);
+            }
+        });
+
+    jqxhr.complete(function () {
+        $("#rhic-table").dataTable( {
+            "bAutoWidth": false,
+            "bJQueryUI": true,
+            "aaData": rhicTableData,
+        });	
+
+        $("#rhic-table tr").click(function () {
+            $(this).toggleClass("ui-state-active");
+        });
+
+    });
+
+
+{% endblock %}
+
+
+

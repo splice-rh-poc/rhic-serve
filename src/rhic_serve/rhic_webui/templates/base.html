@@ -15,10 +15,11 @@
 <html>
 
 <head>
-    <link type="text/css" href="http://code.jquery.com/ui/1.8.23/themes/base/jquery-ui.css" rel="Stylesheet" />	
+    <link type="text/css" href="http://code.jquery.com/ui/1.8.23/themes/sunny/jquery-ui.css" rel="Stylesheet" />	
     <script src="{{ STATIC_URL }}jquery.min.js"></script>
     <script src="{{ STATIC_URL }}jquery-ui.min.js"></script>
     <script src="{{ STATIC_URL }}jquery-csrf.js"></script>
+    <script src="http://datatables.net/download/build/jquery.dataTables.min.js"></script>
     <script>
         $(function() {
                 var username = $( "#username" ),
@@ -96,6 +97,8 @@
                     $("#logout-button").css("opacity", "0.35")
                 {% endif %}
 
+                {% block scripts %}
+                {% endblock %}
 
             });
     </script>
@@ -129,7 +132,9 @@
 </div>
 
 {% block content %}
-
+    {% if user.is_authenticated %}
+        <script>window.location = 'rhic';</script>
+    {% endif %}
 {% endblock %}
 
 </html>
