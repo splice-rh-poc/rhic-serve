@@ -52,18 +52,10 @@ accounts = [
 ]
 
 # sample support levels
-support_levels = [
-    'Level 1',
-    'Level 2',
-    'Level 3',
-    'Self Support'
-]
+support_levels = Contract.support_level_choices.keys()
 
 # sample sla's
-slas = [
-    'Standard',
-    'Premium',
-]
+slas = Contract.sla_choices.keys()
 
 # Random number shortcut
 def r(m):
@@ -75,7 +67,7 @@ for account in accounts:
 
     # Create between 1 and 5 random contracts
     for i in range(1, r(5)+2):
-        c = Contract(contract_id='%s-contract-%s' % (account[0], i))
+        c = Contract(contract_id='contract-%s' % (i))
 
         # Associate a random sla with the contract
         c.sla = slas[r(len(slas))]

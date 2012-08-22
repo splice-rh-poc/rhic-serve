@@ -61,14 +61,27 @@ class Product(EmbeddedDocument):
 
 
 class Contract(EmbeddedDocument):
+
+    support_level_choices = {
+        'l1': 'Level 1',
+        'l2': 'Level 2',
+        'l3': 'Level 3',
+        'ss': 'Self Support',
+    }
+
+    sla_choices = {
+        'std': 'Standard',
+        'prem': 'Premium',
+    }
+
     # Unique Contract identifier
     contract_id = StringField()
     # List of products associated with this contract
     products = ListField(EmbeddedDocumentField(Product))
     # Contract support level
-    support_level = StringField()
+    support_level = StringField(choices=support_level_choices.keys())
     # Contract sla
-    sla = StringField()
+    sla = StringField(choices=sla_choices.keys())
 
 
 class Account(Document):
