@@ -16,6 +16,7 @@ from django.contrib.auth import (login as auth_login,
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 def template_response(request, template_name):
     return render_to_response(template_name, {},
@@ -40,6 +41,7 @@ def logout(request):
     auth_logout(request)
     return template_response(request, 'logout.html')
 
+@ensure_csrf_cookie
 def index(request):
     return template_response(request, 'base.html')
 
