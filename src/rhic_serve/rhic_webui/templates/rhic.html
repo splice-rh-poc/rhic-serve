@@ -78,6 +78,11 @@ Current Certificates:
 <div id="confirm-create"></div>
 <div id="confirm-delete"></div>
 
+<br>
+<br>
+<br>
+<textarea id="cert-value" cols="100"></textarea>
+
 {% endblock %}
 
 {% block scripts %}
@@ -248,6 +253,9 @@ Current Certificates:
                         rhic = $.parseJSON(data.responseText);
                         oTable.fnAddData(["<input type=radio>", rhic["name"], rhic["created_date"], 
                             rhic["contract"], rhic["resource_uri"]]);
+
+                        // XXX TESTING
+                        $("#cert-value").attr("value", rhic["cert_pem"]);
                     });
 
                 },
@@ -258,8 +266,6 @@ Current Certificates:
         });
 
         $("#confirm-create").dialog("open");
-
-        return null
     }
 
     // Edit button click action.
