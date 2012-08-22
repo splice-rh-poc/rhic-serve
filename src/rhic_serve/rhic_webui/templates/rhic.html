@@ -26,6 +26,7 @@
     <p>
         <label for="enter-name">Name:</label>
         <input type="text" id="enter-name"></input>
+        <p><i>(This name will be appended with additional information)</i></p>
     </p>
     <p id="sla-group">
         <label for="sla">SLA:</label>
@@ -148,14 +149,20 @@ Current Certificates:
             $("#sla-group input").each(function(index) {
                 $(this).addClass("ui-state-disabled");
                 $(this).attr("disabled", "disabled");
+                $(this).removeAttr("checked");
             });
             $("#support-level-group input").each(function(index) {
                 $(this).addClass("ui-state-disabled");
                 $(this).attr("disabled", "disabled");
+                $(this).removeAttr("checked");
             });
-            $("#product-choices").remove()
-            $("#select-products").append('<div id="product-choices"></div>')
+            $("#enter-name").attr("value", "");
+            $("#product-choices").remove();
+            $("#select-products").append('<div id="product-choices"></div>');
         }
+
+        // Go ahead and wipe everything.
+        wipe()
 
         // Download contract data from server and populate selector
         var contractData = {};
@@ -202,9 +209,12 @@ Current Certificates:
             autoOpen: false,
             title: "Create New Certificate",
             modal: true,
+            width: "400",
+            height: "450",
             buttons: {
                 "Create": function() {
                     var certData = {};
+                    certData["name"] = $("#enter-name")[0].value;
                     certData["sla"] = $("input[name=sla]:checked").attr("id");
                     certData["support_level"] = $("input[name=support-level]:checked").attr("id");
                     certData["contract"] = $("#select-contract")[0].value;

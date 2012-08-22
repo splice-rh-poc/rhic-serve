@@ -50,9 +50,25 @@ class RHICResource(RestResource):
 
         return bundle
 
-    def hydrate_account_id(self, bundle):
+    def obj_create(self, bundle, request, **kwargs):
+        """
+        Fixups and protections for new RHIC creation.
+        """
+        # Probably need to raise an error if these don't match to being with.
         bundle.data['account_id'] = bundle.request.user.username
-        return bundle
+
+        # Create a meaningful name.
+        if bundle.data['name']:
+            bundle.data['name'] = '%s-%s-%s-%s-%s' % (bundle.data['name'],
+                bundle.data['account_id'], bundle.data['contract'],
+                bundle.data['sla'], bundle.data['support_level'])
+        else:
+            bundle.data['name'] = '%s-%s-%s-%s' % (bundle.data['account_id'],
+                bundle.data['contract'], bundle.data['sla'],
+                bundle.data['support_level'])
+
+        return super(RHICResource, self).obj_create(bundle, request, **kwargs)
+
 
 class ProductResource(RestResource):
 
