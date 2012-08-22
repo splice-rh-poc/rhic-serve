@@ -21,7 +21,7 @@ Current Certificates:
 </p>
 
 <div>
-    <table id="rhic-table">
+    <table id="rhic-table" width="100%">
         <thead>
             <tr>
                 <th><input type="checkbox" name="check-all"/></th>
@@ -48,7 +48,7 @@ Current Certificates:
             rhicData = data;
             for (key = 0; key < data.length; key++) {
                 var rhic = data[key];
-                rhicTableData.push(["<input type=checkbox>", rhic["uuid"], rhic["uuid"], rhic["uuid"]]);
+                rhicTableData.push(["<input type=radio>", rhic["name"], rhic["created_date"], rhic["contract"]]);
             }
         });
 

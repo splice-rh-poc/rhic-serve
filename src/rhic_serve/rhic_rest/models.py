@@ -11,6 +11,10 @@
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
+
+from datetime import datetime
+from dateutil.tz import tzutc
+
 from django.conf import settings
 
 # Given all the base classes, fields, etc, that we need to make use of from
@@ -89,6 +93,8 @@ class RHIC(Document):
         'queryset_class': BaseQuerySet,
     }
 
+    # Human readable name
+    name = StringField()
     # Unique account identifier tying the RHIC to an account.
     account_id = StringField()
     # Contract associated with the RHIC.
@@ -103,6 +109,10 @@ class RHIC(Document):
     products = ListField()
     # Public cert portion of the RHIC.
     public_cert = FileField()
+    # Date RHIC was created
+    created_date = DateTimeField(default=datetime.now(tzutc()))
+    # Date RHIC was last modified
+    modified_date = DateTimeField(default=datetime.now(tzutc()))
 
     @classmethod
     def pre_save(cls, sender, document, **kwargs):
@@ -114,6 +124,10 @@ class RHIC(Document):
         if not document.uuid:
             document.uuid = cls._generate_uuid()
 
+        # Set name
+        if not document.name:
+            document.name = document._generate_name()
+
         # Generate a certificate and private key for this RHIC.
         if not document.public_cert:
             public_cert, private_key = cert_utils.generate(
@@ -123,6 +137,8 @@ class RHIC(Document):
             document.public_cert.write(public_cert)
             document.public_cert.close()
 
+            # private key is saved as an attribute on the document, but it is
+            # not a field.  It will not be kept after this instance is GC'd.
             document.private_key = private_key
 
     @classmethod
@@ -131,6 +147,13 @@ class RHIC(Document):
         Generate a random UUID.
         """
         return uuid.uuid4()
+
+    def _generate_name(self):
+        """
+        Generates a nice human readable name based on other RHIC fields.
+        """
+        return "%s-%s-%s-%s" % (self.account_id, self.contract, self.sla,
+            self.support_level)
 
 
 # Signals
