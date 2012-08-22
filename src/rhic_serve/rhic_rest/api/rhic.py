@@ -50,6 +50,9 @@ class RHICResource(RestResource):
 
         return bundle
 
+    def hydrate_account_id(self, bundle):
+        bundle.data['account_id'] = bundle.request.user.username
+        return bundle
 
 class ProductResource(RestResource):
 

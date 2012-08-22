@@ -70,10 +70,10 @@ for account in accounts:
         c = Contract(contract_id='contract-%s' % (i))
 
         # Associate a random sla with the contract
-        c.sla = slas[r(len(slas))]
+        c.slas = slas
 
         # Associate a random support level with the contract
-        c.support_level = support_levels[r(len(support_levels))]
+        c.support_levels = support_levels
 
         # Associate between 1 and len(products) # of products
         for j in range(1, r(len(products))+2):
@@ -91,8 +91,8 @@ for account in accounts:
     for k in range(r(3)+1):
         c_index = r(len(a.contracts))
         c = a.contracts[c_index]
-        rhic = RHIC(account_id=a.account_id, contract=c.contract_id, support_level=c.support_level,
-            sla=c.sla)
+        rhic = RHIC(account_id=a.account_id, contract=c.contract_id, support_level=c.support_levels[0],
+            sla=c.slas[0])
         for p_id in c.products:
             if r(2) > 0:
                 rhic.products.append(p_id.sku)
