@@ -35,6 +35,14 @@ Current Certificates:
     </table>
 </div>
 
+<div> 
+    <p>
+    <button id="edit-button">Edit</button>
+    <button id="delete-button">Delete</button>
+    <button id="download-button">Download</button>
+    </p>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
@@ -65,6 +73,24 @@ Current Certificates:
 
     });
 
+
+    // Edit button click action.
+    $( "#edit-button" )
+        .button()
+        .click(function() {
+            });
+
+    // Delete button click action.
+    $( "#delete-button" )
+        .button()
+        .click(function() {
+            });
+
+    // Download button click action.
+    $( "#download-button" )
+        .button()
+        .click(function() {
+            });
 
 {% endblock %}
 
