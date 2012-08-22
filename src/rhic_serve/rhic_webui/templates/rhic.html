@@ -24,10 +24,11 @@ Current Certificates:
     <table id="rhic-table" width="100%">
         <thead>
             <tr>
-                <th><input type="checkbox" name="check-all"/></th>
+                <th>Select</th>
                 <th>Name</th>
                 <th>Date Created</th>
                 <th>Contract</th>
+                <th>Resource Uri</th>
             </tr>
         </thead>
         <tbody>
@@ -43,36 +44,62 @@ Current Certificates:
     </p>
 </div>
 
+<div id="confirm-delete"></div>
+
 {% endblock %}
 
 {% block scripts %}
 
     var rhicData = []
     var rhicTableData = []
-
+    var oTable;
 
     var jqxhr = $.get("/api/rhic/", 
         function(data) {
             rhicData = data;
             for (key = 0; key < data.length; key++) {
                 var rhic = data[key];
-                rhicTableData.push(["<input type=radio>", rhic["name"], rhic["created_date"], rhic["contract"]]);
+                rhicTableData.push(["<input type=radio>", rhic["name"], rhic["created_date"], rhic["contract"], rhic["resource_uri"]]);
             }
         });
 
     jqxhr.complete(function () {
-        $("#rhic-table").dataTable( {
+
+        // Table initialization
+        oTable = $("#rhic-table").dataTable( {
             "bAutoWidth": false,
             "bJQueryUI": true,
             "aaData": rhicTableData,
+            "aoColumns": [
+                {"bSortable": false},
+                null,
+                null,
+                null,
+                {"bSearchable": false,
+                 "bVisible": false
+                }
+            ],
         });	
 
-        $("#rhic-table tr").click(function () {
-            $(this).toggleClass("ui-state-active");
+        // Row click selection / highlight
+        $("#rhic-table tbody tr").click( function( e ) {
+            if ( $(this).hasClass('ui-state-active') ) {
+                $("input:radio", this).attr("checked", false)
+                $(this).removeClass('ui-state-active');
+            }
+            else {
+                oTable.$('tr.ui-state-active').removeClass('ui-state-active');
+                oTable.$("input:radio").attr("checked", false)
+                $(this).addClass('ui-state-active');
+                $("input:radio", this)[0].checked = true;
+            }
         });
 
     });
 
+    function fnGetSelected( oTableLocal ) {
+        return oTableLocal.$("tr.ui-state-active")[0];
+    }
 
     // Edit button click action.
     $( "#edit-button" )
@@ -84,7 +111,36 @@ Current Certificates:
     $( "#delete-button" )
         .button()
         .click(function() {
+
+            var selected = fnGetSelected(oTable);
+            var aData = oTable.fnGetData(selected);
+            var url = aData[4]
+
+            $("#confirm-delete").text("Are you sure you want to delete " + aData[1] + " from your account?");
+
+            var delDialog = $("#confirm-delete").dialog({
+                autoOpen: false,
+                title: "Confirm Certificate Deletion",
+                modal: true,
+                buttons: {
+                    "Delete": function() {
+                        var jqxhr = $.ajax({
+                            url: url,
+                            type: "DELETE"
+                        });
+
+                        jqxhr.complete();
+                        oTable.fnDeleteRow(selected);
+                        $(this).dialog("close");
+                    },
+                    "Don't Delete": function() {
+                        $(this).dialog("close");
+                    }
+                }
             });
+            delDialog.text = "Foo";
+            $("#confirm-delete").dialog("open")
+        });
 
     // Download button click action.
     $( "#download-button" )
