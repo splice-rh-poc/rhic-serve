@@ -54,34 +54,36 @@ class BaseQuerySet(QuerySet):
 
 
 class Product(EmbeddedDocument):
-    # Unique product identifier
-    sku = StringField()
-    # Product name
-    name = StringField()
-
-
-class Contract(EmbeddedDocument):
 
     support_level_choices = {
-        'l1': 'Level 1-3',
-        'l3': 'Level 3',
+        'l1-l3': 'L1-L3',
+        'l3': 'L3-only',
+        'ss': 'SS',
     }
 
     sla_choices = {
         'std': 'Standard',
         'prem': 'Premium',
-        'ss': 'Self Support',
+        'na': 'N/A',
     }
 
+    # Product name
+    name = StringField(required=True)
+    # Unique product identifier
+    engineering_id = IntField(required=True)
+    # Quantity 
+    quantity = IntField(required=True)
+    # Product support level
+    support_level = StringField(required=True, choices=support_level_choices.keys())
+    # Product sla
+    sla = StringField(required=True, choices=sla_choices.keys())
+
+
+class Contract(EmbeddedDocument):
     # Unique Contract identifier
-    contract_id = StringField()
+    contract_id = StringField(unique=True, required=True)
     # List of products associated with this contract
     products = ListField(EmbeddedDocumentField(Product))
-    # Contract support level
-    support_levels = ListField(
-        StringField(choices=support_level_choices.keys()))
-    # Contract sla
-    slas = ListField(StringField(choices=sla_choices.keys()))
 
 
 class Account(Document):
@@ -91,9 +93,9 @@ class Account(Document):
     }
 
     # Unique account identifier
-    account_id = StringField()
+    account_id = StringField(unique=True, required=True)
     # Human readable account name
-    name = StringField()
+    login = StringField(unique=True, required=True)
     # List of contracts associated with the account.
     contracts = ListField(EmbeddedDocumentField(Contract))
 
