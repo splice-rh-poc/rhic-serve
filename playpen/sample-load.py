@@ -11,6 +11,10 @@ from rhic_serve import settings
 from rhic_rest.models import *
 
 def load_lines(lines, mappings):
+    """
+    Expects lines in this format:
+    Login, Account#,Contract#,Marketing Product,SLA,Support Level,Number Concurrent
+    """
     for line in lines:
         if line.startswith('#'):
             continue
@@ -47,7 +51,10 @@ def load_lines(lines, mappings):
 
 
 def load_mappings(lines):
-
+    """
+    Expects lines with this format:
+    Marketing Product,Engineering Product ID,Machine Facts
+    """
     mappings = {}
 
     for line in lines:
