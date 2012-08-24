@@ -12,6 +12,11 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
 
+import sys
+import urllib
+
+from django.http import HttpResponse
+
 from rhic_rest.models import RHIC, Account, Product, Contract
 from rhic_rest.api.base import RestResource, AccountAuthorization
 
@@ -55,7 +60,9 @@ class RHICResource(RestResource):
         Fixups and protections for new RHIC creation.
         """
         # Probably need to raise an error if these don't match to being with.
-        bundle.data['account_id'] = bundle.request.user.username
+        account_id = Account.objects(
+            login=request.user.username).only('account_id').first().account_id
+        bundle.data['account_id'] = account_id
 
         # Create a meaningful name.
         if bundle.data['name']:
@@ -69,6 +76,40 @@ class RHICResource(RestResource):
 
         return super(RHICResource, self).obj_create(bundle, request, **kwargs)
 
+
+class RHICDownloadResource(RHICResource):
+
+
+    def deserialize(self, request, data, format='application/json'):
+        if format == "application/x-www-form-urlencoded":
+            deserialized = request.POST
+        elif format == "multipart/form-data":
+            deserialized = request.POST.copy()
+            deserialized.update(request.FILES)
+        else:
+            deserialized = self._meta.serializer.deserialize(data, format=format)
+        
+        return deserialized    
+    
+    def create_response(self, request, bundle, *args, **kwargs):
+
+        if type(bundle) == type([]):
+            return super(RHICDownloadResource, self).create_response(request,
+                bundle, *args, **kwargs)
+
+        cert_pem = request.GET.get('cert_pem', None)
+
+        if cert_pem:
+            cert_pem = urllib.unquote(cert_pem)
+        else:
+            cert_pem = bundle.data['public_cert']
+
+        response = HttpResponse(cert_pem, content_type='test/pem')
+        response['Content-Disposition'] = 'attachment; filename=%s.pem' % \
+            bundle.data['uuid']
+        response['Content-Length'] = sys.getsizeof(cert_pem)
+
+        return response
 
 class ProductResource(RestResource):
 

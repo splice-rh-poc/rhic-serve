@@ -16,6 +16,8 @@ from tastypie.authentication import (BasicAuthentication,
 from tastypie.authorization import Authorization
 from tastypie_mongoengine.resources import MongoEngineResource
 
+from rhic_rest.models import Account
+
 class RestResource(MongoEngineResource):
     """
     Base class for the rhic_rest application.
@@ -94,4 +96,6 @@ class AccountAuthorization(Authorization):
         """
         Filter out all rhics that the logged in user is not authorized to see.
         """
-        return resources.filter(account_id=request.user.username)
+        account_id = Account.objects(
+            login=request.user.username).only('account_id').first().account_id
+        return resources.filter(account_id=account_id)
