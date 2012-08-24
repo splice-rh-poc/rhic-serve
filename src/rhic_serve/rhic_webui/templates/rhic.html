@@ -400,6 +400,7 @@ Current Certificates:
                     certPost.complete(function(data) {
                         $("#confirm-create").dialog("close");
                         rhic = $.parseJSON(data.responseText);
+                        rhicData.push(rhic)
                         oTable.fnAddData(["<input type=radio>", rhic["name"], rhic["created_date"], 
                             rhic["contract"], rhic["resource_uri"]]);
 
