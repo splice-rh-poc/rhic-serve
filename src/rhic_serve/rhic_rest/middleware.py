@@ -12,6 +12,9 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
 
+import sys
+import traceback
+
 from django.contrib.auth import login
 
 class RestLoginMiddleware(object):
@@ -34,3 +37,10 @@ class RestLoginMiddleware(object):
                     login(request, request.user)
 
         return response
+
+
+class RestExceptionMiddleware(object):
+
+    def process_exception(self, request, exception):
+        ei = sys.exc_info()
+        print traceback.print_tb(ei[2])

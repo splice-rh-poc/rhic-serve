@@ -118,6 +118,7 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'rhic_rest.middleware.RestLoginMiddleware',
+    'rhic_rest.middleware.RestExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'rhic_serve.urls'
