@@ -122,6 +122,8 @@ class RHIC(Document):
     uuid = UUIDField()
     # List of Products associated with the RHIC.
     products = ListField()
+    # List of Engineering Id's associated with the RHIC.
+    engineering_ids = ListField()
     # Public cert portion of the RHIC.
     public_cert = FileField()
     # Date RHIC was created
