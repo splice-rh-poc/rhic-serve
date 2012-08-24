@@ -7,6 +7,8 @@ sys.path.insert(0, '../src/rhic_serve')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'rhic_serve.settings'
 
+from mongoengine.django.auth import User
+
 from rhic_serve import settings
 from rhic_rest.models import *
 
@@ -48,6 +50,12 @@ def load_lines(lines, mappings):
         contract_doc.products.append(product_doc)
 
         account_doc.save()
+
+        # Also create a user for each account
+        u, created = User.objects.get_or_create(username=account_doc.login)
+        if created:
+            u.set_password(account_doc.login)
+            u.save()
 
 
 def load_mappings(lines):
