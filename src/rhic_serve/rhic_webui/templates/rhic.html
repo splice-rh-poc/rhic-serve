@@ -18,7 +18,7 @@
 
 <p>
 <a id="create-link" href="">Create a new Red Hat Identity Certificate</a>
-<div id="create-dialog" class="ui-helper-hidden">
+<div id="cert-dialog" class="ui-helper-hidden">
     <label for="select-contract">Contract:</label>
     <select id="select-contract">
         <option id="default-contract">Select a Contract (Required)</option>
@@ -77,7 +77,7 @@ Current Certificates:
     </p>
 </div>
 
-<div id="confirm-create" class="ui-helper-hidden">
+<div id="confirm-cert" class="ui-helper-hidden">
     <p>Red Hat Identity Certificate Summary</p>
     <p><div id="confirm-contract">Contract: </div></p>
     <p><div id="confirm-name">Name: </div></p>
@@ -85,6 +85,9 @@ Current Certificates:
     <p><div id="confirm-support-level">Support Level: </div></p>
     <p><div id="confirm-products">Products: <br></div></p>
 </div>
+
+<div id="edit-dialog" class="ui-helper-hidden"></div>
+<div id="confirm-edit" class="ui-helper-hidden"></div>
 
 <div id="confirm-delete"></div>
 
@@ -166,6 +169,115 @@ Current Certificates:
         return oTableLocal.$("tr.ui-state-active")[0];
     }
 
+    // Wipe SLA choices.
+    function wipe_sla() {
+        $("#sla-group input").each(function(index) {
+            $(this).addClass("ui-state-disabled");
+            $(this).attr("disabled", "disabled");
+            $(this).removeAttr("checked");
+        });
+    }
+
+    // Wipe Support Level choices.
+    function wipe_support_level() {
+        $("#support-level-group input").each(function(index) {
+            $(this).addClass("ui-state-disabled");
+            $(this).attr("disabled", "disabled");
+            $(this).removeAttr("checked");
+        });
+    }
+
+    // Wipe product choices.
+    function wipe_product_choices() {
+        $("#product-choices").remove();
+        $("#select-products").append('<div id="product-choices"></div>');
+    }
+    
+    // Wipe everything.
+    function wipe() {
+        wipe_sla();
+        wipe_support_level();
+        wipe_product_choices();
+        $("#enter-name").attr("value", "");
+        productMap = {};
+        addedProducts = [];
+    }
+
+    function get_contract_data() {
+
+        var contractData = {};
+
+        var jqxhr = $.ajax({
+            url: "/api/account/",
+            async: false,
+            success: function(data) {
+                // Remove any old options first.
+                $("#select-contract [id!='default-contract']").remove()
+                for (key = 0; key < data[0]["contracts"].length; key++) {
+                    var contract = data[0]["contracts"][key];
+                    contractData[contract["contract_id"]] = contract;
+                    $("#select-contract").append(new Option(contract["contract_id"], contract["contract_id"], false, false));
+                }
+            },
+        });
+
+        return contractData;
+
+    }
+
+    function get_product_map(products) {
+
+        var productMap = {};
+
+        // Iterate over each product in the contract
+        products.forEach(function(product) {
+
+            var sla = product["sla"];
+            var supportLevel = product["support_level"];
+            var engId = product["engineering_id"];
+            var prodName = product["name"];
+
+            if ( $.inArray(sla, Object.keys(productMap)) >= 0 ) {
+                if ( $.inArray(supportLevel, Object.keys(productMap[sla])) >= 0 ) {
+                    if ( $.inArray(prodName, productMap[sla][supportLevel] ) < 0) {
+                        productMap[sla][supportLevel].push([engId, prodName])
+                    }
+                }
+                else {
+                    productMap[sla][supportLevel] = []
+                    productMap[sla][supportLevel].push([engId, prodName])
+                }
+            }
+            else {
+                productMap[sla] = {}
+                productMap[sla][supportLevel] = []
+                productMap[sla][supportLevel].push([engId, prodName])
+            }
+        });
+
+        return productMap;
+
+    }
+
+    // Enable the valid product choices base on the chosen SLA and support
+    // level.
+    function enable_product_choices(productMap) {
+        var sla = $("input[name=sla]:checked").attr("id");
+        var supportLevel = $("input[name=support-level]:checked").attr("id");
+        Object.keys(productMap[sla][supportLevel]).forEach(function(product) {
+            var prodName = productMap[sla][supportLevel][product][1];
+            var engId = productMap[sla][supportLevel][product][0];
+            // Add each product to the product choices
+            if ( $.inArray(prodName, addedProducts) < 0 ) {
+                addedProducts.push(prodName);
+                html = '<p><input type="checkbox" name="products" value="' + 
+                    engId + '" txt="' + prodName + '" id="' + engId + '">' + 
+                    prodName + '</input></p>';
+                $("#product-choices").append(html);
+            }
+        });
+    }
+
     // Create link action.
     $("#create-link").click(function(e) {
         e.preventDefault();
@@ -174,40 +286,6 @@ Current Certificates:
         var productMap = {};
         // List to store engineering id's we've already added.
         var addedProducts = [];
-
-        // Wipe SLA choices.
-        function wipe_sla() {
-            $("#sla-group input").each(function(index) {
-                $(this).addClass("ui-state-disabled");
-                $(this).attr("disabled", "disabled");
-                $(this).removeAttr("checked");
-            });
-        }
-
-        // Wipe Support Level choices.
-        function wipe_support_level() {
-            $("#support-level-group input").each(function(index) {
-                $(this).addClass("ui-state-disabled");
-                $(this).attr("disabled", "disabled");
-                $(this).removeAttr("checked");
-            });
-        }
-
-        // Wipe product choices.
-        function wipe_product_choices() {
-            $("#product-choices").remove();
-            $("#select-products").append('<div id="product-choices"></div>');
-        }
-        
-        // Wipe everything.
-        function wipe() {
-            wipe_sla();
-            wipe_support_level();
-            wipe_product_choices();
-            $("#enter-name").attr("value", "");
-            productMap = {};
-            addedProducts = [];
-        }
 
         // Enable the valid sla choices based on the data from the contract
         // parsed into productMap variable.
@@ -227,41 +305,11 @@ Current Certificates:
             });
         }
 
-        // Enable the valid product choices base on the chosen SLA and support
-        // level.
-        function enable_product_choices() {
-            var sla = $("input[name=sla]:checked").attr("id");
-            var supportLevel = $("input[name=support-level]:checked").attr("id");
-            Object.keys(productMap[sla][supportLevel]).forEach(function(product) {
-                var prodName = productMap[sla][supportLevel][product][1];
-                var engId = productMap[sla][supportLevel][product][0];
-                // Add each product to the product choices
-                if ( $.inArray(prodName, addedProducts) < 0 ) {
-                    addedProducts.push(prodName);
-                    html = '<p><input type="checkbox" name="products" value="' + 
-                        engId + '" txt="' + prodName + '">' + 
-                        prodName + '</input></p>';
-                    $("#product-choices").append(html);
-                }
-            });
-        }
-
         // Go ahead and wipe.
         wipe()
 
         // Download contract data from server to populate contract selector
-        var contractData = {};
-        var jqxhr = $.get("/api/account/",
-            function(data) {
-                // Remove any old options first.
-                $("#select-contract [id!='default-contract']").remove()
-                for (key = 0; key < data[0]["contracts"].length; key++) {
-                    var contract = data[0]["contracts"][key];
-                    contractData[contract["contract_id"]] = contract;
-                    $("#select-contract").append(new Option(contract["contract_id"], contract["contract_id"], false, false));
-                }
-            }
-        );
+        var contractData = get_contract_data();
         
         // Contract Selector select action
         $("#select-contract").change(function() {
@@ -272,35 +320,12 @@ Current Certificates:
             contract_id = $("#select-contract option:selected").text();
             contract = contractData[contract_id];
 
-            // Iterate over each product in the contract
-            contract["products"].forEach(function(product) {
-
-                var sla = product["sla"];
-                var supportLevel = product["support_level"];
-                var engId = product["engineering_id"];
-                var prodName = product["name"];
-
-                if ( $.inArray(sla, Object.keys(productMap)) >= 0 ) {
-                    if ( $.inArray(supportLevel, Object.keys(productMap[sla])) >= 0 ) {
-                        if ( $.inArray(prodName, productMap[sla][supportLevel] ) < 0) {
-                            productMap[sla][supportLevel].push([engId, prodName])
-                        }
-                    }
-                    else {
-                        productMap[sla][supportLevel] = []
-                        productMap[sla][supportLevel].push([engId, prodName])
-                    }
-                }
-                else {
-                    productMap[sla] = {}
-                    productMap[sla][supportLevel] = []
-                    productMap[sla][supportLevel].push([engId, prodName])
-                }
-            });
+            productMap = get_product_map(contract["products"]);
 
             enable_sla();
 
         });
+
 
         // SLA radio button click action
         $("input[name='sla']").each(function(index) {
@@ -315,12 +340,12 @@ Current Certificates:
         $("input[name='support-level']").each(function(index) {
             this.onclick = function() {
                 wipe_product_choices();
-                enable_product_choices();
+                enable_product_choices(productMap);
             };
         });
 
         // Create Certificate dialog
-        $("#create-dialog").dialog({
+        $("#cert-dialog").dialog({
             autoOpen: false,
             title: "Create New Certificate",
             modal: true,
@@ -347,7 +372,8 @@ Current Certificates:
                         }
                     );
 
-                    confirm_dialog(certData, confirmData)
+                    confirm_dialog("/api/rhic/", certData, confirmData, 
+                        "Create Confirmation", "Create Certificate", "Don't Create", "POST", true);
                     $(this).dialog("close");
                 },
                 "Cancel": function() {
@@ -357,9 +383,7 @@ Current Certificates:
         });
 
         // Open dialog after contract data has been downloaded and processed.
-        jqxhr.complete(function() {
-            $("#create-dialog").dialog("open");
-        });
+        $("#cert-dialog").dialog("open");
 
     });
 
@@ -381,42 +405,45 @@ Current Certificates:
     };
 
     // Create Confirm Dialog
-    function confirm_dialog(certData, confirmData) {
-        $("#confirm-create").dialog({
+    function confirm_dialog(url, certData, confirmData, title, button1, button2, method, do_download) {
+        $("#confirm-cert").dialog({
             autoOpen: false,
-            title: "Create Confirmation",
+            title: title,
             modal: true,
             buttons: {
-                "Create Certificate": function() {
+                button1: function() {
                      var certPost = $.ajax({
-                        url: "/api/rhic/", 
+                        url: url,
                         contentType: "application/json",
                         processData: false,
-                        type: "POST",
+                        type: method,
                         data: JSON.stringify(certData),
                         dataType: "json",
                     });
 
                     certPost.complete(function(data) {
-                        $("#confirm-create").dialog("close");
+                        $("#confirm-cert").dialog("close");
                         rhic = $.parseJSON(data.responseText);
                         rhicData.push(rhic)
-                        oTable.fnAddData(["<input type=radio>", rhic["name"], rhic["created_date"], 
-                            rhic["contract"], rhic["resource_uri"]]);
 
                         row_click();
 
-                        var cert_pem = {};
-                        cert_pem = "cert_pem=" + encodeURIComponent(rhic["cert_pem"]);
+                        if ( do_download ) {
+                            oTable.fnAddData(["<input type=radio>", rhic["name"], rhic["created_date"], 
+                                rhic["contract"], rhic["resource_uri"]]);
 
-                        $.download("/api/rhicdownload/" + rhic["id"] + "/", cert_pem, 'get');
+                            var cert_pem = {};
+                            cert_pem = "cert_pem=" + encodeURIComponent(rhic["cert_pem"]);
+
+                            $.download("/api/rhicdownload/" + rhic["id"] + "/", cert_pem, 'get');
+                        }
 
                         // XXX TESTING
                         $("#cert-value").attr("value", rhic["cert_pem"]);
                     });
 
                 },
-                "Don't Create": function() {
+                button2: function() {
                     $(this).dialog("close");
                 }
             }
@@ -431,7 +458,7 @@ Current Certificates:
             $("#confirm-products").append(product + "<br>");
         });
 
-        $("#confirm-create").dialog("open");
+        $("#confirm-cert").dialog("open");
     }
 
     // Download PEM dialog
@@ -452,10 +479,90 @@ Current Certificates:
 
 
     // Edit button click action.
-    $( "#edit-button" )
-        .button()
-        .click(function() {
+    $( "#edit-button" ).button().click(function() {
+
+        wipe();
+
+        var selected = fnGetSelected(oTable);
+        var aData = oTable.fnGetData(selected);
+        var url = aData[4];
+        var rhic;
+        var contractData = {};
+        var productMap = {};
+        var addedProducts = [];
+
+        newRhicData = rhicData.filter(function(_rhic) {
+            if ( _rhic["resource_uri"] == url ) {
+                rhic = _rhic;
+                return false;
+            }
+            else {
+                return true;
+            }
+        });
+
+        rhicData = newRhicData;
+
+        $("#enter-name")[0].value = rhic["name"];
+        $("#enter-name").addClass("ui-state-disabled");
+        $("#enter-name").attr("disabled", "disabled");
+        $("#select-contract").append(new Option(rhic["contract"], rhic["contract"], true, true));
+        $("#select-contract").addClass("ui-state-disabled");
+        $("#select-contract").attr("disabled", "disabled");
+        $("#" + rhic["sla"])[0].checked = true;
+        $("#" + rhic["support_level"])[0].checked = true;
+
+        contractData = get_contract_data();
+        productMap = get_product_map(contractData[rhic["contract"]]["products"]);
+        enable_product_choices(productMap);
+
+        rhic["engineering_ids"].forEach(function(engId) {
+            $("#" + engId).each(function() {
+                if ( $.inArray($(this).attr("txt"), rhic["products"]) >= 0 ) {
+                    $(this)[0].checked = true;
+                }
             });
+        });
+
+        $("#cert-dialog").dialog({
+            autoOpen: false,
+            title: "Edit Certificate",
+            modal: true,
+            buttons: {
+                "Update": function() {
+                    var certData = {};
+                    var confirmData = {};
+                    certData["name"] = $("#enter-name")[0].value;
+                    certData["sla"] = $("input[name=sla]:checked").attr("id");
+                    confirmData["sla"] = $("input[name=sla]:checked").attr("txt");
+                    certData["support_level"] = $("input[name=support-level]:checked").attr("id");
+                    confirmData["support_level"] = $("input[name=support-level]:checked").attr("txt");
+                    certData["contract"] = $("#select-contract")[0].value;
+                    certData["products"] = [];
+                    certData["engineering_ids"] = [];
+                    confirmData["products"] = [];
+                    $("input[name=products]:checked").each(
+                        function(index) {
+                            certData["engineering_ids"].push($(this).attr("value"));
+                            certData["products"].push($(this).attr("txt"));
+                            confirmData["products"].push($(this).attr("txt"));
+                        }
+                    );
+
+                    confirm_dialog(rhic["resource_uri"], certData, confirmData, 
+                        "Edit Confirmation", "Edit Certificate", "Don't Edit", "PUT", false);
+                    $(this).dialog("close");
+
+                },
+                "Cancel": function() {
+                    $(this).dialog("close");
+                }
+            }
+        });
+
+        $("#cert-dialog").dialog("open");
+
+    });
 
     // Delete button click action.
     $( "#delete-button" )
