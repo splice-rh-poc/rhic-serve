@@ -43,4 +43,6 @@ class RestExceptionMiddleware(object):
 
     def process_exception(self, request, exception):
         ei = sys.exc_info()
+        print ei[0]
+        print ei[1]
         print traceback.print_tb(ei[2])
