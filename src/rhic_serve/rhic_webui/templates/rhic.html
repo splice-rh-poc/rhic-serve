@@ -101,6 +101,7 @@ Current Certificates:
 {% block scripts %}
 
     var rhicData = []
+    var oldRhicdata = []
     var rhicTableData = []
     var oTable;
 
@@ -216,7 +217,7 @@ Current Certificates:
                 for (key = 0; key < data[0]["contracts"].length; key++) {
                     var contract = data[0]["contracts"][key];
                     contractData[contract["contract_id"]] = contract;
-                    $("#select-contract").append(new Option(contract["contract_id"], contract["contract_id"], false, false));
+                    $("#select-contract").append('<option id="' + contract["contract_id"] + '" value="' + contract["contract_id"] + '">' + contract["contract_id"] + '</option>');
                 }
             },
         });
@@ -444,6 +445,7 @@ Current Certificates:
 
                 },
                 button2: function() {
+                    rhicData = oldRhicData;
                     $(this).dialog("close");
                 }
             }
@@ -490,8 +492,9 @@ Current Certificates:
         var contractData = {};
         var productMap = {};
         var addedProducts = [];
+        oldRhicData = rhicData;
 
-        newRhicData = rhicData.filter(function(_rhic) {
+        rhicData = rhicData.filter(function(_rhic) {
             if ( _rhic["resource_uri"] == url ) {
                 rhic = _rhic;
                 return false;
@@ -501,20 +504,19 @@ Current Certificates:
             }
         });
 
-        rhicData = newRhicData;
-
         $("#enter-name")[0].value = rhic["name"];
         $("#enter-name").addClass("ui-state-disabled");
         $("#enter-name").attr("disabled", "disabled");
-        $("#select-contract").append(new Option(rhic["contract"], rhic["contract"], true, true));
-        $("#select-contract").addClass("ui-state-disabled");
-        $("#select-contract").attr("disabled", "disabled");
         $("#" + rhic["sla"])[0].checked = true;
         $("#" + rhic["support_level"])[0].checked = true;
 
         contractData = get_contract_data();
         productMap = get_product_map(contractData[rhic["contract"]]["products"]);
         enable_product_choices(productMap);
+
+        $("#" + rhic["contract"]).attr("selected", true);
+        $("#select-contract").addClass("ui-state-disabled");
+        $("#select-contract").attr("disabled", "disabled");
 
         rhic["engineering_ids"].forEach(function(engId) {
             $("#" + engId).each(function() {
@@ -555,6 +557,7 @@ Current Certificates:
 
                 },
                 "Cancel": function() {
+                    rhicData = oldRhicData;
                     $(this).dialog("close");
                 }
             }
