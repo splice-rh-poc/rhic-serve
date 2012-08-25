@@ -23,12 +23,22 @@ from rhic_rest.api.base import RestResource, AccountAuthorization
 from tastypie.authorization import Authorization
 from tastypie_mongoengine.fields import (EmbeddedDocumentField,
     EmbeddedListField)
+from tastypie.validation import Validation
+
+class RHICValidation(Validation):
+
+    def is_valid(self, bundle, request=None):
+        valid = super(RHICValidation, self).is_valid(bundle, request)
+        rhic = bundle.obj
+        return valid
+
 
 class RHICResource(RestResource):
 
     class Meta(RestResource.Meta):
         queryset = RHIC.objects.all()
         authorization = AccountAuthorization()
+        validation = RHICValidation()
 
     def dehydrate_public_cert(self, bundle):
         """
@@ -55,25 +65,28 @@ class RHICResource(RestResource):
 
         return bundle
 
+    def hydrate_account_id(self, bundle):
+        # Probably need to raise an error if these don't match to being with.
+        account_id = Account.objects(
+            login=bundle.request.user.username).only('account_id').first().account_id
+        bundle.data['account_id'] = account_id
+        return bundle
+
+    def hydrate_name(self, bundle):
+        bundle = self.hydrate_account_id(bundle)
+        name_suffix = '%s-%s-%s-%s' % (bundle.data['account_id'],
+                bundle.data['contract'], bundle.data['sla'],
+                bundle.data['support_level'])
+        name = bundle.data.get('name', '')
+        if not name.endswith(name_suffix):
+            name = '%s-%s' % (name, name_suffix)
+            bundle.data['name'] = name
+        return bundle
+
     def obj_create(self, bundle, request, **kwargs):
         """
         Fixups and protections for new RHIC creation.
         """
-        # Probably need to raise an error if these don't match to being with.
-        account_id = Account.objects(
-            login=request.user.username).only('account_id').first().account_id
-        bundle.data['account_id'] = account_id
-
-        # Create a meaningful name.
-        if bundle.data['name']:
-            bundle.data['name'] = '%s-%s-%s-%s-%s' % (bundle.data['name'],
-                bundle.data['account_id'], bundle.data['contract'],
-                bundle.data['sla'], bundle.data['support_level'])
-        else:
-            bundle.data['name'] = '%s-%s-%s-%s' % (bundle.data['account_id'],
-                bundle.data['contract'], bundle.data['sla'],
-                bundle.data['support_level'])
-
         return super(RHICResource, self).obj_create(bundle, request, **kwargs)
 
 
