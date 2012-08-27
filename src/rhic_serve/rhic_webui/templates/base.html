@@ -48,6 +48,7 @@
                             })
 
                             jqxhr.error(function(jqxhr, textStatus, errorThrown) {
+                                $("#relogin").addClass("ui-helper-hidden");
                                 if ( jqxhr.status == "403" ) {
                                     $("#login-error").removeClass("ui-helper-hidden");
                                 }
