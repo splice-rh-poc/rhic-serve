@@ -42,9 +42,9 @@
                             var jqxhr = $.ajax({
                                 url: "/ui/login",
                                 type: "POST",
-                                contentType: "text/html",
+                                contentType: "application/json",
                                 data: data,
-                                dataType: "json",
+                                dataType: "html",
                             })
 
                             jqxhr.error(function(jqxhr, textStatus, errorThrown) {
@@ -53,8 +53,8 @@
                                 }
                             });
 
-                            jqxhr.complete(function(jqxhr, status){  
-                                if ( jqxhr.status == "200" ) {
+                            jqxhr.complete(function(jqxhr, textStatus){  
+                                if ( textStatus == "success" ) {
                                     $(this).dialog("close");
                                     window.location="rhic"
                                 }
@@ -62,6 +62,8 @@
                        },
                         Cancel: function() {
                             $( this ).dialog( "close" );
+                            $("#login-error").addClass("ui-helper-hidden");
+                            $("#relogin").addClass("ui-helper-hidden");
                         }
                     },
                     close: function() {
@@ -69,11 +71,25 @@
                     }
                 });
 
+                function login(relogin) {
+                    $("#login-form").dialog( "open" );
+
+                    if ( relogin ) {
+                        $("#relogin").removeClass("ui-helper-hidden");
+                    }
+                }
+
+                $.ajaxSetup({
+                    "error": function() {
+                        login(true);
+                    },
+                });
+
                 // Login button click action.
                 $( "#login-button" )
                     .button()
                     .click(function() {
-                        $( "#login-form" ).dialog( "open" );
+                        login();
                 });
 
                 // Logout button click action.
@@ -138,6 +154,9 @@
             <p>Invalid Username or Password.</p>
             <p>Please try again.</p>
         </div>
+    </div>
+    <div id="relogin" class="ui-helper-hidden">
+        <p>Your session has expired, you must relogin.</p>
     </div>
 </div>
 
