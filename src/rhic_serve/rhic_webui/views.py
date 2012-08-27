@@ -14,6 +14,7 @@
 from django.contrib.auth import (login as auth_login, 
     logout as auth_logout, authenticate)
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -31,12 +32,11 @@ def login(request):
             auth_login(request, user)
             return template_response(request, 'base.html')
         else:
-            pass
-            # Return a 'disabled account' error message
+            return HttpResponseForbidden()
     else:
-        pass
-        # Return an 'invalid login' error message.    
+        return HttpResponseForbidden()
 
+@ensure_csrf_cookie
 def logout(request):
     auth_logout(request)
     return template_response(request, 'logout.html')
