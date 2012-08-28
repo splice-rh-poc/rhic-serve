@@ -1,5 +1,5 @@
 Name:		rhic-serve
-Version:	0.2
+Version:	0.3
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -78,6 +78,16 @@ rm -rf %{buildroot}
 
 
 %changelog
+* Tue Aug 28 2012 James Slagle <slagle@redhat.com> 0.3-1
+- Update apache config (slagle@redhat.com)
+- package test ca cert and key (slagle@redhat.com)
+- Set new templates dir path in settings.py (slagle@redhat.com)
+- Install Django templates (slagle@redhat.com)
+- Packaging fixes. (slagle@redhat.com)
+- wsgi script (slagle@redhat.com)
+- setup.py (slagle@redhat.com)
+- Add apache config file (slagle@redhat.com)
+
 * Tue Aug 28 2012 James Slagle <slagle@redhat.com> 0.2-1
 - new package built with tito
 
