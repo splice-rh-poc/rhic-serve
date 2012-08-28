@@ -16,8 +16,36 @@
 
 {% block content %}
 
-<p>
+<style>
+    .dataTables_wrapper {
+        clear: left;
+        min-height: 100px;
+        position: relative;
+    }
+</style>
+
+<div id="main-wrap" class="wrapu">
+    <div class="wrapi">
+        <div id="container" class="clearWrap">
+            <div id="content" class="c-mF">
+                <div id="main">
+                    <div id="appsTabBox">
+                        <div class="clearBoxXtraWide">
+                            <div class="clearBoxInnerXtraWide">
+                                <div class="clearBoxBody">
+                                    <h1>Red Hat Identity Certificate Management</h1>
+                                        <div class="contentIndent">
+                                            <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
+                                                <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+                                                    <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
+                                                        <span style="padding: 6 16;">Current Certificates</span>
+                                                    </li>
+                                                </ul>
+
+<div id="rhic-page" class="ui-tabs-panel ui-widget-content ui-corner-bottom" style="padding: 20px 20px 20px 20px">
 <a id="create-link" href="">Create a new Red Hat Identity Certificate</a>
+
+<p>
 <div id="cert-dialog" class="ui-helper-hidden">
     <label for="select-contract">Contract:</label>
     <select id="select-contract">
@@ -47,14 +75,8 @@
 </div>
 </p>
 
-</p>
-
-<p>
-Current Certificates:
-</p>
-
 <div>
-    <table id="rhic-table" width="100%">
+    <table id="rhic-table" class="display" style="display: table" width="100%">
         <thead>
             <tr>
                 <th>Select</th>
@@ -90,6 +112,22 @@ Current Certificates:
 <div id="confirm-edit" class="ui-helper-hidden"></div>
 
 <div id="confirm-delete"></div>
+
+
+</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <br>
 <br>
