@@ -23,8 +23,6 @@ from rhic_rest.api import rhic
 rhic_resource = rhic.RHICResource()
 rhic_download_resource = rhic.RHICDownloadResource()
 account_resource = rhic.AccountResource()
-contract_resource = rhic.ContractResource()
-product_resource = rhic.ProductResource()
 
 urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -37,8 +35,6 @@ urlpatterns = patterns('',
     url(r'^api/', include(rhic_resource.urls)),
     url(r'^api/', include(rhic_download_resource.urls)),
     url(r'^api/', include(account_resource.urls)),
-    url(r'^api/', include(contract_resource.urls)),
-    url(r'^api/', include(product_resource.urls)),
 
     # UI Views
     url(r'^ui/$', 'rhic_webui.views.index'),
