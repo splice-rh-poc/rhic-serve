@@ -46,6 +46,9 @@ mkdir -p %{buildroot}/%{_var}/log/%{name}
 cp -R srv %{buildroot}
 cp etc/httpd/conf.d/%{name}.conf %{buildroot}/%{_sysconfdir}/httpd/conf.d/
 
+# Remove egg info
+rm -rf %{buildroot}/%{python_sitelib}/*.egg-info
+
 
 %clean
 rm -rf %{buildroot}
@@ -53,7 +56,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%{python_sitelib}/%{name}
+%{python_sitelib}/rhic_serve
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %defattr(-,apache,apache,-)
 %dir %{_sysconfdir}/pki/%{name}
