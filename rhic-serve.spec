@@ -50,6 +50,9 @@ cp -R src/rhic_serve/rhic_webui/templates %{buildroot}/%{_usr}/lib/rhic_webui
 cp -R srv %{buildroot}
 cp etc/httpd/conf.d/%{name}.conf %{buildroot}/%{_sysconfdir}/httpd/conf.d/
 
+# Install CA cert and key
+cp -R etc/pki/rhic-serve %{buildroot}/%{_sysconfdir}/pki/
+
 # Remove egg info
 rm -rf %{buildroot}/%{python_sitelib}/*.egg-info
 
