@@ -22,6 +22,7 @@ from rhic_rest.api import rhic
 # Resources
 rhic_resource = rhic.RHICResource()
 rhic_download_resource = rhic.RHICDownloadResource()
+rhic_rcs_resource = rhic.RHICRcsResource()
 account_resource = rhic.AccountResource()
 
 urlpatterns = patterns('',
@@ -34,6 +35,7 @@ urlpatterns = patterns('',
     # API Resources
     url(r'^api/', include(rhic_resource.urls)),
     url(r'^api/', include(rhic_download_resource.urls)),
+    url(r'^api/', include(rhic_rcs_resource.urls)),
     url(r'^api/', include(account_resource.urls)),
 
     # UI Views

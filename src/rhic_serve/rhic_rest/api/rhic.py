@@ -20,7 +20,8 @@ from django.http import HttpResponse
 from rhic_rest.models import RHIC, Account, Product, Contract
 from rhic_rest.api.base import RestResource, AccountAuthorization
 
-from tastypie.authorization import Authorization
+from tastypie.authentication import Authentication
+from tastypie.authorization import ReadOnlyAuthorization
 from tastypie_mongoengine.fields import (EmbeddedDocumentField,
     EmbeddedListField)
 from tastypie.validation import Validation
@@ -123,6 +124,14 @@ class RHICDownloadResource(RHICResource):
         response['Content-Length'] = sys.getsizeof(cert_pem)
 
         return response
+
+
+class RHICRcsResource(RHICResource):
+
+    class Meta(RHICResource.Meta):
+        authentication = Authentication()
+        authorization = ReadOnlyAuthorization()
+        fields = ['uuid', 'engineering_ids']
 
 class ProductResource(RestResource):
 
