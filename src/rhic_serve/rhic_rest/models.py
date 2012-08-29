@@ -23,7 +23,7 @@ from mongoengine import *
 from mongoengine import signals
 from mongoengine.queryset import QuerySet
 
-from rhic_rest.common import cert_utils
+from rhic_serve.rhic_rest.common import cert_utils
 
 import uuid
 

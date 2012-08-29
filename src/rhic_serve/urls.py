@@ -13,7 +13,7 @@
 
 
 from django.conf.urls import patterns, include, url
-from rhic_rest.api import rhic
+from rhic_serve.rhic_rest.api import rhic
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin

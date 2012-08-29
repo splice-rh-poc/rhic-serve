@@ -17,8 +17,8 @@ import urllib
 
 from django.http import HttpResponse
 
-from rhic_rest.models import RHIC, Account, Product, Contract
-from rhic_rest.api.base import RestResource, AccountAuthorization
+from rhic_serve.rhic_rest.models import RHIC, Account, Product, Contract
+from rhic_serve.rhic_rest.api.base import RestResource, AccountAuthorization
 
 from tastypie.authentication import Authentication
 from tastypie.authorization import ReadOnlyAuthorization
@@ -140,7 +140,7 @@ class ProductResource(RestResource):
 
 class ContractResource(RestResource):
 
-    products = EmbeddedListField(of='rhic_rest.api.rhic.ProductResource',
+    products = EmbeddedListField(of='rhic_serve.rhic_rest.api.rhic.ProductResource',
         attribute='products', full=True)
 
     class Meta(RestResource.Meta):
@@ -148,7 +148,7 @@ class ContractResource(RestResource):
 
 class AccountResource(RestResource):
 
-    contracts = EmbeddedListField(of='rhic_rest.api.rhic.ContractResource', 
+    contracts = EmbeddedListField(of='rhic_serve.rhic_rest.api.rhic.ContractResource', 
         attribute='contracts', full=True)
 
     class Meta(RestResource.Meta):

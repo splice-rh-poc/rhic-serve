@@ -7,7 +7,7 @@ MONGO_DATABASE_NAME = 'rhic_serve'
 connect(MONGO_DATABASE_NAME)
 
 # Custom test runner to work with Mongo
-TEST_RUNNER = 'rhic_rest.tests.MongoTestRunner'
+TEST_RUNNER = 'rhic_serve.rhic_rest.tests.MongoTestRunner'
 
 CA_CERT_PATH = '/tmp/ca.crt' 
 CA_KEY_PATH = '/tmp/ca.key'
@@ -119,8 +119,8 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'rhic_rest.middleware.RestLoginMiddleware',
-    'rhic_rest.middleware.RestExceptionMiddleware',
+    'rhic_serve.rhic_rest.middleware.RestLoginMiddleware',
+    'rhic_serve.rhic_rest.middleware.RestExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'rhic_serve.urls'

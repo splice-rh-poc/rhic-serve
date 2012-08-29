@@ -16,7 +16,7 @@ from tastypie.authentication import (BasicAuthentication,
 from tastypie.authorization import Authorization
 from tastypie_mongoengine.resources import MongoEngineResource
 
-from rhic_rest.models import Account
+from rhic_serve.rhic_rest.models import Account
 
 class RestResource(MongoEngineResource):
     """

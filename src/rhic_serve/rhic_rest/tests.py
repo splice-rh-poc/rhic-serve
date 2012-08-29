@@ -16,7 +16,7 @@ from django.test import client, simple, testcases
 
 from mongoengine import connection
 
-from rhic_rest.models import RHIC
+from rhic_serve.rhic_rest.models import RHIC
 
 MONGO_TEST_DATABASE_NAME = 'test_%s' % settings.MONGO_DATABASE_NAME
 
