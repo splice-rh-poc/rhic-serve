@@ -42,9 +42,13 @@ mkdir -p %{buildroot}/%{_sysconfdir}/httpd/conf.d/
 mkdir -p %{buildroot}/%{_sysconfdir}/pki/%{name}
 mkdir -p %{buildroot}/%{_var}/log/%{name}
 mkdir -p %{buildroot}/%{_usr}/lib/rhic_webui
+mkdir -p %{buildroot}/%{_localstatedir}/www/html/rhic_webui/
 
 # Install template files
 cp -R src/rhic_serve/rhic_webui/templates %{buildroot}/%{_usr}/lib/rhic_webui
+
+# Install static files
+cp -R src/rhic_serve/rhic_webui/static %{buildroot}/%{_localstatedir}/www/html/rhic_webui
 
 # Install WSGI script & httpd conf
 cp -R srv %{buildroot}
@@ -72,6 +76,7 @@ rm -rf %{buildroot}
 %dir %{_var}/log/%{name}
 /srv/%{name}/webservices.wsgi
 %{_usr}/lib/rhic_webui/templates
+%{_localstatedir}/www/html/rhic_webui/static
 
 
 %doc

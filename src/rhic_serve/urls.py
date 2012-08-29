@@ -39,9 +39,9 @@ urlpatterns = patterns('',
     url(r'^api/', include(account_resource.urls)),
 
     # UI Views
-    url(r'^ui/$', 'rhic_webui.views.index'),
-    url(r'^ui/login$', 'rhic_webui.views.login'),
-    url(r'^ui/logout$', 'rhic_webui.views.logout'),
-    url(r'^ui/rhic$', 'rhic_webui.views.rhic'),
+    url(r'^ui/$', 'rhic_serve.rhic_webui.views.index'),
+    url(r'^ui/login$', 'rhic_serve.rhic_webui.views.login'),
+    url(r'^ui/logout$', 'rhic_serve.rhic_webui.views.logout'),
+    url(r'^ui/rhic$', 'rhic_serve.rhic_webui.views.rhic'),
 
 )

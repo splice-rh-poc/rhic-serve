@@ -144,8 +144,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tastypie',
     'tastypie_mongoengine',
-    'rhic_rest',
-    'rhic_webui',
+    'rhic_serve.rhic_rest',
+    'rhic_serve.rhic_webui',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
