@@ -96,6 +96,9 @@ class AccountAuthorization(Authorization):
         """
         Filter out all rhics that the logged in user is not authorized to see.
         """
-        account_id = Account.objects(
-            login=request.user.username).only('account_id').first().account_id
-        return resources.filter(account_id=account_id)
+        if request.user.username:
+            account_id = Account.objects(
+                login=request.user.username).only('account_id').first().account_id
+            return resources.filter(account_id=account_id)
+        else:
+            return []
