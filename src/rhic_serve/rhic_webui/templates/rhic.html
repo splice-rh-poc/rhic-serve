@@ -576,10 +576,10 @@
 
         $("#cert-dialog").dialog({
             autoOpen: false,
-            title: "Edit Certificate",
+            title: "Manage Products",
             modal: true,
             buttons: {
-                "Update": function() {
+                "Update Products": function() {
                     var certData = {};
                     var confirmData = {};
                     certData["name"] = $("#enter-name")[0].value;
@@ -600,7 +600,7 @@
                     );
 
                     confirm_dialog(rhic["resource_uri"], certData, confirmData, 
-                        "Edit Confirmation", "Edit Certificate", "Don't Edit", "PUT", false);
+                        "Manage Products Confirmation", "Update Products", "Don't Update", "PATCH", false);
                     $(this).dialog("close");
 
                 },
