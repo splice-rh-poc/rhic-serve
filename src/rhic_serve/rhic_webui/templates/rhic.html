@@ -482,7 +482,7 @@
                                 var cert_pem = {};
                                 cert_pem = "cert_pem=" + encodeURIComponent(rhic["cert_pem"]);
 
-                                $.download("/api/rhicdownload/" + rhic["id"] + "/", cert_pem, 'get');
+                                $.download("/api/rhicdownload/" + rhic["uuid"] + "/", cert_pem, 'get');
                             }
 
                         });
