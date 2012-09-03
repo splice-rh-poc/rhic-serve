@@ -40,6 +40,7 @@ class RHICResource(RestResource):
         queryset = RHIC.objects.all()
         authorization = AccountAuthorization()
         validation = RHICValidation()
+        detail_uri_name = 'uuid'
 
     def dehydrate_public_cert(self, bundle):
         """
@@ -133,10 +134,12 @@ class RHICRcsResource(RHICResource):
         authorization = ReadOnlyAuthorization()
         fields = ['uuid', 'engineering_ids']
 
+
 class ProductResource(RestResource):
 
     class Meta(RestResource.Meta):
         queryset = object_class = Product
+
 
 class ContractResource(RestResource):
 
@@ -145,6 +148,7 @@ class ContractResource(RestResource):
 
     class Meta(RestResource.Meta):
         queryset = object_class = Contract
+
 
 class AccountResource(RestResource):
 
