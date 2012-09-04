@@ -146,6 +146,7 @@
 
     function row_click() {
         // Row click selection / highlight
+        $("#rhic-table tbody tr").unbind();
         $("#rhic-table tbody tr").click( function( e ) {
             if ( $(this).hasClass('ui-state-active') ) {
                 $("input:radio", this).attr("checked", false)
@@ -174,7 +175,14 @@
              "bVisible": false
             }
         ],
+        "fnDrawCallback": function( oSettings ) {
+            row_click();
+        },
     });	
+
+    $('.dataTables_length select').live('change', function() {
+           alert(this.value);
+    });
 
     function populate_table() {
         rhicTableData = [];
@@ -194,7 +202,7 @@
                 oTable.fnAddData(rhic);
             });
 
-            row_click();
+            // row_click();
         });
     }
 
@@ -473,7 +481,7 @@
                             rhic = $.parseJSON(data.responseText);
                             rhicData.push(rhic)
 
-                            row_click();
+                            // row_click();
 
                             if ( do_download ) {
                                 oTable.fnAddData(["<input type=radio>", rhic["name"], rhic["created_date"], 
