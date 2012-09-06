@@ -107,6 +107,12 @@
     <p>SLA: <span id="confirm-sla"></span></p>
     <p>Support Level: <span id="confirm-support-level"></span></p>
     <p>Products: <span id="confirm-products"><br></span></p>
+    <p><div id="confirm-download-pem">Once the certificate is created, you will
+    be presented with the certificate and private key in PEM format to download
+    via your browser.  You must download and save the certificate at that time.
+    This is the only opportunity to download the private key portion of your
+    certificate.  Red Hat does not store your certificate's private key, and
+    without it, your certificate can not be used.</div></p>
 </div>
 
 <div id="edit-dialog" class="ui-helper-hidden"></div>
@@ -253,7 +259,8 @@
         $("#confirm-name").text("");
         $("#confirm-sla").text("");
         $("#confirm-support-level").text("");
-        $("#confirm-products").text("")
+        $("#confirm-products").text("");
+        $("#confirm-download-pem").addClass("ui-helper-hidden");
     }
 
     // Wipe everything.
@@ -519,7 +526,6 @@
                 {
                     text: button2,
                     click: function() {
-                        rhicData = oldRhicData;
                         $(this).dialog("close");
                     }
                 }
@@ -534,6 +540,10 @@
         confirmData["products"].forEach(function(product) {
             $("#confirm-products").append(product + "<br>");
         });
+
+        if ( do_download ) {
+            $("#confirm-download-pem").removeClass("ui-helper-hidden");
+        }
 
         $("#confirm-cert").dialog("open");
     }
