@@ -149,20 +149,20 @@
     var oldRhicdata = []
     var rhicTableData = []
     var oTable;
+    var selectedRow;
 
     function row_click() {
         // Row click selection / highlight
         $("#rhic-table tbody tr").unbind();
         $("#rhic-table tbody tr").click( function( e ) {
-            if ( $(this).hasClass('ui-state-active') ) {
+            if ( $("input:radio", this).attr("checked") ) {
                 $("input:radio", this).attr("checked", false)
-                $(this).removeClass('ui-state-active');
+                selectedRow = null;
             }
             else {
-                oTable.$('tr.ui-state-active').removeClass('ui-state-active');
                 oTable.$("input:radio").attr("checked", false)
-                $(this).addClass('ui-state-active');
                 $("input:radio", this)[0].checked = true;
+                selectedRow = this;
             }
         });
     }
@@ -208,7 +208,6 @@
                 oTable.fnAddData(rhic);
             });
 
-            // row_click();
         });
     }
 
@@ -217,11 +216,6 @@
     // $("#download").onload(function() {
         // populate_table();
     // });
-
-    // Helper function to get the currently selected row
-    function fnGetSelected( oTableLocal ) {
-        return oTableLocal.$("tr.ui-state-active")[0];
-    }
 
     // Wipe SLA choices.
     function wipe_sla() {
@@ -507,8 +501,6 @@
                             rhic = $.parseJSON(data.responseText);
                             rhicData.push(rhic)
 
-                            // row_click();
-
                             if ( do_download ) {
                                 oTable.fnAddData(["<input type=radio>", rhic["name"], rhic["created_date"], 
                                     rhic["contract"], rhic["resource_uri"]]);
@@ -570,7 +562,12 @@
 
         wipe();
 
-        var selected = fnGetSelected(oTable);
+        var selected = selectedRow;
+
+        if ( ! selected ) {
+            return;
+        }
+
         var aData = oTable.fnGetData(selected);
         var url = aData[4];
         var rhic;
@@ -657,7 +654,12 @@
         .button()
         .click(function() {
 
-            var selected = fnGetSelected(oTable);
+            var selected = selectedRow;
+
+            if ( ! selected ) {
+                return;
+            }
+
             var aData = oTable.fnGetData(selected);
             var url = aData[4]
 
@@ -690,7 +692,12 @@
     $( "#download-button" )
         .button()
         .click(function() {
-                var selected = fnGetSelected(oTable);
+                var selected = selectedRow;
+
+                if ( ! selected ) {
+                    return;
+                }
+
                 var aData = oTable.fnGetData(selected);
                 var url = aData[4];
 
