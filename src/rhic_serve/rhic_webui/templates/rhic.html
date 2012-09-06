@@ -102,11 +102,11 @@
 
 <div id="confirm-cert" class="ui-helper-hidden">
     <p>Red Hat Identity Certificate Summary</p>
-    <p><div id="confirm-contract">Contract: </div></p>
-    <p><div id="confirm-name">Name: </div></p>
-    <p><div id="confirm-sla">SLA: </div></p>
-    <p><div id="confirm-support-level">Support Level: </div></p>
-    <p><div id="confirm-products">Products: <br></div></p>
+    <p>Contract: <span id="confirm-contract"></span></p>
+    <p>Name: <span id="confirm-name"></span></p>
+    <p>SLA: <span id="confirm-sla"></span></p>
+    <p>Support Level: <span id="confirm-support-level"></span></p>
+    <p>Products: <span id="confirm-products"><br></span></p>
 </div>
 
 <div id="edit-dialog" class="ui-helper-hidden"></div>
@@ -241,12 +241,31 @@
         $("#select-products").append('<div id="product-choices"></div>');
     }
     
+    // Wipe contract choices.
+    function wipe_contract() {
+        $("#select-contract").removeClass("ui-state-disabled");
+        $("#select-contract").removeAttr("disabled", "");
+    }
+    
+    // Wipe Confirmation display
+    function wipe_confirm() {
+        $("#confirm-contract").text("");
+        $("#confirm-name").text("");
+        $("#confirm-sla").text("");
+        $("#confirm-support-level").text("");
+        $("#confirm-products").text("")
+    }
+
     // Wipe everything.
     function wipe() {
+        wipe_contract();
         wipe_sla();
         wipe_support_level();
         wipe_product_choices();
+        wipe_confirm();
         $("#enter-name").attr("value", "");
+        $("#enter-name").removeAttr("disabled");
+        $("#enter-name").removeClass("ui-state-disabled");
         productMap = {};
         addedProducts = [];
     }
