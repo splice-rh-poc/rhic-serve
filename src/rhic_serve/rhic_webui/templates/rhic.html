@@ -22,6 +22,9 @@
         min-height: 100px;
         position: relative;
     }
+
+    .row_click {
+    }
 </style>
 
 
@@ -155,13 +158,15 @@
         // Row click selection / highlight
         $("#rhic-table tbody tr").unbind();
         $("#rhic-table tbody tr").click( function( e ) {
-            if ( $("input:radio", this).attr("checked") ) {
+            if ( $(this).hasClass("row_click") )  {
                 $("input:radio", this).attr("checked", false)
+                $(this).removeClass("row_click");
                 selectedRow = null;
             }
             else {
                 oTable.$("input:radio").attr("checked", false)
                 $("input:radio", this)[0].checked = true;
+                $(this).addClass("row_click");
                 selectedRow = this;
             }
         });
