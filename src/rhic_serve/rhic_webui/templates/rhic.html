@@ -60,6 +60,10 @@
         <input type="text" id="enter-name"></input>
         <p><i>(This name will be appended with additional information)</i></p>
     </p>
+    <div id="uuid" class="ui-helper-hidden">
+        <label for="uuid-field">UUID: </label>
+        <input type="text" id="uuid-field" disabled="disabled" size="35"></input>
+    </div>
     <p id="sla-group">
         <label for="sla">SLA:</label>
         <input type="radio" id="prem" name="sla" class="ui-state-disabled" disabled="disabled" txt="Premium">Premium</input>
@@ -272,6 +276,8 @@
         $("#enter-name").attr("value", "");
         $("#enter-name").attr("disabled", "disabled");
         $("#enter-name").addClass("ui-state-disabled");
+        $("#uuid-field").attr("value", "");
+        $("#uuid").addClass("ui-helper-hidden");
         $("#create-cert-button").attr("disabled", "disabled");
         $("#create-cert-button").addClass("ui-state-disabled");
         productMap = {};
@@ -630,6 +636,8 @@
         $("#enter-name")[0].value = rhic["name"];
         $("#enter-name").addClass("ui-state-disabled");
         $("#enter-name").attr("disabled", "disabled");
+        $("#uuid").removeClass("ui-helper-hidden");
+        $("#uuid-field").attr("value", rhic["uuid"]);
         $("#" + rhic["sla"])[0].checked = true;
         $("#" + rhic["support_level"])[0].checked = true;
 
