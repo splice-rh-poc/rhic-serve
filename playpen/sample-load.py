@@ -3,14 +3,14 @@
 import os
 import sys
 
-sys.path.insert(0, '../src/rhic_serve')
+sys.path.insert(0, '../src')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'rhic_serve.settings'
 
 from mongoengine.django.auth import User
 
 from rhic_serve import settings
-from rhic_rest.models import *
+from rhic_serve.rhic_rest.models import *
 
 def load_lines(lines, mappings):
     """
@@ -44,7 +44,7 @@ def load_lines(lines, mappings):
             Product.support_level_choices[s] == support_level][0]
 
         product_doc = Product(name=product,
-            engineering_id=mappings[product], sla=sla,
+            engineering_ids=mappings[product], sla=sla,
             support_level=support_level, quantity=quantity)
 
         contract_doc.products.append(product_doc)
@@ -75,9 +75,10 @@ def load_mappings(lines):
             print "rejecting line: %s" % line
             continue
 
-        product, eng_id, facts = values
+        product, eng_ids, facts = values
+        eng_ids = eng_ids.split('|')
 
-        mappings[product] = eng_id
+        mappings[product] = eng_ids
 
     return mappings
 

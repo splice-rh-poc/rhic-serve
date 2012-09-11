@@ -14,14 +14,13 @@
 import os
 import sys
 
-sys.path.insert(0, '../src/rhic_serve')
+sys.path.insert(0, '../src')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'rhic_serve.settings'
 
 from mongoengine.django.auth import User
 
-from rhic_serve import settings
-from rhic_rest.models import *
+from rhic_serve.rhic_rest.models import *
 
 User.objects.all().delete()
 Account.objects.all().delete()

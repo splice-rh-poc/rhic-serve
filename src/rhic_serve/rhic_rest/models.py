@@ -70,7 +70,7 @@ class Product(EmbeddedDocument):
     # Product name
     name = StringField(required=True)
     # Unique product identifier
-    engineering_id = IntField(required=True)
+    engineering_ids = ListField(required=True)
     # Quantity 
     quantity = IntField(required=True)
     # Product support level
