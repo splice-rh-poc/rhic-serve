@@ -340,7 +340,30 @@
 
     }
 
-    // Enable the valid product choices base on the chosen SLA and support
+    // Product checkbox checked action
+    function product_checked(product) {
+        var engIds = product.value.split(",");
+        engIds.forEach(function(engId) {
+            $("input[name='products'][value*='" + engId + "']").not(product).each(function() {
+                $(this).addClass("ui-state-disabled");
+                $(this).attr("disabled", "disabled");
+            });
+        });
+
+    }
+
+    // Product checkbox unchecked action
+    function product_unchecked(product) {
+        var engIds = product.value.split(",");
+        engIds.forEach(function(engId) {
+            $("input[name='products'][value*='" + engId + "']").not(product).each(function() {
+                $(this).removeClass("ui-state-disabled");
+                $(this).removeAttr("disabled");
+            });
+        });
+    }
+
+    // Enable the valid product choices based on the chosen SLA and support
     // level.
     function enable_product_choices(productMap) {
         var sla = $("input[name=sla]:checked").attr("id");
@@ -352,13 +375,14 @@
             if ( $.inArray(prodName, addedProducts) < 0 ) {
                 addedProducts.push(prodName);
                 html = '<p><input type="checkbox" name="products" value="' + 
-                    engIds + '" txt="' + prodName + '" id="' + engIds + '">' + 
+                    engIds + '" txt="' + prodName + '" id="' + prodName.replace(/ /g, '')  + '">' + 
                     prodName + '</input></p>';
                 $("#product-choices").append(html);
             }
 
             
         });
+
 
         // Product checkboxes click action
         $("input[name='products']").each(function(index) {
@@ -367,21 +391,11 @@
                 var thisProduct = this;
                 if ( this.checked ) {
                     // We're checking the box.
-                    engIds.forEach(function(engId) {
-                        $("input[name='products'][value*='" + engId + "']").not(thisProduct).each(function() {
-                            $(this).addClass("ui-state-disabled");
-                            $(this).attr("disabled", "disabled");
-                        });
-                    });
+                    product_checked(this);
                 }
                 else {
                     // We're unchecking the box.
-                    engIds.forEach(function(engId) {
-                        $("input[name='products'][value*='" + engId + "']").not(thisProduct).each(function() {
-                            $(this).removeClass("ui-state-disabled");
-                            $(this).removeAttr("disabled");
-                        });
-                    });
+                    product_unchecked(this);
                 }
             }
         });
@@ -417,6 +431,9 @@
                 $("#ss").attr("checked", true);
                 wipe_product_choices();
                 enable_product_choices(productMap);
+                // Go ahead and enable the creat button
+                $("#create-cert-button").removeAttr("disabled");
+                $("#create-cert-button").removeClass("ui-state-disabled");
             }
         }
 
@@ -679,11 +696,10 @@
         $("#select-contract").addClass("ui-state-disabled");
         $("#select-contract").attr("disabled", "disabled");
 
-        rhic["engineering_ids"].forEach(function(engId) {
-            $("#" + engId).each(function() {
-                if ( $.inArray($(this).attr("txt"), rhic["products"]) >= 0 ) {
-                    $(this)[0].checked = true;
-                }
+        rhic["products"].forEach(function(product) {
+            $("#" + product.replace(/ /g, '')).each(function() {
+                $(this)[0].checked = true;
+                product_checked($(this)[0]);
             });
         });
 
