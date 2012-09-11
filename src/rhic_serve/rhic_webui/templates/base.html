@@ -86,8 +86,22 @@
                 }
 
                 $.ajaxSetup({
-                    "error": function() {
-                        login(true);
+                    "error": function(jqXHR, textStatus, errorThrown) {
+                        if ( jqXHR.status == 500 ) {
+                            $("#error-dialog-text").text(jqXHR.responseText);
+                            $("#error-dialog").dialog({
+                                title: "Something went wrong.",
+                                modal: true,
+                                buttons: {
+                                    "Ok" : function () {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            });
+                        }
+                        else if ( (jqXHR.status == 401) || (jqXHR.status == 403)) {
+                            login(true);
+                        }
                     },
                 });
 
@@ -167,14 +181,10 @@
 </div>
 </div>
 
-<!--
-<div class="ui-widget-header">
-    <div style="text-align:center; font-size: 200%;">
-        Red Hat Identity Certificate Management
-    </div>
+<!-- Error Dialog -->
+<div id="error-dialog" class="ui-state-error ui-helper-hidden">
+    <p id="error-dialog-text" class="ui-state-error"></p>
 </div>
-
--->
 
 <!-- Login Form -->
 <div id="login-form" title="Login">
