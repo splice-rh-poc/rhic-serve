@@ -315,24 +315,24 @@
 
             var sla = product["sla"];
             var supportLevel = product["support_level"];
-            var engId = product["engineering_id"];
+            var engIds = product["engineering_ids"];
             var prodName = product["name"];
 
             if ( $.inArray(sla, Object.keys(productMap)) >= 0 ) {
                 if ( $.inArray(supportLevel, Object.keys(productMap[sla])) >= 0 ) {
                     if ( $.inArray(prodName, productMap[sla][supportLevel] ) < 0) {
-                        productMap[sla][supportLevel].push([engId, prodName])
+                        productMap[sla][supportLevel].push([engIds, prodName])
                     }
                 }
                 else {
                     productMap[sla][supportLevel] = []
-                    productMap[sla][supportLevel].push([engId, prodName])
+                    productMap[sla][supportLevel].push([engIds, prodName])
                 }
             }
             else {
                 productMap[sla] = {}
                 productMap[sla][supportLevel] = []
-                productMap[sla][supportLevel].push([engId, prodName])
+                productMap[sla][supportLevel].push([engIds, prodName])
             }
         });
 
@@ -347,16 +347,45 @@
         var supportLevel = $("input[name=support-level]:checked").attr("id");
         Object.keys(productMap[sla][supportLevel]).forEach(function(product) {
             var prodName = productMap[sla][supportLevel][product][1];
-            var engId = productMap[sla][supportLevel][product][0];
+            var engIds = productMap[sla][supportLevel][product][0];
             // Add each product to the product choices
             if ( $.inArray(prodName, addedProducts) < 0 ) {
                 addedProducts.push(prodName);
                 html = '<p><input type="checkbox" name="products" value="' + 
-                    engId + '" txt="' + prodName + '" id="' + engId + '">' + 
+                    engIds + '" txt="' + prodName + '" id="' + engIds + '">' + 
                     prodName + '</input></p>';
                 $("#product-choices").append(html);
             }
+
+            
         });
+
+        // Product checkboxes click action
+        $("input[name='products']").each(function(index) {
+            this.onclick = function() {
+                engIds = this.value.split(",");
+                var thisProduct = this;
+                if ( this.checked ) {
+                    // We're checking the box.
+                    engIds.forEach(function(engId) {
+                        $("input[name='products'][value*='" + engId + "']").not(thisProduct).each(function() {
+                            $(this).addClass("ui-state-disabled");
+                            $(this).attr("disabled", "disabled");
+                        });
+                    });
+                }
+                else {
+                    // We're unchecking the box.
+                    engIds.forEach(function(engId) {
+                        $("input[name='products'][value*='" + engId + "']").not(thisProduct).each(function() {
+                            $(this).removeClass("ui-state-disabled");
+                            $(this).removeAttr("disabled");
+                        });
+                    });
+                }
+            }
+        });
+
     }
 
     // Create link action.
@@ -454,6 +483,7 @@
                 enable_product_choices(productMap);
             };
         });
+
 
         // Create Certificate dialog
         $("#cert-dialog").dialog({
