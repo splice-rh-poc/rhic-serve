@@ -421,7 +421,7 @@
                 // If a support level has been chosen, we can enable the
                 // button.
                 if ( $("input[name=support-level]:checked").length > 0 ) {
-                    $("#create-cert-button").attr("disabled", "");
+                    $("#create-cert-button").removeAttr("disabled");
                     $("#create-cert-button").removeClass("ui-state-disabled");
                 }
             }
@@ -446,7 +446,7 @@
 
                 // If a name has been entered, we can enable the button.
                 if ( $("#enter-name").val() ) {
-                    $("#create-cert-button").attr("disabled", "");
+                    $("#create-cert-button").removeAttr("disabled");
                     $("#create-cert-button").removeClass("ui-state-disabled");
                 }
 

@@ -109,7 +109,7 @@ class RHIC(Document):
     }
 
     # Human readable name
-    name = StringField()
+    name = StringField(unique=True)
     # Unique account identifier tying the RHIC to an account.
     account_id = StringField()
     # Contract associated with the RHIC.
