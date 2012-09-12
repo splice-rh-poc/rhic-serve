@@ -344,9 +344,12 @@
     function product_checked(product) {
         var engIds = product.value.split(",");
         engIds.forEach(function(engId) {
-            $("input[name='products'][value*='" + engId + "']").not(product).each(function() {
-                $(this).addClass("ui-state-disabled");
-                $(this).attr("disabled", "disabled");
+            $("input[name='products']").not(product).each(function() {
+                _engIds = this.value.split(",");
+                if ( $.inArray(engId, _engIds) >= 0 ) {
+                    $(this).addClass("ui-state-disabled");
+                    $(this).attr("disabled", "disabled");
+                }
             });
         });
 
@@ -356,9 +359,12 @@
     function product_unchecked(product) {
         var engIds = product.value.split(",");
         engIds.forEach(function(engId) {
-            $("input[name='products'][value*='" + engId + "']").not(product).each(function() {
-                $(this).removeClass("ui-state-disabled");
-                $(this).removeAttr("disabled");
+            $("input[name='products']").not(product).each(function() {
+                _engIds = this.value.split(",");
+                if ( $.inArray(engId, _engIds) >= 0 ) {
+                    $(this).removeClass("ui-state-disabled");
+                    $(this).removeAttr("disabled");
+                }
             });
         });
     }
