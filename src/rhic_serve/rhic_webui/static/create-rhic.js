@@ -12,6 +12,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 */
 
+$(document).ready(function() {
+
 // Create link action.
 $("#create-link").click(function(e) {
     e.preventDefault();
@@ -164,3 +166,4 @@ $("#create-link").click(function(e) {
 
 });
 
+});

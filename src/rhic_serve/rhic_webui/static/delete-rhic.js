@@ -12,6 +12,8 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 */
 
+$(document).ready(function() {
+
 // Delete button click action.
 $( "#delete-button" ).button().click(function() {
 
@@ -49,4 +51,4 @@ $( "#delete-button" ).button().click(function() {
     $("#confirm-delete").dialog("open")
 });
 
-
+});

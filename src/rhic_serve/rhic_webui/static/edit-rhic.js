@@ -12,6 +12,9 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 */
 
+
+$(document).ready(function() {
+
 // Edit button click action.
 $( "#edit-button" ).button().click(function() {
 
@@ -105,3 +108,4 @@ $( "#edit-button" ).button().click(function() {
 
 });
 
+});
