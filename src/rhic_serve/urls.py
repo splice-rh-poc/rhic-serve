@@ -15,9 +15,6 @@
 from django.conf.urls import patterns, include, url
 from rhic_serve.rhic_rest.api import rhic
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
 
 # Resources
 rhic_resource = rhic.RHICResource()
@@ -26,11 +23,6 @@ rhic_rcs_resource = rhic.RHICRcsResource()
 account_resource = rhic.AccountResource()
 
 urlpatterns = patterns('',
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
 
     # API Resources
     url(r'^api/', include(rhic_resource.urls)),

@@ -1,3 +1,4 @@
+# rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
 Version:	0.3
 Release:	1%{?dist}
@@ -11,6 +12,8 @@ Source0:	%{name}-%{version}.tar.gz
 BuildRequires:	python-setuptools
 BuildRequires:  python2-devel
 
+Requires:   rhic-serve-common
+Requires:   rhic-serve-rcs
 Requires:   mongodb-server
 Requires:   pymongo
 Requires:   pymongo-gridfs
@@ -21,6 +24,33 @@ Requires:   mod_ssl
 
 %description
 REST/Web Service for creating RHIC's
+# ----------------------------------------------------------------------------
+
+
+# rhic-serve-common subpackage --------------------------------------------------
+%package common
+Summary:    Common libraries for rhic-serve.
+Group:      Development/Languages
+
+%description common
+Common libraries for rhic-serve.
+# ----------------------------------------------------------------------------
+
+
+# rhic-serve-rcs subpackage --------------------------------------------------
+%package rcs
+Summary:    API's for querying RHIC data for use by the RCS.
+Group:      Development/Languages
+Requires:   rhic-serve-common
+Requires:   mongodb-server
+Requires:   pymongo
+Requires:   httpd
+Requires:   mod_wsgi
+Requires:   mod_ssl
+
+%description rcs
+API's for querying RHIC data for use by the RCS.
+# ----------------------------------------------------------------------------
 
 
 %prep
@@ -65,9 +95,12 @@ rm -rf %{buildroot}/%{python_sitelib}/*.egg-info
 rm -rf %{buildroot}
 
 
+# rhic-serve files -----------------------------------------------------------
 %files
 %defattr(-,root,root,-)
-%{python_sitelib}/rhic_serve
+%{python_sitelib}/rhic_serve/*.py*
+%{python_sitelib}/rhic_serve/rhic_rest
+%{python_sitelib}/rhic_serve/rhic_webui
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %defattr(-,apache,apache,-)
 %dir %{_sysconfdir}/pki/%{name}
@@ -77,6 +110,21 @@ rm -rf %{buildroot}
 /srv/%{name}/webservices.wsgi
 %{_usr}/lib/rhic_webui/templates
 %{_localstatedir}/www/html/rhic_webui/static
+# ----------------------------------------------------------------------------
+
+
+# rhic-serve-common files -------------------------------------------------------
+%files common
+%defattr(-,root,root,-)
+%{python_sitelib}/rhic_serve/common
+# ----------------------------------------------------------------------------
+
+
+# rhic-serve-rcs files -------------------------------------------------------
+%files rcs
+%defattr(-,root,root,-)
+%{python_sitelib}/rhic_serve/rhic_rcs
+# ----------------------------------------------------------------------------
 
 
 %doc

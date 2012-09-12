@@ -10,3 +10,17 @@
 # NON-INFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. You should
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
+
+from django.conf.urls import patterns, include, url
+from rhic_serve.rhic_rcs.api import rhic
+
+# Resources
+rhic_rcs_resource = rhic.RHICRcsResource()
+
+urlpatterns = patterns('',
+
+    # API Resources
+    url(r'^api/', include(rhic_rcs_resource.urls)),
+
+)
