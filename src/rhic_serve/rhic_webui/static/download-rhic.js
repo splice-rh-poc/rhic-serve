@@ -44,7 +44,7 @@ $( "#download-button" ).button().click(function() {
 
     rhicData.forEach(function(rhic) {
         if ( rhic["resource_uri"] == url ) {
-            $.download("/api/rhicdownload/" + rhic["id"] + "/", " ", 'get');
+            $.download("/api/rhicdownload/" + rhic["uuid"] + "/", " ", 'get');
             return false
         }
     });

@@ -136,3 +136,66 @@ function enable_product_choices(productMap) {
 
 }
 
+// Create Confirm Dialog
+function confirm_dialog(url, certData, confirmData, title, button1, button2, method, do_download) {
+    $("#confirm-cert").dialog({
+        autoOpen: false,
+        title: title,
+        modal: true,
+        buttons: [
+            {
+                text: button1, 
+                click: function() {
+                     var certPost = $.ajax({
+                        url: url,
+                        contentType: "application/json",
+                        processData: false,
+                        type: method,
+                        data: JSON.stringify(certData),
+                        dataType: "json",
+                    });
+
+                    certPost.complete(function(data) {
+                        $("#confirm-cert").dialog("close");
+                        rhic = $.parseJSON(data.responseText);
+                        rhicData.push(rhic)
+
+                        if ( do_download ) {
+                            oTable.fnAddData(["<input type=radio>", rhic["name"], rhic["created_date"], 
+                                rhic["contract"], rhic["resource_uri"]]);
+
+                            var cert_pem = {};
+                            cert_pem = "cert_pem=" + encodeURIComponent(rhic["cert_pem"]);
+
+                            $.download("/api/rhicdownload/" + rhic["uuid"] + "/", cert_pem, 'get');
+                        }
+
+                    });
+
+                },
+            },
+            {
+                text: button2,
+                click: function() {
+                    $(this).dialog("close");
+                }
+            }
+        ]
+    });
+
+    // Populate dialog with the choices made from certData
+    $("#confirm-contract").append(certData["contract"]);
+    $("#confirm-name").append(certData["name"]);
+    $("#confirm-sla").append(confirmData["sla"]);
+    $("#confirm-support-level").append(confirmData["support_level"]);
+    confirmData["products"].forEach(function(product) {
+        $("#confirm-products").append(product + "<br>");
+    });
+
+    if ( do_download ) {
+        $("#confirm-download-pem").removeClass("ui-helper-hidden");
+    }
+
+    $("#confirm-cert").dialog("open");
+}
+
