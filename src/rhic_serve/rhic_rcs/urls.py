@@ -21,6 +21,6 @@ rhic_rcs_resource = rhic.RHICRcsResource()
 urlpatterns = patterns('',
 
     # API Resources
-    url(r'^api/', include(rhic_rcs_resource.urls)),
+    url(r'', include(rhic_rcs_resource.urls)),
 
 )

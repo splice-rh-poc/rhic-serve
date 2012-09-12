@@ -14,20 +14,19 @@
 
 from django.conf.urls import patterns, include, url
 from rhic_serve.rhic_rest.api import rhic
+from rhic_serve import rhic_rcs
 
 
 # Resources
 rhic_resource = rhic.RHICResource()
 rhic_download_resource = rhic.RHICDownloadResource()
-rhic_rcs_resource = rhic.RHICRcsResource()
 account_resource = rhic.AccountResource()
 
 urlpatterns = patterns('',
 
-    # API Resources
+    # RHIC API Resources
     url(r'^api/', include(rhic_resource.urls)),
     url(r'^api/', include(rhic_download_resource.urls)),
-    url(r'^api/', include(rhic_rcs_resource.urls)),
     url(r'^api/', include(account_resource.urls)),
 
     # UI Views
@@ -36,4 +35,8 @@ urlpatterns = patterns('',
     url(r'^ui/logout$', 'rhic_serve.rhic_webui.views.logout'),
     url(r'^ui/rhic$', 'rhic_serve.rhic_webui.views.rhic'),
 
+    # RHIC RCS Resources
+    url(r'^api/', include('rhic_rcs.urls')),
+
 )
+

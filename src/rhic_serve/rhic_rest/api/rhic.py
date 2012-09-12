@@ -143,14 +143,6 @@ class RHICDownloadResource(RHICResource):
         return response
 
 
-class RHICRcsResource(RHICResource):
-
-    class Meta(RHICResource.Meta):
-        authentication = Authentication()
-        authorization = ReadOnlyAuthorization()
-        fields = ['uuid', 'engineering_ids']
-
-
 class ProductResource(RestResource):
 
     class Meta(RestResource.Meta):

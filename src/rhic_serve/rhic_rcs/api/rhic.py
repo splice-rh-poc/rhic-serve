@@ -21,7 +21,7 @@ from tastypie.authorization import ReadOnlyAuthorization
 
 class RHICRcsResource(RestResource):
 
-    class Meta(RHICResource.Meta):
+    class Meta:
         queryset = RHIC.objects.all()
         authentication = Authentication()
         authorization = ReadOnlyAuthorization()

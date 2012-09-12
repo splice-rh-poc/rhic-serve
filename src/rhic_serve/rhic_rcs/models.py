@@ -21,11 +21,15 @@ from django.conf import settings
 # mognoengine, it's easiest to just use import *
 from mongoengine import *
 
+from rhic_serve.common.models import *
+
+
 class RHIC(Document):
 
     meta = {
         # Override collection name, otherwise we get r_h_i_c.
         'collection': 'rhic',
+        'queryset_class': BaseQuerySet,
     }
 
     uuid = UUIDField()
