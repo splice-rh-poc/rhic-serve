@@ -9,10 +9,8 @@ connect(MONGO_DATABASE_NAME)
 # Custom test runner to work with Mongo
 TEST_RUNNER = 'rhic_serve.rhic_rest.tests.MongoTestRunner'
 
-# CA_CERT_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.crt'
-# CA_KEY_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.key'
-CA_CERT_PATH = '/tmp/ca.crt'
-CA_KEY_PATH = '/tmp/ca.key'
+CA_CERT_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.crt'
+CA_KEY_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.key'
 CERT_DAYS = 10000
 
 AUTHENTICATION_BACKENDS = (
