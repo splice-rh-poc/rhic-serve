@@ -26,5 +26,5 @@ class RHICRcsResource(RestResource):
         authentication = Authentication()
         authorization = ReadOnlyAuthorization()
         detail_uri_name = 'uuid'
-        fields = ['uuid', 'engineering_ids']
+        fields = ['uuid', 'engineering_ids', 'resource_uri',]
 
