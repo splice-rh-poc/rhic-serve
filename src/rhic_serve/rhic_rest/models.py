@@ -23,35 +23,10 @@ from mongoengine import *
 from mongoengine import signals
 from mongoengine.queryset import QuerySet
 
-from rhic_serve.rhic_rest.common import cert_utils
+from rhic_serve.common import cert_utils
+from rhic_serve.common.models import *
 
 import uuid
-
-class BaseQuery(object):
-    """
-    BaseQuery and BaseQuerySet are 2 dummy classes to work around a mongoengine
-    incompatibility with tastypie.  tastypie assumes each resources model
-    queryset has a query object associated with it, and that query object has
-    an attribute called query_terms.
-
-    These classes work around that assumption.
-    """
-    query_terms = object()
-
-
-class BaseQuerySet(QuerySet):
-    """
-    BaseQuery and BaseQuerySet are 2 dummy classes to work around a mongoengine
-    incompatibility with tastypie.  tastypie assumes each resources model
-    queryset has a query object associated with it, and that query object has
-    an attribute called query_terms.
-
-    These classes work around that assumption.
-    """
-    def __init__(self, *args, **kwargs):
-        QuerySet.__init__(self, *args, **kwargs)
-        self.query = BaseQuery()
-
 
 class Product(EmbeddedDocument):
 

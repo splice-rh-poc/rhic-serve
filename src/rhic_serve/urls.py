@@ -15,27 +15,17 @@
 from django.conf.urls import patterns, include, url
 from rhic_serve.rhic_rest.api import rhic
 
-# Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
 
 # Resources
 rhic_resource = rhic.RHICResource()
 rhic_download_resource = rhic.RHICDownloadResource()
-rhic_rcs_resource = rhic.RHICRcsResource()
 account_resource = rhic.AccountResource()
 
 urlpatterns = patterns('',
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
-
-    # API Resources
+    # RHIC API Resources
     url(r'^api/', include(rhic_resource.urls)),
     url(r'^api/', include(rhic_download_resource.urls)),
-    url(r'^api/', include(rhic_rcs_resource.urls)),
     url(r'^api/', include(account_resource.urls)),
 
     # UI Views
@@ -44,4 +34,8 @@ urlpatterns = patterns('',
     url(r'^ui/logout$', 'rhic_serve.rhic_webui.views.logout'),
     url(r'^ui/rhic$', 'rhic_serve.rhic_webui.views.rhic'),
 
+    # RHIC RCS Resources
+    url(r'^api/', include('rhic_serve.rhic_rcs.urls')),
+
 )
+

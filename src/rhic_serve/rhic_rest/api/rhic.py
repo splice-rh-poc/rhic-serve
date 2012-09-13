@@ -17,8 +17,10 @@ import urllib
 
 from django.http import HttpResponse
 
+from rhic_serve.common.api import RestResource, AccountAuthorization
+
+from rhic_serve.rhic_rest.api import errors
 from rhic_serve.rhic_rest.models import RHIC, Account, Product, Contract
-from rhic_serve.rhic_rest.api.base import RestResource, AccountAuthorization
 
 from tastypie.authentication import Authentication
 from tastypie.authorization import ReadOnlyAuthorization
@@ -85,6 +87,20 @@ class RHICResource(RestResource):
             bundle.data['name'] = name
         return bundle
 
+    def hydrate_engineering_ids(self, bundle):
+        engineering_ids = []
+        for eng_id_set in bundle.data['engineering_ids']:
+            new_eng_ids = eng_id_set.split(',')
+            for new_eng_id in new_eng_ids:
+                if new_eng_id in engineering_ids:
+                    raise errors.EngineeringProductConflict(new_eng_id)
+                else:
+                    engineering_ids.append(new_eng_id)
+
+        bundle.data['engineering_ids'] = engineering_ids
+
+        return bundle
+
     def obj_create(self, bundle, request, **kwargs):
         """
         Fixups and protections for new RHIC creation.
@@ -125,14 +141,6 @@ class RHICDownloadResource(RHICResource):
         response['Content-Length'] = sys.getsizeof(cert_pem)
 
         return response
-
-
-class RHICRcsResource(RHICResource):
-
-    class Meta(RHICResource.Meta):
-        authentication = Authentication()
-        authorization = ReadOnlyAuthorization()
-        fields = ['uuid', 'engineering_ids']
 
 
 class ProductResource(RestResource):

@@ -157,12 +157,13 @@
         $("#rhic-table tbody tr").unbind();
         $("#rhic-table tbody tr").click( function( e ) {
             if ( $(this).hasClass("row_click") )  {
-                $("input:radio", this).attr("checked", false)
+                $("input:radio", this).attr("checked", false);
                 $(this).removeClass("row_click");
                 selectedRow = null;
             }
             else {
-                oTable.$("input:radio").attr("checked", false)
+                oTable.$("input:radio").attr("checked", false);
+                oTable.$("tr").removeClass("row_click");
                 $("input:radio", this)[0].checked = true;
                 $(this).addClass("row_click");
                 selectedRow = this;

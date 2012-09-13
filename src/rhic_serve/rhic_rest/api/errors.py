@@ -10,3 +10,21 @@
 # NON-INFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. You should
 # have received a copy of GPLv2 along with this software; if not, see
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
+
+from tastypie.exceptions import *
+
+
+class RhicExceptionMixIn(object):
+
+    def __init__(self, *args):
+        if args:
+            super(RhicExceptionMixIn, self).__init__(self.message % args)
+        else:
+            super(RhicExceptionMixIn, self).__init__(self.message)
+
+
+class EngineeringProductConflict(RhicExceptionMixIn, BadRequest):
+    message = 'Conflict in engineering products: %s.\n'
+
+

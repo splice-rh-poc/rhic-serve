@@ -18,44 +18,48 @@ def load_lines(lines, mappings):
     Login, Account#,Contract#,Marketing Product,SLA,Support Level,Number Concurrent
     """
     for line in lines:
-        if line.startswith('#'):
-            continue
+        try:
+            if line.startswith('#'):
+                continue
 
-        values = line.split(',')
+            values = line.split(',')
 
-        if len(values) != 7:
-            print "rejecting line: %s" % line
-            continue
+            if len(values) != 7:
+                print "rejecting line: %s" % line
+                continue
 
-        login, account, contract, product, sla, support_level, quantity = values
+            login, account, contract, product, sla, support_level, quantity = values
 
-        account_doc, created = Account.objects.get_or_create(login=login, account_id=account)
-        contract_ids = [c.contract_id for c in account_doc.contracts]
+            account_doc, created = Account.objects.get_or_create(login=login, account_id=account)
+            contract_ids = [c.contract_id for c in account_doc.contracts]
 
-        if contract in contract_ids:
-            contract_doc = account_doc.contracts[contract_ids.index(contract)]
-        else:
-            contract_doc = Contract(contract_id=contract)
-            account_doc.contracts.append(contract_doc)
+            if contract in contract_ids:
+                contract_doc = account_doc.contracts[contract_ids.index(contract)]
+            else:
+                contract_doc = Contract(contract_id=contract)
+                account_doc.contracts.append(contract_doc)
 
-        sla = [s for s in Product.sla_choices if \
-            Product.sla_choices[s] == sla][0]
-        support_level = [s for s in Product.support_level_choices if \
-            Product.support_level_choices[s] == support_level][0]
+            sla = [s for s in Product.sla_choices if \
+                Product.sla_choices[s] == sla][0]
+            support_level = [s for s in Product.support_level_choices if \
+                Product.support_level_choices[s] == support_level][0]
 
-        product_doc = Product(name=product,
-            engineering_ids=mappings[product], sla=sla,
-            support_level=support_level, quantity=quantity)
+            product_doc = Product(name=product,
+                engineering_ids=mappings[product], sla=sla,
+                support_level=support_level, quantity=quantity)
 
-        contract_doc.products.append(product_doc)
+            contract_doc.products.append(product_doc)
 
-        account_doc.save()
+            account_doc.save()
 
-        # Also create a user for each account
-        u, created = User.objects.get_or_create(username=account_doc.login)
-        if created:
-            u.set_password(account_doc.login)
-            u.save()
+            # Also create a user for each account
+            u, created = User.objects.get_or_create(username=account_doc.login)
+            if created:
+                u.set_password(account_doc.login)
+                u.save()
+        except Exception, e:
+            print "Error loading line: %s" % line
+            print e
 
 
 def load_mappings(lines):

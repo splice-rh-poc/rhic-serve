@@ -1,6 +1,6 @@
 #!/bin/bash
 curl \
-    -u shadowman:shadowman \
+    -u shadowman@redhat.com:shadowman@redhat.com \
     -H 'Content-Type: application/json' \
     -X POST \
     --data @rhic.json \

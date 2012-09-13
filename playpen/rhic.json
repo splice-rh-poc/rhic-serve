@@ -1,6 +1,13 @@
 {
-    "account_id": "shadowman",
-    "contract": "contract1",
-    "sla": "premium",
-    "support_level": "level1"
+    "account_id": "shadowman@redhat.com",
+    "contract": "3879847",
+    "sla": "na",
+    "support_level": "ss",
+    "products" : [
+        "RHEL Server for Engineers"
+    ],
+    "engineering_ids" : [
+        "69,83,85","69"
+    ],
+    "name": "eng2"
 }
