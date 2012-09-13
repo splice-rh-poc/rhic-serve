@@ -14,7 +14,6 @@
 
 from django.conf.urls import patterns, include, url
 from rhic_serve.rhic_rest.api import rhic
-from rhic_serve import rhic_rcs
 
 
 # Resources
@@ -36,7 +35,7 @@ urlpatterns = patterns('',
     url(r'^ui/rhic$', 'rhic_serve.rhic_webui.views.rhic'),
 
     # RHIC RCS Resources
-    url(r'^api/', include('rhic_rcs.urls')),
+    url(r'^api/', include('rhic_serve.rhic_rcs.urls')),
 
 )
 
