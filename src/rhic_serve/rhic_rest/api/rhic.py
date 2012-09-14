@@ -20,7 +20,8 @@ from dateutil.tz import tzutc
 
 from django.http import HttpResponse
 
-from rhic_serve.common.api import RestResource, AccountAuthorization
+from rhic_serve.common.api import (RestResource, AccountAuthorization,
+    RHICSerializer)
 
 from rhic_serve.rhic_rest.api import errors
 from rhic_serve.rhic_rest.models import RHIC, Account, Product, Contract
@@ -50,6 +51,7 @@ class RHICResource(RestResource):
             'created_date': ['gte', 'gt', 'lte', 'lt', 'range'],
             'modified_date': ['gte', 'gt', 'lte', 'lt', 'range'],
         }
+        serializer = RHICSerializer()
 
     def dehydrate_public_cert(self, bundle):
         """
