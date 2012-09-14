@@ -97,6 +97,10 @@ rm -rf %{buildroot}/%{python_sitelib}/*.egg-info
 rm -rf %{buildroot}
 
 
+%post
+echo 01 > %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
+
+
 # rhic-serve files -----------------------------------------------------------
 %files
 %defattr(-,root,root,-)

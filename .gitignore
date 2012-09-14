@@ -33,3 +33,6 @@ pip-log.txt
 *.project
 *.pydevproject
 *.settings
+
+#Generated CA srl file
+etc/pki/rhic-serve/rhic-serve-ca.srl
