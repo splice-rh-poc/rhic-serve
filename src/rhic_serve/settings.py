@@ -4,7 +4,7 @@ from mongoengine import connect
 
 MONGO_DATABASE_NAME = 'rhic_serve'
 # Connect to the mongo db
-connect(MONGO_DATABASE_NAME)
+connect(MONGO_DATABASE_NAME, tz_aware=True)
 
 # Custom test runner to work with Mongo
 TEST_RUNNER = 'rhic_serve.rhic_rest.tests.MongoTestRunner'
