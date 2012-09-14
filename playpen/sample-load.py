@@ -30,6 +30,10 @@ def load_lines(lines, mappings):
 
             login, account, contract, product, sla, support_level, quantity = values
 
+            if not login:
+                print "rejecting line: %s" % line
+                continue
+
             account_doc, created = Account.objects.get_or_create(login=login, account_id=account)
             contract_ids = [c.contract_id for c in account_doc.contracts]
 
