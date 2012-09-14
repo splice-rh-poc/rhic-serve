@@ -49,6 +49,8 @@ class RHICResource(RestResource):
         filtering = {
             'created_date': ['gte', 'gt', 'lte', 'lt', 'range'],
             'modified_date': ['gte', 'gt', 'lte', 'lt', 'range'],
+            'deleted_date': ['gte', 'gt', 'lte', 'lt', 'range'],
+            'deleted': ['exact'],
         }
 
     def dehydrate_public_cert(self, bundle):
@@ -113,6 +115,34 @@ class RHICResource(RestResource):
         Fixups and protections for new RHIC creation.
         """
         return super(RHICResource, self).obj_create(bundle, request, **kwargs)
+
+    def obj_delete(self, request, **kwargs):
+        """
+        RHIC's aren't actually deleted from the datastore.  They're just marked
+        as deleted.
+        """
+        obj = kwargs.pop('_obj', None)
+
+        if not hasattr(obj, 'delete'):
+            try:
+                obj = self.obj_get(request, **kwargs)
+            except ObjectDoesNotExist:
+                raise NotFound("A model instance matching the provided "
+                    "arguments could not be found.")
+
+        obj.deleted = True
+        obj.deleted_date = datetime.now(tz=tzutc())
+        obj.save()
+
+
+    def apply_filters(self, request, applicable_filters):
+        """
+        By, default, filter on deleted=False when requesting all RHIC's.
+        """
+        fields = [f.split('__')[0] for f in applicable_filters.keys()]
+        if 'deleted' not in fields:
+            applicable_filters['deleted__exact'] = False
+        return super(RHICResource, self).apply_filters(request, applicable_filters)
 
 
 class RHICDownloadResource(RHICResource):

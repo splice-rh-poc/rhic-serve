@@ -96,10 +96,14 @@ class RHIC(Document):
     engineering_ids = ListField()
     # Public cert portion of the RHIC.
     public_cert = FileField()
+    # Flag to indicate if this RHIC has been deleted.
+    deleted = BooleanField(default=False)
     # Date RHIC was created
     created_date = IsoDateTimeField()
     # Date RHIC was last modified
     modified_date = IsoDateTimeField()
+    # Date RHIC was deleted
+    deleted_date = IsoDateTimeField()
 
     @classmethod
     def pre_save(cls, sender, document, **kwargs):
