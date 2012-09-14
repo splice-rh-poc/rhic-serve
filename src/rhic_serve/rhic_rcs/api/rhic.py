@@ -12,8 +12,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
 
-from rhic_serve.common.api import (RestResource, AccountAuthorization,
-    RHICSerializer)
+from rhic_serve.common.api import RestResource, AccountAuthorization
 from rhic_serve.rhic_rcs.models import RHIC
 
 from tastypie.authentication import Authentication
@@ -33,5 +32,4 @@ class RHICRcsResource(RestResource):
             'created_date': ['gte', 'gt', 'lte', 'lt', 'range'],
             'modified_date': ['gte', 'gt', 'lte', 'lt', 'range'],
         }
-        serializer = RHICSerializer()
 

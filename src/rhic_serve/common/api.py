@@ -19,6 +19,24 @@ from tastypie_mongoengine.resources import MongoEngineResource
 
 from rhic_serve.rhic_rest.models import Account
 
+
+class RestSerializer(Serializer):
+    """
+    Class for overriding various aspects of the default Tastypie Serializer
+    class.
+    """
+
+    def format_datetime(self, data):
+        """
+        By default, Tastypie's serializer serializes all datetime objects as
+        naive (no timezone info).  I'm not sure why this is the case.
+
+        There's a patch, but it has not been merged into master Tastypie:
+        https://github.com/toastdriven/django-tastypie/commit/542d365d7d975a90c64c4c375257e5bc4b3b220a
+        """
+        return data.isoformat()
+
+
 class RestResource(MongoEngineResource):
     """
     Base class for the rhic_rest application.
@@ -37,6 +55,9 @@ class RestResource(MongoEngineResource):
         # All Resources require basic authentication (for now).
         authentication = MultiAuthentication(SessionAuthentication(),
             BasicAuthentication())
+
+        # Use our serializer for all resources
+        serializer = RestSerializer()
 
     def alter_list_data_to_serialize(self, request, data):
         """
@@ -104,18 +125,3 @@ class AccountAuthorization(Authorization):
         else:
             return []
 
-class RHICSerializer(Serializer):
-    """
-    Class for overriding various aspects of the default Tastypie Serializer
-    class.
-    """
-
-    def format_datetime(self, data):
-        """
-        By default, Tastypie's serializer serializes all datetime objects as
-        naive (no timezone info).  I'm not sure why this is the case.
-
-        There's a patch, but it has not been merged into master Tastypie:
-        https://github.com/toastdriven/django-tastypie/commit/542d365d7d975a90c64c4c375257e5bc4b3b220a
-        """
-        return data.isoformat()
