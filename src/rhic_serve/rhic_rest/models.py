@@ -24,7 +24,7 @@ from mongoengine import signals
 from mongoengine.queryset import QuerySet
 
 from rhic_serve.common import cert_utils
-from rhic_serve.common.models import *
+from rhic_serve.common.fields import *
 
 import uuid
 
@@ -63,10 +63,6 @@ class Contract(EmbeddedDocument):
 
 class Account(Document):
 
-    meta = {
-        'queryset_class': BaseQuerySet,
-    }
-
     # Unique account identifier
     account_id = StringField(unique=True, required=True)
     # Human readable account name
@@ -80,7 +76,6 @@ class RHIC(Document):
     meta = {
         # Override collection name, otherwise we get r_h_i_c.
         'collection': 'rhic',
-        'queryset_class': BaseQuerySet,
     }
 
     # Human readable name
@@ -102,9 +97,9 @@ class RHIC(Document):
     # Public cert portion of the RHIC.
     public_cert = FileField()
     # Date RHIC was created
-    created_date = DateTimeField(default=datetime.now(tzutc()))
+    created_date = IsoDateTimeField()
     # Date RHIC was last modified
-    modified_date = DateTimeField(default=datetime.now(tzutc()))
+    modified_date = IsoDateTimeField()
 
     @classmethod
     def pre_save(cls, sender, document, **kwargs):
@@ -132,6 +127,15 @@ class RHIC(Document):
             # private key is saved as an attribute on the document, but it is
             # not a field.  It will not be kept after this instance is GC'd.
             document.private_key = private_key
+
+        # Created Date
+        if not document.created_date:
+            document.created_date = datetime.now(tzutc())
+
+        # Modified Date.
+        # This will get updated whether or not anything changed.  I guess
+        # that's ok.
+        document.modified_date = datetime.now(tzutc())
 
     @classmethod
     def _generate_uuid(cls):

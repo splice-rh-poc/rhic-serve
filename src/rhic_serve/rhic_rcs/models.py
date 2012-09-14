@@ -21,7 +21,7 @@ from django.conf import settings
 # mognoengine, it's easiest to just use import *
 from mongoengine import *
 
-from rhic_serve.common.models import *
+from rhic_serve.common.fields import *
 
 
 class RHIC(Document):
@@ -29,13 +29,12 @@ class RHIC(Document):
     meta = {
         # Override collection name, otherwise we get r_h_i_c.
         'collection': 'rhic',
-        'queryset_class': BaseQuerySet,
     }
 
     uuid = UUIDField()
     # List of Products associated with the RHIC.
     engineering_ids = ListField()
     # Date RHIC was created
-    created_date = DateTimeField(default=datetime.now(tzutc()))
+    created_date = IsoDateTimeField(default=datetime.now(tzutc()))
     # Date RHIC was last modified
-    modified_date = DateTimeField(default=datetime.now(tzutc()))
+    modified_date = IsoDateTimeField(default=datetime.now(tzutc()))

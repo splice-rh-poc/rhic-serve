@@ -26,5 +26,10 @@ class RHICRcsResource(RestResource):
         authentication = Authentication()
         authorization = ReadOnlyAuthorization()
         detail_uri_name = 'uuid'
-        fields = ['uuid', 'engineering_ids', 'resource_uri',]
+        fields = ['uuid', 'engineering_ids', 'resource_uri', 'created_date',
+            'modified_date',]
+        filtering = {
+            'created_date': ['gte', 'gt', 'lte', 'lt', 'range'],
+            'modified_date': ['gte', 'gt', 'lte', 'lt', 'range'],
+        }
 

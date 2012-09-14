@@ -15,6 +15,9 @@
 import sys
 import urllib
 
+from datetime import datetime
+from dateutil.tz import tzutc
+
 from django.http import HttpResponse
 
 from rhic_serve.common.api import RestResource, AccountAuthorization
@@ -43,6 +46,10 @@ class RHICResource(RestResource):
         authorization = AccountAuthorization()
         validation = RHICValidation()
         detail_uri_name = 'uuid'
+        filtering = {
+            'created_date': ['gte', 'gt', 'lte', 'lt', 'range'],
+            'modified_date': ['gte', 'gt', 'lte', 'lt', 'range'],
+        }
 
     def dehydrate_public_cert(self, bundle):
         """
