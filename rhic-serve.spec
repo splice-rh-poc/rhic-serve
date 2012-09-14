@@ -20,6 +20,7 @@ Requires:   pymongo-gridfs
 Requires:   httpd
 Requires:   mod_wsgi
 Requires:   mod_ssl
+Requires:   python-isodate
 
 
 %description
@@ -47,6 +48,7 @@ Requires:   pymongo
 Requires:   httpd
 Requires:   mod_wsgi
 Requires:   mod_ssl
+Requires:   python-isodate
 
 %description rcs
 API's for querying RHIC data for use by the RCS.
