@@ -38,3 +38,8 @@ class RHIC(Document):
     created_date = IsoDateTimeField(default=datetime.now(tzutc()))
     # Date RHIC was last modified
     modified_date = IsoDateTimeField(default=datetime.now(tzutc()))
+    # Flag to indicate if this RHIC has been deleted.
+    deleted = BooleanField(default=False)
+    # Date RHIC was deleted
+    deleted_date = IsoDateTimeField()
+
