@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.3
+Version:	0.4
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -137,6 +137,88 @@ echo 01 > %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Mon Sep 17 2012 James Slagle <slagle@redhat.com> 0.4-1
+- Automatic commit of package [python-django-tastypie-mongoengine] minor
+  release [0.2.3-3]. (slagle@redhat.com)
+- Add docs (slagle@redhat.com)
+- package build fixes (slagle@redhat.com)
+- Automatic commit of package [python-django-tastypie-mongoengine] minor
+  release [0.2.3-2]. (slagle@redhat.com)
+- New dep build for django-tastypie-mongoengine (slagle@redhat.com)
+- Update exception middleware to use new logging (slagle@redhat.com)
+- Add tests for getting deleted and modified rhics (slagle@redhat.com)
+- Add tests for rhic_rcs (slagle@redhat.com)
+- Refactor web client methods into common base class (slagle@redhat.com)
+- Add tests and refactor into a common lib (slagle@redhat.com)
+- Override for django-tastypie-mongoengine (slagle@redhat.com)
+- Mark required fields as such (slagle@redhat.com)
+- use new logging configuration (slagle@redhat.com)
+- Fix logging configuration (slagle@redhat.com)
+- fix typo (slagle@redhat.com)
+- Move dev outside of src/ (slagle@redhat.com)
+- sample data load update (slagle@redhat.com)
+- CA srl file does not need to be version controlled.  Instead generated it and
+  the %%post and the dev settings.py (slagle@redhat.com)
+- Add settings.py file for development, so that CA does not have to be
+  installed as root (slagle@redhat.com)
+- mongo connection should use tz's (slagle@redhat.com)
+- Add deleted logic to rhic_rcs (slagle@redhat.com)
+- Add deleted flag, and querying ability on delete (slagle@redhat.com)
+- Set serializer at the base class level (slagle@redhat.com)
+- Add Requires for new dep (slagle@redhat.com)
+- Serialize all dates with timezone information in ISO8601 format
+  (slagle@redhat.com)
+- Add querying for a RHIC based on a date range (slagle@redhat.com)
+- Module no longer needed after using latest django-tastypie-mongoengine from
+  git (slagle@redhat.com)
+- Include resource_uri in fields (slagle@redhat.com)
+- Merge branch 'master' into js-refactor (slagle@redhat.com)
+- Full module path needed in include() (slagle@redhat.com)
+- Fix bug in row selection (slagle@redhat.com)
+- Add missing alias for /static (slagle@redhat.com)
+- Update sample load script (slagle@redhat.com)
+- Undo dev changes to settings.py (slagle@redhat.com)
+- Consolidate under one common dir (slagle@redhat.com)
+- Fixes for application refactoring (slagle@redhat.com)
+- Refactor rhic-serve into seperate apps (slagle@redhat.com)
+- exception handling for engineering product conflict (slagle@redhat.com)
+- fix create rhic scripts (slagle@redhat.com)
+- refactor a bit more (slagle@redhat.com)
+- Add script for global variable declaration (slagle@redhat.com)
+- A couple more fixes (slagle@redhat.com)
+- Move js files under /static and other fixes (slagle@redhat.com)
+- Initial attempt at breaking out into seperate js files (slagle@redhat.com)
+- Fix product logic on edit screen (slagle@redhat.com)
+- Fix product logic on edit screen (slagle@redhat.com)
+- UI support for marketing/eng product enable/disable logic (slagle@redhat.com)
+- Fix data load scripts and add an example of a marketing product with multiple
+  engineering id's (slagle@redhat.com)
+- Remove old random data generator (slagle@redhat.com)
+- Handle 500's a bit more gracefully in the js UI (slagle@redhat.com)
+- Fix button enablement (slagle@redhat.com)
+- Serve dataTables js from app instead of remote download (slagle@redhat.com)
+- Add uuid field to manage products popup (slagle@redhat.com)
+- Don't enable the create cert button until a name, sla, and support level have
+  been chosen (which inturn imply has a contract has been chosen
+  (slagle@redhat.com)
+- Fix row selection again (slagle@redhat.com)
+- Fix row highlight and selecting the current row (slagle@redhat.com)
+- Add text about pem download (slagle@redhat.com)
+- Fix multiple entries on confirmation dialog (slagle@redhat.com)
+- set up row_click as a callback (slagle@redhat.com)
+- Use uuid to download certificate (slagle@redhat.com)
+- Use rhic uuid as resource identifier instead of internal id
+  (slagle@redhat.com)
+- Add check for username on request.user.  It should always be set, but just to
+  be safe. (slagle@redhat.com)
+- Switch to using PATCH method, update button/title names (slagle@redhat.com)
+- UI fixes (slagle@redhat.com)
+- Fix path to ca (slagle@redhat.com)
+- Fix path to ca (slagle@redhat.com)
+- Install static js files (slagle@redhat.com)
+- Change top level of the python packaging (slagle@redhat.com)
+- Change top level of the python packaging (slagle@redhat.com)
+
 * Tue Aug 28 2012 James Slagle <slagle@redhat.com> 0.3-1
 - Update apache config (slagle@redhat.com)
 - package test ca cert and key (slagle@redhat.com)
