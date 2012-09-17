@@ -90,7 +90,7 @@ class RestResource(MongoEngineResource):
 
     def determine_format(self, request):
         """
-        Always return json.  Makes it such that sepcifying the format=json
+        Always return json.  Makes it such that specifying the format=json
         query parameter is not required as it typically is by tastypie.
         """
         return 'application/json'
