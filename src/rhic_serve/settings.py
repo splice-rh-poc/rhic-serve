@@ -7,7 +7,7 @@ MONGO_DATABASE_NAME = 'rhic_serve'
 connect(MONGO_DATABASE_NAME, tz_aware=True)
 
 # Custom test runner to work with Mongo
-TEST_RUNNER = 'rhic_serve.rhic_rest.tests.MongoTestRunner'
+TEST_RUNNER = 'rhic_serve.common.tests.MongoTestRunner'
 
 CA_CERT_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.crt'
 CA_KEY_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.key'
