@@ -79,29 +79,29 @@ class RHIC(Document):
     }
 
     # Human readable name
-    name = StringField(unique=True)
+    name = StringField(unique=True, required=True)
     # Unique account identifier tying the RHIC to an account.
-    account_id = StringField()
+    account_id = StringField(required=True)
     # Contract associated with the RHIC.
-    contract = StringField()
+    contract = StringField(required=True)
     # Support Level associated with the RHIC.
-    support_level = StringField()
+    support_level = StringField(required=True)
     # SLA (service level availability) associated with the RHIC.
-    sla = StringField()
+    sla = StringField(required=True)
     # UUID associated with the RHIC.
-    uuid = UUIDField()
+    uuid = UUIDField(required=True)
     # List of Products associated with the RHIC.
-    products = ListField()
+    products = ListField(required=True)
     # List of Engineering Id's associated with the RHIC.
-    engineering_ids = ListField()
+    engineering_ids = ListField(required=True)
     # Public cert portion of the RHIC.
-    public_cert = FileField()
+    public_cert = FileField(required=True)
     # Flag to indicate if this RHIC has been deleted.
     deleted = BooleanField(default=False)
     # Date RHIC was created
-    created_date = IsoDateTimeField()
+    created_date = IsoDateTimeField(required=True)
     # Date RHIC was last modified
-    modified_date = IsoDateTimeField()
+    modified_date = IsoDateTimeField(required=True)
     # Date RHIC was deleted
     deleted_date = IsoDateTimeField()
 
@@ -114,10 +114,6 @@ class RHIC(Document):
         # new one and set it.
         if not document.uuid:
             document.uuid = cls._generate_uuid()
-
-        # Set name
-        if not document.name:
-            document.name = document._generate_name()
 
         # Generate a certificate and private key for this RHIC.
         if not document.public_cert:
@@ -147,13 +143,6 @@ class RHIC(Document):
         Generate a random UUID.
         """
         return uuid.uuid4()
-
-    def _generate_name(self):
-        """
-        Generates a nice human readable name based on other RHIC fields.
-        """
-        return "%s-%s-%s-%s" % (self.account_id, self.contract, self.sla,
-            self.support_level)
 
 
 # Signals
