@@ -16,7 +16,7 @@ import simplejson
 
 from mongoengine.base import ValidationError
 
-from rhic_serve.common.tests import MongoTestCase
+from rhic_serve.common.tests import MongoTestCase, MongoApiTestCase
 from rhic_serve.rhic_rest.models import RHIC
 
 
@@ -56,7 +56,7 @@ class RHICModelTest(MongoTestCase):
             setattr(r, required_field, 'test_%s' % required_field)
 
 
-class RHICApiTest(MongoTestCase):
+class RHICApiTest(MongoApiTestCase):
 
     create_rhic_json = """\
 {
@@ -85,42 +85,6 @@ class RHICApiTest(MongoTestCase):
 	]
 }
 """
-
-    def login(self):
-        self.client.login(username='shadowman@redhat.com',
-            password='shadowman@redhat.com')
-
-    def post(self, url, data):
-        self.login()
-        content_type = 'application/json'
-        response = self.client.post(url, data, content_type)
-        self.assertEquals(response.status_code, 201)
-        self.client.logout()
-        return response
-
-    def get(self, url):
-        self.login()
-        content_type = 'application/json'
-        response = self.client.get(url)
-        self.assertEquals(response.status_code, 200)
-        self.client.logout()
-        return response
-
-    def delete(self, url):
-        self.login()
-        content_type = 'application/json'
-        response = self.client.delete(url)
-        self.assertEquals(response.status_code, 204)
-        self.client.logout()
-        return response
-
-    def patch(self, url, data):
-        self.login()
-        content_type = 'application/json'
-        response = self.client.patch(url, data, content_type)
-        self.assertEquals(response.status_code, 202)
-        self.client.logout()
-        return response
 
     def test_create_rhic(self):
         """

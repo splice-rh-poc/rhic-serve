@@ -93,4 +93,44 @@ class MongoTestCase(testcases.TestCase):
         pymongo_connection.drop_database(MONGO_TEST_DATABASE_NAME)
 
 
+class MongoApiTestCase(MongoTestCase):
+
+    username = 'shadowman@redhat.com'
+    password = 'shadowman@redhat.com'
+
+    def login(self):
+        self.client.login(username=self.username, password=self.password)
+
+    def post(self, url, data):
+        self.login()
+        content_type = 'application/json'
+        response = self.client.post(url, data, content_type)
+        self.assertEquals(response.status_code, 201)
+        self.client.logout()
+        return response
+
+    def get(self, url):
+        self.login()
+        content_type = 'application/json'
+        response = self.client.get(url)
+        self.assertEquals(response.status_code, 200)
+        self.client.logout()
+        return response
+
+    def delete(self, url):
+        self.login()
+        content_type = 'application/json'
+        response = self.client.delete(url)
+        self.assertEquals(response.status_code, 204)
+        self.client.logout()
+        return response
+
+    def patch(self, url, data):
+        self.login()
+        content_type = 'application/json'
+        response = self.client.patch(url, data, content_type)
+        self.assertEquals(response.status_code, 202)
+        self.client.logout()
+        return response
+
 
