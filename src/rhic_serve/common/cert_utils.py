@@ -29,7 +29,7 @@ import pdb
 
 from M2Crypto import X509, RSA, EVP, util
 
-LOG = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 def generate(cn, ca_cert_filename, ca_key_filename, days):
     '''
@@ -90,10 +90,10 @@ def _generate_cert_request(dest_dir, cert_name, cn):
     output = p.stdout.read()
     error = p.stderr.read()
 
-    LOG.info('Private key creation output')
-    LOG.info('Exit Code: ' + str(exit_code))
-    LOG.info(output)
-    LOG.info(error)
+    logger.info('Private key creation output')
+    logger.info('Exit Code: ' + str(exit_code))
+    logger.info(output)
+    logger.info(error)
 
     # Generate request
     request = X509.Request()
@@ -134,7 +134,7 @@ def _sign_request(dest_dir, cert_name, ca_cert_filename, ca_key_filename, days=3
           (days, csr_filename, ca_cert_filename, ca_key_filename,
            ca_srl_filename, crt_filename)
 
-    LOG.info('Command [%s]' % cmd)
+    logger.info('Command [%s]' % cmd)
 
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     p.wait()
@@ -142,9 +142,9 @@ def _sign_request(dest_dir, cert_name, ca_cert_filename, ca_key_filename, days=3
     output = p.stdout.read()
     error = p.stderr.read()
 
-    LOG.info('Certificate creation output')
-    LOG.info(output)
-    LOG.info(error)
+    logger.info('Certificate creation output')
+    logger.info(output)
+    logger.info(error)
 
     return exit_code
 
