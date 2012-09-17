@@ -14,6 +14,7 @@
 from tastypie.authentication import (BasicAuthentication, 
     MultiAuthentication, SessionAuthentication)
 from tastypie.authorization import Authorization
+from tastypie.resources import ModelResource
 from tastypie.serializers import Serializer
 from tastypie_mongoengine.resources import MongoEngineResource
 
@@ -94,6 +95,16 @@ class RestResource(MongoEngineResource):
         query parameter is not required as it typically is by tastypie.
         """
         return 'application/json'
+
+    def full_hydrate(self, bundle):
+        """
+        Override to just call tastypie's full_hydrate.
+
+        django-tastypie-mongoengine does a lot of extra checks that make some
+        assumptions that break things in their full_hydrate method.
+        """
+        return ModelResource.full_hydrate(self, bundle)
+
 
 class AccountAuthorization(Authorization):
     """
