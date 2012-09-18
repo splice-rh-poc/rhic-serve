@@ -21,6 +21,10 @@ Requires:   httpd
 Requires:   mod_wsgi
 Requires:   mod_ssl
 Requires:   python-isodate
+Requires:   Django
+Requires:   python-django-tastypie
+Requires:   python-django-tastypie-mongoengine
+Requires:   python-mongoengine
 
 
 %description
@@ -99,6 +103,7 @@ rm -rf %{buildroot}
 
 %post
 echo 01 > %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
+chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 # rhic-serve files -----------------------------------------------------------
