@@ -53,6 +53,11 @@ Requires:   httpd
 Requires:   mod_wsgi
 Requires:   mod_ssl
 Requires:   python-isodate
+Requires:   Django
+Requires:   python-django-tastypie
+Requires:   python-django-tastypie-mongoengine
+Requires:   python-mongoengine
+
 
 %description rcs
 API's for querying RHIC data for use by the RCS.
@@ -106,6 +111,23 @@ echo 01 > %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
+# rhic-serve-common files -------------------------------------------------------
+# This %files is listed first so that we can mark the files for the common
+# subpackage and use a wildcard in the next section.
+%files common
+%defattr(-,apache,apache,-)
+%dir /srv/%{name}
+/srv/%{name}/webservices.wsgi
+%dir %{_sysconfdir}/pki/%{name}
+%{_sysconfdir}/pki/%{name}
+%defattr(-,root,root,-)
+%{python_sitelib}/rhic_serve/common
+%{python_sitelib}/rhic_serve/urls.py*
+%{python_sitelib}/rhic_serve/settings.py*
+%{python_sitelib}/rhic_serve/__init__.py*
+# ----------------------------------------------------------------------------
+
+
 # rhic-serve files -----------------------------------------------------------
 %files
 %defattr(-,root,root,-)
@@ -114,20 +136,8 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 %{python_sitelib}/rhic_serve/rhic_webui
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %defattr(-,apache,apache,-)
-%dir %{_sysconfdir}/pki/%{name}
-%{_sysconfdir}/pki/%{name}
-%dir /srv/%{name}
-%dir %{_var}/log/%{name}
-/srv/%{name}/webservices.wsgi
 %{_usr}/lib/rhic_webui/templates
 %{_localstatedir}/www/html/rhic_webui/static
-# ----------------------------------------------------------------------------
-
-
-# rhic-serve-common files -------------------------------------------------------
-%files common
-%defattr(-,root,root,-)
-%{python_sitelib}/rhic_serve/common
 # ----------------------------------------------------------------------------
 
 
