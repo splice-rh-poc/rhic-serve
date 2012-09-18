@@ -12,7 +12,7 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
 
-from rhic_serve.common.api import RestResource, AccountAuthorization
+from rhic_serve.common.api import RestResource
 from rhic_serve.rhic_rcs.models import RHIC
 
 from tastypie.authentication import Authentication

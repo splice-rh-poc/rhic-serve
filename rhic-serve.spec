@@ -46,9 +46,10 @@ Common libraries for rhic-serve.
 %package rcs
 Summary:    API's for querying RHIC data for use by the RCS.
 Group:      Development/Languages
-Requires:   rhic-serve-common
+Requires:   rhic-serve-common >= %{version}
 Requires:   mongodb-server
 Requires:   pymongo
+Requires:   pymongo-gridfs
 Requires:   httpd
 Requires:   mod_wsgi
 Requires:   mod_ssl
@@ -125,6 +126,7 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 %{python_sitelib}/rhic_serve/urls.py*
 %{python_sitelib}/rhic_serve/settings.py*
 %{python_sitelib}/rhic_serve/__init__.py*
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 # ----------------------------------------------------------------------------
 
 

@@ -18,8 +18,6 @@ from tastypie.resources import ModelResource
 from tastypie.serializers import Serializer
 from tastypie_mongoengine.resources import MongoEngineResource
 
-from rhic_serve.rhic_rest.models import Account
-
 
 class RestSerializer(Serializer):
     """
@@ -104,35 +102,3 @@ class RestResource(MongoEngineResource):
         assumptions that break things in their full_hydrate method.
         """
         return ModelResource.full_hydrate(self, bundle)
-
-
-class AccountAuthorization(Authorization):
-    """
-    Authorization base class that can be re-used by any resource that wants to
-    authorize or deny access based on the fact that resource.account_id matches
-    the logged in user's username.
-    """
-
-    def is_authorized(self, request, resource=None):
-        """
-        Check if the user is authorized to see the given RHIC.
-
-        If a specific RHIC is not being requested, just return True, and RHIC's
-        the user is not authorized to see will be filtered out in apply_limits.
-        """
-        if resource and resource.account_id != request.user.username:
-            return False
-
-        return True
-
-    def apply_limits(self, request, resources):
-        """
-        Filter out all rhics that the logged in user is not authorized to see.
-        """
-        if request.user.username:
-            account_id = Account.objects(
-                login=request.user.username).only('account_id').first().account_id
-            return resources.filter(account_id=account_id)
-        else:
-            return []
-

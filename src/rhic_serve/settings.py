@@ -2,6 +2,29 @@
 
 from mongoengine import connect
 
+# Conditional imports for the various django apps that rhic-serve installs to
+# see which ones are installed.
+# We could use separate settings.py for each, but this seems easier for now.
+
+try:
+    from rhic_serve import rhic_rest
+    has_rhic_rest = True
+except ImportError:
+    has_rhic_rest = False
+
+try:
+    from rhic_serve import rhic_webui
+    has_rhic_webui = True
+except ImportError:
+    has_rhic_webui = False
+
+try:
+    from rhic_serve import rhic_rcs
+    has_rhic_rcs = True
+except ImportError:
+    has_rhic_rcs = False
+
+
 MONGO_DATABASE_NAME = 'rhic_serve'
 # Connect to the mongo db
 connect(MONGO_DATABASE_NAME, tz_aware=True)
@@ -120,8 +143,8 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'rhic_serve.rhic_rest.middleware.RestLoginMiddleware',
-    'rhic_serve.rhic_rest.middleware.RestExceptionMiddleware',
+    'rhic_serve.common.middleware.RestLoginMiddleware',
+    'rhic_serve.common.middleware.RestExceptionMiddleware',
 )
 
 ROOT_URLCONF = 'rhic_serve.urls'
@@ -145,10 +168,14 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tastypie',
     'tastypie_mongoengine',
-    'rhic_serve.rhic_rest',
-    'rhic_serve.rhic_webui',
-    'rhic_serve.rhic_rcs',
 )
+
+if has_rhic_rest:
+    INSTALLED_APPS += ('rhic_serve.rhic_rest', )
+if has_rhic_webui:
+    INSTALLED_APPS += ('rhic_serve.rhic_webui', )
+if has_rhic_rcs:
+    INSTALLED_APPS += ('rhic_serve.rhic_rcs', )
 
 # Logging configuration
 LOGGING = {
