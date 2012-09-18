@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.7
+Version:	0.8
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -154,6 +154,9 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Tue Sep 18 2012 James Slagle <slagle@redhat.com> 0.8-1
+- Refactoring fixes (slagle@redhat.com)
+
 * Tue Sep 18 2012 James Slagle <slagle@redhat.com> 0.7-1
 - Packaging fixes (slagle@redhat.com)
 
