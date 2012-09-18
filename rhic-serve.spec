@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.4
+Version:	0.5
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -142,6 +142,9 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Mon Sep 17 2012 James Slagle <slagle@redhat.com> 0.5-1
+- Spec file updates (slagle@redhat.com)
+
 * Mon Sep 17 2012 James Slagle <slagle@redhat.com> 0.4-1
 - Automatic commit of package [python-django-tastypie-mongoengine] minor
   release [0.2.3-3]. (slagle@redhat.com)
