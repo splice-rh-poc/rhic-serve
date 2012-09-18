@@ -20,12 +20,13 @@ from dateutil.tz import tzutc
 
 from django.http import HttpResponse
 
-from rhic_serve.common.api import RestResource, AccountAuthorization
+from rhic_serve.common.api import RestResource
 
 from rhic_serve.rhic_rest.api import errors
 from rhic_serve.rhic_rest.models import RHIC, Account, Product, Contract
 
 from tastypie.authentication import Authentication
+from tastypie.authorization import Authorization
 from tastypie.authorization import ReadOnlyAuthorization
 from tastypie_mongoengine.fields import (EmbeddedDocumentField,
     EmbeddedListField)

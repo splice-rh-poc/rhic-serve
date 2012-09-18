@@ -19,7 +19,7 @@ from django.conf.urls import patterns, include, url
 # We could use separate urls.py for each, but this seems easier for now.
 
 try:
-    from rhic_serve import rhic_rest
+    from rhic_serve.rhic_rest.api import rhic
     has_rhic_rest = True
 except ImportError:
     has_rhic_rest = False
@@ -41,9 +41,9 @@ urlpatterns = patterns('', )
 
 if has_rhic_rest:
     # Resources
-    rhic_resource = rhic_rest.api.rhic.RHICResource()
-    rhic_download_resource = rhic_rest.api.rhic.RHICDownloadResource()
-    account_resource = rhic_rest.api.rhic.AccountResource()
+    rhic_resource = rhic.RHICResource()
+    rhic_download_resource = rhic.RHICDownloadResource()
+    account_resource = rhic.AccountResource()
 
     urlpatterns += (
         # RHIC API Resources
