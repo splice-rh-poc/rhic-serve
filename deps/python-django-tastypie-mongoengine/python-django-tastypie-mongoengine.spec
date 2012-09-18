@@ -16,6 +16,7 @@ BuildRequires:	python2-devel
 BuildRequires:  python-setuptools
 Requires:	    python-django-tastypie
 Requires:       Django
+Requires:       python-mongoengine
 
 %description
 MongoEngine support for django-tastypie.
