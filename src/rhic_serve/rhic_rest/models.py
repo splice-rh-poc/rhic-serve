@@ -89,7 +89,7 @@ class RHIC(Document):
     # SLA (service level availability) associated with the RHIC.
     sla = StringField(required=True)
     # UUID associated with the RHIC.
-    uuid = UUIDField(required=True)
+    uuid = UUIDField(required=True, binary=False)
     # List of Products associated with the RHIC.
     products = ListField(required=True)
     # List of Engineering Id's associated with the RHIC.

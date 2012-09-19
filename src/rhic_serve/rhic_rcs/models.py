@@ -31,7 +31,7 @@ class RHIC(Document):
         'collection': 'rhic',
     }
 
-    uuid = UUIDField()
+    uuid = UUIDField(binary=False)
     # List of Products associated with the RHIC.
     engineering_ids = ListField()
     # Date RHIC was created
