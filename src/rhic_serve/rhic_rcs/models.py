@@ -29,6 +29,7 @@ class RHIC(Document):
     meta = {
         # Override collection name, otherwise we get r_h_i_c.
         'collection': 'rhic',
+        'allow_inheritance': True,
     }
 
     uuid = UUIDField(binary=False)
