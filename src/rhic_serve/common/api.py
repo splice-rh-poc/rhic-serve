@@ -13,7 +13,6 @@
 
 from tastypie.authentication import (BasicAuthentication, 
     MultiAuthentication, SessionAuthentication)
-from tastypie.authorization import Authorization
 from tastypie.resources import ModelResource
 from tastypie.serializers import Serializer
 from tastypie_mongoengine.resources import MongoEngineResource

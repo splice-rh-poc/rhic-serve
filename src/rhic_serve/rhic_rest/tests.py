@@ -90,7 +90,7 @@ class RHICApiTest(MongoApiTestCase):
         """
         Create RHIC Test.
         """
-        response = self.post('/api/rhic/', self.create_rhic_json)
+        response = self.post('/api/v1/rhic/', self.create_rhic_json)
         json = response.content
         rhic = simplejson.loads(json)
         self.assertEquals('jj-1190457-3116649-prem-l1-l3', rhic['name'])
@@ -101,7 +101,7 @@ class RHICApiTest(MongoApiTestCase):
         self.assertEquals(['69', '83'], rhic['engineering_ids'])
         self.assertEquals(['RHEL Server', 'RHEL HA'], rhic['products'])
         self.assertEquals(36, len(rhic['uuid']))
-        self.assertEquals('http://testserver/api/rhic/%s/' % rhic['uuid'],
+        self.assertEquals('http://testserver/api/v1/rhic/%s/' % rhic['uuid'],
             rhic['resource_uri'])
 
         # Just test that something got generated for these.
@@ -114,7 +114,7 @@ class RHICApiTest(MongoApiTestCase):
         Patch (update) RHIC Test.
         """
         response = self.patch(
-            '/api/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/', 
+            '/api/v1/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/', 
             self.patch_rhic_json)
         json = response.content
         rhic = simplejson.loads(json)
@@ -124,13 +124,13 @@ class RHICApiTest(MongoApiTestCase):
         """
         Get all rhics.
         """
-        response = self.get('/api/rhic/')
+        response = self.get('/api/v1/rhic/')
         json = response.content
         rhics = simplejson.loads(json)
         self.assertEquals(8, len(rhics))
 
     def test_get_rhic(self):
-        response = self.get('/api/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
+        response = self.get('/api/v1/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
         json = response.content
         rhic = simplejson.loads(json)
         self.assertIsInstance(rhic, dict)
@@ -140,9 +140,9 @@ class RHICApiTest(MongoApiTestCase):
         """
         Delete RHIC Test.
         """
-        response = self.delete('/api/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
+        response = self.delete('/api/v1/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
 
-        response = self.get('/api/rhic/')
+        response = self.get('/api/v1/rhic/')
         json = response.content
         rhics = simplejson.loads(json)
         self.assertEquals(7, len(rhics))

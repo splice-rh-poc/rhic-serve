@@ -145,7 +145,7 @@ $("#create-link").click(function(e) {
                         }
                     );
 
-                    confirm_dialog("/api/rhic/", certData, confirmData, 
+                    confirm_dialog("/api/v1/rhic/", certData, confirmData, 
                         "Create Confirmation", "Create Certificate", "Don't Create", "POST", true);
                     $(this).dialog("close");
                 },

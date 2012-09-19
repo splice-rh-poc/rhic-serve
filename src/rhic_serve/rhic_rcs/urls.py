@@ -13,14 +13,20 @@
 
 
 from django.conf.urls import patterns, include, url
+from tastypie.api import Api
+
 from rhic_serve.rhic_rcs.api import rhic
+
+v1_api = Api(api_name='v1')
 
 # Resources
 rhic_rcs_resource = rhic.RHICRcsResource()
 
+v1_api.register(rhic_rcs_resource)
+
 urlpatterns = patterns('',
 
     # API Resources
-    url(r'', include(rhic_rcs_resource.urls)),
+    url(r'^api/', include(v1_api.urls)),
 
 )

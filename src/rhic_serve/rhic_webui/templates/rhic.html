@@ -192,7 +192,7 @@
 
     function populate_table() {
         rhicTableData = [];
-        var jqxhr = $.get("/api/rhic/", 
+        var jqxhr = $.get("/api/v1/rhic/", 
             function(data) {
                 rhicData = data;
                 for (key = 0; key < data.length; key++) {

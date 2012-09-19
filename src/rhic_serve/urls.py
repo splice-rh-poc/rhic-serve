@@ -13,6 +13,7 @@
 
 
 from django.conf.urls import patterns, include, url
+from tastypie.api import Api
 
 # Conditional imports for the various django apps that rhic-serve installs to
 # see which ones are installed.
@@ -36,6 +37,7 @@ try:
 except ImportError:
     has_rhic_rcs = False
 
+v1_api = Api(api_name='v1')
 
 urlpatterns = patterns('', )
 
@@ -45,12 +47,9 @@ if has_rhic_rest:
     rhic_download_resource = rhic.RHICDownloadResource()
     account_resource = rhic.AccountResource()
 
-    urlpatterns += (
-        # RHIC API Resources
-        url(r'^api/', include(rhic_resource.urls)),
-        url(r'^api/', include(rhic_download_resource.urls)),
-        url(r'^api/', include(account_resource.urls)),
-    )
+    v1_api.register(rhic_resource)
+    v1_api.register(rhic_download_resource)
+    v1_api.register(account_resource)
 
 if has_rhic_webui:
     urlpatterns += (
@@ -64,7 +63,11 @@ if has_rhic_webui:
 if has_rhic_rcs:
     urlpatterns += (
         # RHIC RCS Resources
-        url(r'^api/', include('rhic_serve.rhic_rcs.urls')),
+        url(r'', include('rhic_serve.rhic_rcs.urls')),
     )
 
+
+urlpatterns += (
+    url(r'^api/', include(v1_api.urls)),
+)
 

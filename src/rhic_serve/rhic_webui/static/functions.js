@@ -17,7 +17,7 @@ function get_contract_data() {
     var contractData = {};
 
     var jqxhr = $.ajax({
-        url: "/api/account/",
+        url: "/api/v1/account/",
         async: false,
         success: function(data) {
             // Remove any old options first.
@@ -167,7 +167,7 @@ function confirm_dialog(url, certData, confirmData, title, button1, button2, met
                             var cert_pem = {};
                             cert_pem = "cert_pem=" + encodeURIComponent(rhic["cert_pem"]);
 
-                            $.download("/api/rhicdownload/" + rhic["uuid"] + "/", cert_pem, 'get');
+                            $.download("/api/v1/rhicdownload/" + rhic["uuid"] + "/", cert_pem, 'get');
                         }
 
                     });
