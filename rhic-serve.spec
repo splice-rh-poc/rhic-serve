@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.9
+Version:	0.10
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -152,6 +152,14 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Wed Sep 19 2012 James Slagle <slagle@redhat.com> 0.10-1
+- rhic-serve-rcs is not meant to be a standalone wsgi app so move those files
+  back to the rhic-serve package (slagle@redhat.com)
+- Merge branch 'master' of github.com:splice/rhic-serve (slagle@redhat.com)
+- Default binary to False (slagle@redhat.com)
+- Added 'allow_inheritance' on rhic-server-rcs models.RHIC
+  (jmatthews@redhat.com)
+
 * Wed Sep 19 2012 James Slagle <slagle@redhat.com> 0.9-1
 - Use a versioned top level api (slagle@redhat.com)
 - Add LICENSE file (slagle@redhat.com)
