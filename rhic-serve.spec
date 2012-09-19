@@ -116,22 +116,20 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 # This %files is listed first so that we can mark the files for the common
 # subpackage and use a wildcard in the next section.
 %files common
-%defattr(-,apache,apache,-)
-%dir /srv/%{name}
-/srv/%{name}/webservices.wsgi
-%dir %{_sysconfdir}/pki/%{name}
-%{_sysconfdir}/pki/%{name}
 %defattr(-,root,root,-)
 %{python_sitelib}/rhic_serve/common
-%{python_sitelib}/rhic_serve/urls.py*
-%{python_sitelib}/rhic_serve/settings.py*
 %{python_sitelib}/rhic_serve/__init__.py*
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 # ----------------------------------------------------------------------------
 
 
 # rhic-serve files -----------------------------------------------------------
 %files
+%defattr(-,apache,apache,-)
+%dir /srv/%{name}
+/srv/%{name}/webservices.wsgi
+%dir %{_sysconfdir}/pki/%{name}
+%{_sysconfdir}/pki/%{name}
+%config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %defattr(-,root,root,-)
 %{python_sitelib}/rhic_serve/*.py*
 %{python_sitelib}/rhic_serve/rhic_rest
