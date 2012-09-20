@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.10
+Version:	0.11
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -152,6 +152,12 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Thu Sep 20 2012 James Slagle <slagle@redhat.com> 0.11-1
+- products and engineering_ids should not be required fields, they can be empty
+  (slagle@redhat.com)
+- Specify rhic_serve db alias instead of relying on default alias.  This is
+  more robust (slagle@redhat.com)
+
 * Wed Sep 19 2012 James Slagle <slagle@redhat.com> 0.10-1
 - rhic-serve-rcs is not meant to be a standalone wsgi app so move those files
   back to the rhic-serve package (slagle@redhat.com)
