@@ -75,7 +75,17 @@ class RHICApiTest(MongoApiTestCase):
 	"support_level" : "l1-l3"
 }
 """
-
+    create_rhic_no_products_json = """\
+{
+	"account_id" : "1190457",
+	"contract" : "3116649",
+	"engineering_ids" : [],
+	"name" : "jj",
+	"products" : [],
+	"sla" : "prem",
+	"support_level" : "l1-l3"
+}
+"""
     patch_rhic_json = """\
 {
     "engineering_ids": ["69", "83"],
@@ -108,6 +118,27 @@ class RHICApiTest(MongoApiTestCase):
         self.assertGreater(len(rhic['private_key']), 100)
         self.assertGreater(len(rhic['public_cert']), 100)
         self.assertGreater(len(rhic['cert_pem']), 100)
+
+    def test_create_rhic_no_products(self):
+        response = self.post('/api/v1/rhic/', self.create_rhic_no_products_json)
+        json = response.content
+        rhic = simplejson.loads(json)
+        self.assertEquals('jj-1190457-3116649-prem-l1-l3', rhic['name'])
+        self.assertEquals('1190457', rhic['account_id'])
+        self.assertEquals('prem', rhic['sla'])
+        self.assertEquals('l1-l3', rhic['support_level'])
+        self.assertEquals('3116649', rhic['contract'])
+        self.assertEquals([], rhic['engineering_ids'])
+        self.assertEquals([], rhic['products'])
+        self.assertEquals(36, len(rhic['uuid']))
+        self.assertEquals('http://testserver/api/v1/rhic/%s/' % rhic['uuid'],
+            rhic['resource_uri'])
+
+        # Just test that something got generated for these.
+        self.assertGreater(len(rhic['private_key']), 100)
+        self.assertGreater(len(rhic['public_cert']), 100)
+        self.assertGreater(len(rhic['cert_pem']), 100)
+
 
     def test_patch_rhic(self):
         """

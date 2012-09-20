@@ -96,9 +96,9 @@ class RHIC(Document):
     # UUID associated with the RHIC.
     uuid = UUIDField(required=True, binary=False)
     # List of Products associated with the RHIC.
-    products = ListField(required=True)
+    products = ListField()
     # List of Engineering Id's associated with the RHIC.
-    engineering_ids = ListField(required=True)
+    engineering_ids = ListField()
     # Public cert portion of the RHIC.
     public_cert = FileField(required=True)
     # Flag to indicate if this RHIC has been deleted.
