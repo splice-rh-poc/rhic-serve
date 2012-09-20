@@ -63,6 +63,10 @@ class Contract(EmbeddedDocument):
 
 class Account(Document):
 
+    meta = {
+        'db_alias': 'rhic_serve'
+    }
+
     # Unique account identifier
     account_id = StringField(unique=True, required=True)
     # Human readable account name
@@ -76,6 +80,7 @@ class RHIC(Document):
     meta = {
         # Override collection name, otherwise we get r_h_i_c.
         'collection': 'rhic',
+        'db_alias': 'rhic_serve'
     }
 
     # Human readable name

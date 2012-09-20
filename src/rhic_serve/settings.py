@@ -1,6 +1,7 @@
 # Django settings for rhic_serve project.
 
 from mongoengine import connect
+from mongoengine.connection import register_connection
 
 # Conditional imports for the various django apps that rhic-serve installs to
 # see which ones are installed.
@@ -27,7 +28,8 @@ except ImportError:
 
 MONGO_DATABASE_NAME = 'rhic_serve'
 # Connect to the mongo db
-connect(MONGO_DATABASE_NAME, tz_aware=True)
+connect(MONGO_DATABASE_NAME, alias=MONGO_DATABASE_NAME, tz_aware=True)
+register_connection('default', MONGO_DATABASE_NAME)
 
 # Custom test runner to work with Mongo
 TEST_RUNNER = 'rhic_serve.common.tests.MongoTestRunner'

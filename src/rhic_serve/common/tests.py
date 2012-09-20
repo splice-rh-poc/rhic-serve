@@ -75,8 +75,9 @@ class MongoTestCase(testcases.TestCase):
 
     def setup_database(self, *args, **kwargs):
         # Disconnect from the default mongo db, and use a test db instead.
-        connection.disconnect()
-        connection.connect(MONGO_TEST_DATABASE_NAME)
+        self.disconnect_dbs()
+        connection.connect(MONGO_TEST_DATABASE_NAME, 
+            alias=settings.MONGO_DATABASE_NAME, tz_aware=True)
 
         for collection in ['account', 'user', 'rhic', 'fs.chunks',
             'fs.files']:
@@ -86,11 +87,15 @@ class MongoTestCase(testcases.TestCase):
                 '%s.json' % os.path.join(settings.DUMP_DIR, collection)])
 
     def teardown_database(self, *args, **kwargs):
-        connection.disconnect()
+        self.disconnect_dbs()
 
         # Drop the test database
-        pymongo_connection = connection.get_connection()
+        pymongo_connection = connection.get_connection(settings.MONGO_DATABASE_NAME)
         pymongo_connection.drop_database(MONGO_TEST_DATABASE_NAME)
+
+    def disconnect_dbs(self):
+        for alias in connection._connections.keys():
+            connection.disconnect(alias)
 
 
 class MongoApiTestCase(MongoTestCase):

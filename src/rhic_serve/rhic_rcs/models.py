@@ -30,6 +30,7 @@ class RHIC(Document):
         # Override collection name, otherwise we get r_h_i_c.
         'collection': 'rhic',
         'allow_inheritance': True,
+        'db_alias': 'rhic_serve'
     }
 
     uuid = UUIDField(binary=False)
