@@ -108,9 +108,10 @@ function enable_product_choices(productMap) {
         // Add each product to the product choices
         if ( $.inArray(prodName, addedProducts) < 0 ) {
             addedProducts.push(prodName);
-            html = '<p><input type="checkbox" name="products" value="' + 
-                engIds + '" txt="' + prodName + '" id="' + prodName.replace(/ /g, '')  + '">' + 
-                prodName + '</input></p>';
+            var id = prodName.replace(/ /g, '');
+            html = '<p><label for="' + id + '"><input type="checkbox" name="products" value="' + 
+                engIds + '" txt="' + prodName + '" id="' + id + '">' + 
+                prodName + '</input></label></p>';
             $("#product-choices").append(html);
         }
 
