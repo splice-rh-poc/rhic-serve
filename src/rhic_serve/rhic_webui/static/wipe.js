@@ -34,6 +34,7 @@ function wipe_support_level() {
 function wipe_product_choices() {
     $("#product-choices").remove();
     $("#select-products").append('<div id="product-choices"></div>');
+    addedProducts = [];
 }
 
 // Wipe contract choices.
@@ -67,7 +68,6 @@ function wipe() {
     $("#create-cert-button").attr("disabled", "disabled");
     $("#create-cert-button").addClass("ui-state-disabled");
     productMap = {};
-    addedProducts = [];
 }
 
 
