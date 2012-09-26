@@ -18,6 +18,7 @@ function wipe_sla() {
         $(this).addClass("ui-state-disabled");
         $(this).attr("disabled", "disabled");
         $(this).removeAttr("checked");
+        $('label[name=sla-label]').addClass("ui-state-disabled")
     });
 }
 
@@ -27,6 +28,7 @@ function wipe_support_level() {
         $(this).addClass("ui-state-disabled");
         $(this).attr("disabled", "disabled");
         $(this).removeAttr("checked");
+        $('label[name=support-level-label]').addClass("ui-state-disabled")
     });
 }
 

@@ -29,6 +29,7 @@ $("#create-link").click(function(e) {
         Object.keys(productMap).forEach(function(sla) {
             $("#" + sla).removeClass("ui-state-disabled");
             $("#" + sla).attr("disabled", false);
+            $("label[for=" + sla + "]").removeClass("ui-state-disabled")
         });
     }
 
@@ -38,6 +39,7 @@ $("#create-link").click(function(e) {
         Object.keys(productMap[sla]).forEach(function(supportLevel) {
             $("#" + supportLevel).removeClass("ui-state-disabled");
             $("#" + supportLevel).attr("disabled", false);
+            $("label[for=" + supportLevel + "]").removeClass("ui-state-disabled")
         });
         if ( sla == "na" ) {
             $("#ss").attr("checked", true);

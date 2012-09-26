@@ -66,27 +66,21 @@
     </div>
     <p id="sla-group">
         <label for="sla">SLA:</label>
-        <label for="prem">
-            <input type="radio" id="prem" name="sla" class="ui-state-disabled" disabled="disabled" txt="Premium">Premium</input>
-        </label>
-        <label for="std">
-            <input type="radio" id="std" name="sla" class="ui-state-disabled" disabled="disabled" txt="Standard">Standard</input>
-        </label>
-        <label for="na">
-            <input type="radio" id="na" name="sla" class="ui-state-disabled" disabled="disabled" txt="Self Support">Self Support</input>
-        </label>
+        <input type="radio" id="prem" name="sla" class="ui-state-disabled" disabled="disabled" txt="Premium"></input>
+        <label name='sla-label' for="prem">Premium</label>
+        <input type="radio" id="std" name="sla" class="ui-state-disabled" disabled="disabled" txt="Standard"></input>
+        <label name='sla-label' for="std">Standard</label>
+        <input type="radio" id="na" name="sla" class="ui-state-disabled" disabled="disabled" txt="Self Support"></input>
+        <label name='sla-label' for="na">Self Support</label>
     </p>
     <p id="support-level-group">
         <label for="support-level">Support Level:</label>
-        <label for="l1-l3">
-            <input type="radio" id="l1-l3" name="support-level" class="ui-state-disabled" disabled="disabled" txt="Level 1-3">Level 1-3</input>
-        </label>
-        <label for="l3">
-            <input type="radio" id="l3" name="support-level" class="ui-state-disabled" disabled="disabled" txt="Level 3 only">Level 3 only</input>
-        </label>
-        <label for="ss">
-            <input type="radio" id="ss" name="support-level" class="ui-helper-hidden" disabled="disabled" txt="Self Support"></input>
-        </label>
+        <input type="radio" id="l1-l3" name="support-level" class="ui-state-disabled" disabled="disabled" txt="Level 1-3"></input>
+        <label name='support-level-label' for="l1-l3">Level 1-3</label>
+        <input type="radio" id="l3" name="support-level" class="ui-state-disabled" disabled="disabled" txt="Level 3 only"></input>
+        <label name='support-level-label' for="l3">Level 3 only</label>
+        <input type="radio" id="ss" name="support-level" class="ui-helper-hidden" disabled="disabled" txt="Self Support"></input>
+        <label for="ss"></label>
     </p>
     <p id="select-products">
         <label for="product-choices">Products:</label>

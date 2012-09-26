@@ -77,6 +77,7 @@ function product_checked(product) {
             if ( $.inArray(engId, _engIds) >= 0 ) {
                 $(this).addClass("ui-state-disabled");
                 $(this).attr("disabled", "disabled");
+                $('label[for=' + this.id + ']').addClass("ui-state-disabled")
             }
         });
     });
@@ -92,6 +93,7 @@ function product_unchecked(product) {
             if ( $.inArray(engId, _engIds) >= 0 ) {
                 $(this).removeClass("ui-state-disabled");
                 $(this).removeAttr("disabled");
+                $('label[for=' + this.id + ']').removeClass("ui-state-disabled")
             }
         });
     });
@@ -109,9 +111,10 @@ function enable_product_choices(productMap) {
         if ( $.inArray(prodName, addedProducts) < 0 ) {
             addedProducts.push(prodName);
             var id = prodName.replace(/ /g, '');
-            html = '<p><label for="' + id + '"><input type="checkbox" name="products" value="' + 
-                engIds + '" txt="' + prodName + '" id="' + id + '">' + 
-                prodName + '</input></label></p>';
+            html = '<p><input type="checkbox" name="products" value="' + 
+                engIds + '" txt="' + prodName + '" id="' + id + 
+                '"></input><label for="' + id + '">' + prodName + 
+                '</label></p>'; 
             $("#product-choices").append(html);
         }
 
