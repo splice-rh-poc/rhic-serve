@@ -12,8 +12,8 @@ Source0:	%{name}-%{version}.tar.gz
 BuildRequires:	python-setuptools
 BuildRequires:  python2-devel
 
-Requires:   rhic-serve-common
-Requires:   rhic-serve-rcs
+Requires:   rhic-serve-common = %{version}
+Requires:   rhic-serve-rcs = %{version}
 Requires:   mongodb-server
 Requires:   pymongo
 Requires:   pymongo-gridfs
@@ -36,6 +36,7 @@ REST/Web Service for creating RHIC's
 %package common
 Summary:    Common libraries for rhic-serve.
 Group:      Development/Languages
+Requires:   rhic-serve = %{version}
 
 %description common
 Common libraries for rhic-serve.
@@ -46,7 +47,7 @@ Common libraries for rhic-serve.
 %package rcs
 Summary:    API's for querying RHIC data for use by the RCS.
 Group:      Development/Languages
-Requires:   rhic-serve-common >= %{version}
+Requires:   rhic-serve-common = %{version}
 Requires:   mongodb-server
 Requires:   pymongo
 Requires:   pymongo-gridfs
