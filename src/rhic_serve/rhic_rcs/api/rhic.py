@@ -42,4 +42,9 @@ class RHICRcsResource(RestResource):
             applicable_filters['deleted__exact'] = False
         return super(RestResource, self).apply_filters(request, applicable_filters)
 
+    def alter_list_data_to_serialize(self, request, data):
+        """
+        """
+        return data
+
 

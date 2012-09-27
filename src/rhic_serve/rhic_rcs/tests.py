@@ -24,13 +24,13 @@ class RHICRcsApiTest(MongoApiTestCase):
         """
         Get all rhics.
         """
-        response = self.get('/api/v1/rhic/')
+        response = self.get('/api/v1/rhicrcs/')
         json = response.content
-        rhics = simplejson.loads(json)
+        rhics = simplejson.loads(json)['objects']
         self.assertEquals(8, len(rhics))
 
     def test_get_rhic(self):
-        response = self.get('/api/v1/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
+        response = self.get('/api/v1/rhicrcs/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
         json = response.content
         rhic = simplejson.loads(json)
         self.assertIsInstance(rhic, dict)
@@ -41,7 +41,7 @@ class RHICRcsApiTest(MongoApiTestCase):
         # 1 rhic is already deleted in the sample data
         response = self.get('/api/v1/rhicrcs/?deleted__exact=True')
         json = response.content
-        rhics = simplejson.loads(json)
+        rhics = simplejson.loads(json)['objects']
         self.assertEquals(1, len(rhics))
 
         # Delete 2 more rhics
@@ -51,7 +51,7 @@ class RHICRcsApiTest(MongoApiTestCase):
         # Should only be 6 non-deleted rhics left
         response = self.get('/api/v1/rhicrcs/')
         json = response.content
-        rhics = simplejson.loads(json)
+        rhics = simplejson.loads(json)['objects']
         self.assertEquals(6, len(rhics))
         non_deleted_uuids = [r['uuid'] for r in rhics]
         self.assertTrue('ed74e2a5-eb37-4bcb-9504-a9c338db56d0' not in 
@@ -62,7 +62,7 @@ class RHICRcsApiTest(MongoApiTestCase):
         # 3 rhics deleted in total
         response = self.get('/api/v1/rhicrcs/?deleted__exact=True')
         json = response.content
-        rhics = simplejson.loads(json)
+        rhics = simplejson.loads(json)['objects']
         self.assertEquals(3, len(rhics))
 
 
@@ -83,7 +83,7 @@ class RHICRcsApiTest(MongoApiTestCase):
         response = self.get(
             '/api/v1/rhicrcs/?modified_date__gt=2012-09-14T21:50Z')
         json = response.content
-        rhics = simplejson.loads(json)
+        rhics = simplejson.loads(json)['objects']
         self.assertEquals(3, len(rhics))
 
 
