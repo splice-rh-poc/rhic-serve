@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.11
+Version:	0.12
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -152,6 +152,13 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Thu Sep 27 2012 James Slagle <slagle@redhat.com> 0.12-1
+- Update to latest CA (slagle@redhat.com)
+- Grey out label text on disabled selectors as well (slagle@redhat.com)
+- Use encompassing <label> tags around rhic choices, so that you can click the
+  text, not just the selector (slagle@redhat.com)
+- Clear the addedProducts variable from a different method (slagle@redhat.com)
+
 * Thu Sep 20 2012 James Slagle <slagle@redhat.com> 0.11-1
 - products and engineering_ids should not be required fields, they can be empty
   (slagle@redhat.com)
