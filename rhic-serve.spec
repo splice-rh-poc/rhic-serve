@@ -36,7 +36,6 @@ REST/Web Service for creating RHIC's
 %package common
 Summary:    Common libraries for rhic-serve.
 Group:      Development/Languages
-Requires:   rhic-serve = %{version}
 
 %description common
 Common libraries for rhic-serve.
