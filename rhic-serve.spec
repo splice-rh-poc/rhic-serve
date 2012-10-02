@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.15
+Version:	0.16
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -152,6 +152,9 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Tue Oct 02 2012 James Slagle <slagle@redhat.com> 0.16-1
+- Include deleted rhics in response by default for rhic_rcs (slagle@redhat.com)
+
 * Mon Oct 01 2012 James Slagle <slagle@redhat.com> 0.15-1
 - rhic-serve-common should not require rhic-serve (slagle@redhat.com)
 
