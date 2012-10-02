@@ -27,7 +27,7 @@ class RHICRcsApiTest(MongoApiTestCase):
         response = self.get('/api/v1/rhicrcs/')
         json = response.content
         rhics = simplejson.loads(json)['objects']
-        self.assertEquals(8, len(rhics))
+        self.assertEquals(9, len(rhics))
 
     def test_get_rhic(self):
         response = self.get('/api/v1/rhicrcs/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
@@ -48,15 +48,16 @@ class RHICRcsApiTest(MongoApiTestCase):
         self.delete('/api/v1/rhic/ed74e2a5-eb37-4bcb-9504-a9c338db56d0/')
         self.delete('/api/v1/rhic/01720e7a-14d0-4a30-9ea9-de11c50c1d31/')
 
-        # Should only be 6 non-deleted rhics left
+        # Should be 9 rhics left, rhic_rcs shows all deleted and non-deleted
+        # rhics in the default response
         response = self.get('/api/v1/rhicrcs/')
         json = response.content
         rhics = simplejson.loads(json)['objects']
-        self.assertEquals(6, len(rhics))
+        self.assertEquals(9, len(rhics))
         non_deleted_uuids = [r['uuid'] for r in rhics]
-        self.assertTrue('ed74e2a5-eb37-4bcb-9504-a9c338db56d0' not in 
+        self.assertTrue('ed74e2a5-eb37-4bcb-9504-a9c338db56d0' in 
             non_deleted_uuids)
-        self.assertTrue('01720e7a-14d0-4a30-9ea9-de11c50c1d31' not in
+        self.assertTrue('01720e7a-14d0-4a30-9ea9-de11c50c1d31' in
             non_deleted_uuids)
 
         # 3 rhics deleted in total

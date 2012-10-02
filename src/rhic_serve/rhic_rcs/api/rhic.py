@@ -33,14 +33,6 @@ class RHICRcsResource(RestResource):
             'deleted': ['exact'],
         }
 
-    def apply_filters(self, request, applicable_filters):
-        """
-        By, default, filter on deleted=False when requesting all RHIC's.
-        """
-        fields = [f.split('__')[0] for f in applicable_filters.keys()]
-        if 'deleted' not in fields:
-            applicable_filters['deleted__exact'] = False
-        return super(RestResource, self).apply_filters(request, applicable_filters)
 
     def alter_list_data_to_serialize(self, request, data):
         """
