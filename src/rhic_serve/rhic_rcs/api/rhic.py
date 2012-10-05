@@ -18,7 +18,6 @@ from rhic_serve.rhic_rcs.models import RHIC
 from tastypie.authentication import Authentication
 from tastypie.authorization import ReadOnlyAuthorization
 
-
 class RHICRcsResource(RestResource):
 
     class Meta(RestResource.Meta):
@@ -32,6 +31,7 @@ class RHICRcsResource(RestResource):
             'deleted_date': ['gte', 'gt', 'lte', 'lt', 'range'],
             'deleted': ['exact'],
         }
+        max_limit = 0
 
 
     def alter_list_data_to_serialize(self, request, data):
