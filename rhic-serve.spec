@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 Name:		rhic-serve
-Version:	0.16
+Version:	0.17
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -152,6 +152,9 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Fri Oct 05 2012 John Matthews <jmatthews@redhat.com> 0.17-1
+- Allowing pagination to not have an upper limit (jmatthews@redhat.com)
+
 * Tue Oct 02 2012 James Slagle <slagle@redhat.com> 0.16-1
 - Include deleted rhics in response by default for rhic_rcs (slagle@redhat.com)
 
