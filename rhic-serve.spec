@@ -100,7 +100,7 @@ pushd src
 popd
 # SELinux Configuration
 cd selinux
-perl -i -pe 'BEGIN { $VER = join ".", grep /^\d+$/, split /\./, "%{version}.%{release}"; } s!0.0.0!$VER!g;' splice-server.te
+perl -i -pe 'BEGIN { $VER = join ".", grep /^\d+$/, split /\./, "%{version}.%{release}"; } s!0.0.0!$VER!g;' rhic-serve.te
 ./build.sh
 cd -
 
