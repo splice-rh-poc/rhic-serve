@@ -23,7 +23,7 @@ from mongoengine import *
 from mongoengine import signals
 from mongoengine.queryset import QuerySet
 
-from rhic_serve.common import cert_utils
+from certutils.certutils import CertUtils
 from rhic_serve.common.fields import *
 
 import uuid
@@ -122,7 +122,8 @@ class RHIC(Document):
 
         # Generate a certificate and private key for this RHIC.
         if not document.public_cert:
-            public_cert, private_key = cert_utils.generate(
+            cu = CertUtils()
+            public_cert, private_key = cu.generate(
                 str(document.uuid), settings.CA_CERT_PATH, settings.CA_KEY_PATH,
                 settings.CERT_DAYS)
             document.public_cert.new_file()

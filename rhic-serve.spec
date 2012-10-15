@@ -1,6 +1,6 @@
 # rhic-serve package ---------------------------------------------------------
 
-#SELinux
+# SELinux
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
@@ -29,6 +29,7 @@ Requires:   Django
 Requires:   python-django-tastypie
 Requires:   python-django-tastypie-mongoengine
 Requires:   python-mongoengine
+Requires:   python-certutils
 #
 # Our own selinux RPM
 #
