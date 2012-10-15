@@ -13,6 +13,8 @@ License:	GPLv2+
 URL:		https://github.com/splice/rhic-serve
 Source0:	%{name}-%{version}.tar.gz
 
+BuildArch:  noarch
+
 BuildRequires:	python-setuptools
 BuildRequires:  python2-devel
 
