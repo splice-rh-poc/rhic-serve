@@ -1,4 +1,8 @@
 # rhic-serve package ---------------------------------------------------------
+
+#SELinux
+%global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
+
 Name:		rhic-serve
 Version:	0.17
 Release:	1%{?dist}
@@ -25,7 +29,10 @@ Requires:   Django
 Requires:   python-django-tastypie
 Requires:   python-django-tastypie-mongoengine
 Requires:   python-mongoengine
-
+#
+# Our own selinux RPM
+#
+Requires: %{name}-selinux = %{version}-%{release}
 
 %description
 REST/Web Service for creating RHIC's
@@ -62,9 +69,27 @@ Requires:   python-mongoengine
 
 %description rcs
 API's for querying RHIC data for use by the RCS.
+
+%package        selinux
+Summary:        Splice SELinux policy
+Group:          Development/Languages
+BuildRequires:  rpm-python
+BuildRequires:  make
+BuildRequires:  checkpolicy
+BuildRequires:  selinux-policy-devel
+# el6, selinux-policy-doc is the required RPM which will bring below 'policyhelp'
+BuildRequires:  /usr/share/selinux/devel/policyhelp
+BuildRequires:  hardlink
+Requires: selinux-policy >= %{selinux_policyver}
+Requires(post): policycoreutils-python 
+Requires(post): selinux-policy-targeted
+Requires(post): /usr/sbin/semodule, /sbin/fixfiles, /usr/sbin/semanage
+Requires(postun): /usr/sbin/semodule
+
+%description  selinux
+SELinux policy for rhic-serve
+
 # ----------------------------------------------------------------------------
-
-
 %prep
 %setup -q
 
@@ -73,7 +98,11 @@ API's for querying RHIC data for use by the RCS.
 pushd src
 %{__python} setup.py build
 popd
-
+# SELinux Configuration
+cd selinux
+perl -i -pe 'BEGIN { $VER = join ".", grep /^\d+$/, split /\./, "%{version}.%{release}"; } s!0.0.0!$VER!g;' splice-server.te
+./build.sh
+cd -
 
 %install
 rm -rf %{buildroot}
@@ -102,9 +131,39 @@ cp -R etc/pki/rhic-serve %{buildroot}/%{_sysconfdir}/pki/
 # Remove egg info
 rm -rf %{buildroot}/%{python_sitelib}/*.egg-info
 
+# Install SELinux policy modules
+cd selinux
+./install.sh %{buildroot}%{_datadir}
+mkdir -p %{buildroot}%{_datadir}/%{name}/selinux
+cp enable.sh %{buildroot}%{_datadir}/%{name}/selinux
+cp uninstall.sh %{buildroot}%{_datadir}/%{name}/selinux
+cp relabel.sh %{buildroot}%{_datadir}/%{name}/selinux
+cd -
 
 %clean
 rm -rf %{buildroot}
+
+%post selinux
+# Enable SELinux policy modules
+if /usr/sbin/selinuxenabled ; then
+ %{_datadir}/%{name}/selinux/enable.sh %{_datadir}
+fi
+
+# Continuing with using posttrans, as we did this for Pulp and it worked for us.
+# restorcecon wasn't reading new file contexts we added when running under 'post' so moved to 'posttrans'
+# Spacewalk saw same issue and filed BZ here: https://bugzilla.redhat.com/show_bug.cgi?id=505066
+%posttrans selinux
+if /usr/sbin/selinuxenabled ; then
+ %{_datadir}/%{name}/selinux/relabel.sh %{_datadir}
+fi
+
+%preun selinux
+# Clean up after package removal
+if [ $1 -eq 0 ]; then
+  %{_datadir}/%{name}/selinux/uninstall.sh
+  %{_datadir}/%{name}/selinux/relabel.sh
+fi
+exit 0
 
 
 %post
@@ -147,6 +206,12 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 %{python_sitelib}/rhic_serve/rhic_rcs
 # ----------------------------------------------------------------------------
 
+%files selinux
+%defattr(-,root,root,-)
+%doc selinux/%{name}.fc selinux/%{name}.if selinux/%{name}.te
+%{_datadir}/%{name}/selinux/*
+%{_datadir}/selinux/*/%{name}.pp
+%{_datadir}/selinux/devel/include/apps/%{name}.if
 
 %doc
 

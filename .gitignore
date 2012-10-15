@@ -36,3 +36,7 @@ pip-log.txt
 
 #Generated CA srl file
 etc/pki/rhic-serve/rhic-serve-ca.srl
+
+# selinux build files
+selinux/*.pp.targeted
+
