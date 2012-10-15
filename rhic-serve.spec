@@ -4,7 +4,7 @@
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
-Version:	0.18
+Version:	0.19
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -217,6 +217,9 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Mon Oct 15 2012 John Matthews <jmatthews@redhat.com> 0.19-1
+- Fix so selinux module has version info (jmatthews@redhat.com)
+
 * Mon Oct 15 2012 John Matthews <jmatthews@redhat.com> 0.18-1
 - Initial cut of a SELinux policy (jmatthews@redhat.com)
 
