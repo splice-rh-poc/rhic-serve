@@ -21,6 +21,7 @@ from django.conf import settings
 # mognoengine, it's easiest to just use import *
 from mongoengine import *
 from mongoengine import signals
+from mongoengine.base import ValidationError
 from mongoengine.queryset import QuerySet
 
 from certutils.certutils import CertUtils
@@ -122,10 +123,18 @@ class RHIC(Document):
 
         # Generate a certificate and private key for this RHIC.
         if not document.public_cert:
+
+            # Fields are validated in save(), but we need to validate
+            # account_id was set here since we need to use it in the X509
+            # request.
+            if not document.account_id:
+                raise ValidationError('account_id is not set')
+
             cu = CertUtils()
             public_cert, private_key = cu.generate(
-                str(document.uuid), settings.CA_CERT_PATH, settings.CA_KEY_PATH,
-                settings.CERT_DAYS)
+                settings.CA_CERT_PATH, settings.CA_KEY_PATH,
+                settings.CERT_DAYS, dict(CN=str(document.uuid),
+                                         O=document.account_id))
             document.public_cert.new_file()
             document.public_cert.write(public_cert)
             document.public_cert.close()
