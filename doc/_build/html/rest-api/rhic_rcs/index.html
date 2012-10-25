@@ -80,7 +80,7 @@
     ],
     &quot;id&quot;: &quot;505386a2d9c1417e41000002&quot;,
     &quot;modified_date&quot;: &quot;2012-09-14T19:33:54.294000+00:00&quot;,
-    &quot;resource_uri&quot;: &quot;https://ec2-184-72-159-16.compute-1.amazonaws.com/api/rhicrcs/7dd72d62-fcf2-4e5c-a659-273bb88bd509/&quot;,
+    &quot;resource_uri&quot;: &quot;https://example.com/api/rhicrcs/7dd72d62-fcf2-4e5c-a659-273bb88bd509/&quot;,
     &quot;uuid&quot;: &quot;7dd72d62-fcf2-4e5c-a659-273bb88bd509&quot;
   },
   {
@@ -93,7 +93,7 @@
     ],
     &quot;id&quot;: &quot;50539bdbd9c1417e42000002&quot;,
     &quot;modified_date&quot;: &quot;2012-09-14T21:04:27.090000+00:00&quot;,
-    &quot;resource_uri&quot;: &quot;https://ec2-184-72-159-16.compute-1.amazonaws.com/api/rhicrcs/5e6a8a78-ceb9-4835-80c8-4b2b337ebec4/&quot;,
+    &quot;resource_uri&quot;: &quot;https://example.com/api/rhicrcs/5e6a8a78-ceb9-4835-80c8-4b2b337ebec4/&quot;,
     &quot;uuid&quot;: &quot;5e6a8a78-ceb9-4835-80c8-4b2b337ebec4&quot;
   },
   {
@@ -105,7 +105,7 @@
     ],
     &quot;id&quot;: &quot;50539e0cd9c1417f38000002&quot;,
     &quot;modified_date&quot;: &quot;2012-09-14T21:13:48.752000+00:00&quot;,
-    &quot;resource_uri&quot;: &quot;https://ec2-184-72-159-16.compute-1.amazonaws.com/api/rhicrcs/cc11f76f-8f82-433f-bc37-c61b5bf43d19/&quot;,
+    &quot;resource_uri&quot;: &quot;https://example.com/api/rhicrcs/cc11f76f-8f82-433f-bc37-c61b5bf43d19/&quot;,
     &quot;uuid&quot;: &quot;cc11f76f-8f82-433f-bc37-c61b5bf43d19&quot;
   }
 ]
@@ -125,7 +125,7 @@
 </td>
 </tr>
 <tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
-<li><strong>200</strong> &#8211; no error</li>
+<li><strong>200</strong> &#8211; Ok</li>
 </ul>
 </td>
 </tr>
@@ -136,12 +136,42 @@
 <dl class="get">
 <dt id="get--api-v1-rhicrcs-(str-uuid)-">
 <tt class="descname">GET </tt><tt class="descname">/api/v1/rhicrcs/</tt><big>(</big><em class="property">str: </em><em>uuid</em><big>)</big><tt class="descname">/</tt><a class="headerlink" href="#get--api-v1-rhicrcs-(str-uuid)-" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
+<dd><p>Get a single rhic that is available to the rcs.</p>
+<p><strong>Sample Request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/v1/rhicrcs/cc11f76f-8f82-433f-bc37-c61b5bf43d19</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+{
+ &quot;created_date&quot;: &quot;2012-09-14T21:13:48.752000+00:00&quot;,
+ &quot;deleted&quot;: false,
+ &quot;deleted_date&quot;: null,
+ &quot;engineering_ids&quot;: [
+   &quot;69&quot;
+ ],
+ &quot;id&quot;: &quot;50539e0cd9c1417f38000002&quot;,
+ &quot;modified_date&quot;: &quot;2012-09-14T21:13:48.752000+00:00&quot;,
+ &quot;resource_uri&quot;: &quot;https://example.com/api/rhicrcs/cc11f76f-8f82-433f-bc37-c61b5bf43d19/&quot;,
+ &quot;uuid&quot;: &quot;cc11f76f-8f82-433f-bc37-c61b5bf43d19&quot;
+}
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<tr class="field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>uuid</strong> (<em>str</em>) &#8211; rhic&#8217;s uuid</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; Ok</li>
 </ul>
 </td>
 </tr>

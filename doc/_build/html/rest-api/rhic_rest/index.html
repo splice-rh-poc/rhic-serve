@@ -24,6 +24,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="rhic-serve v0.1 documentation" href="../../index.html" />
     <link rel="up" title="REST API" href="../index.html" />
+    <link rel="next" title="RHIC RCS" href="../rhic_rcs/index.html" />
     <link rel="prev" title="REST API" href="../index.html" /> 
   </head>
   <body>
@@ -36,6 +37,9 @@
         <li class="right" >
           <a href="../../http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
+        <li class="right" >
+          <a href="../rhic_rcs/index.html" title="RHIC RCS"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="REST API"
              accesskey="P">previous</a> |</li>
@@ -88,7 +92,7 @@
            &quot;JBoss EAP&quot;
        ],
        &quot;public_cert&quot;: null,
-       &quot;resource_uri&quot;: &quot;http://localhost:8000/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8/&quot;,
+       &quot;resource_uri&quot;: &quot;http://example.com/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8/&quot;,
        &quot;sla&quot;: &quot;prem&quot;,
        &quot;support_level&quot;: &quot;l1-l3&quot;,
        &quot;uuid&quot;: &quot;fea363f5-af37-4a23-a2fd-bea8d1fff9e8&quot;
@@ -109,7 +113,7 @@
            &quot;RHEL Server for Education&quot;
        ],
        &quot;public_cert&quot;: null,
-       &quot;resource_uri&quot;: &quot;http://localhost:8000/api/v1/rhic/fbbd06c6-ebed-4892-87a3-2bf17c86e610/&quot;,
+       &quot;resource_uri&quot;: &quot;http://example.com/api/v1/rhic/fbbd06c6-ebed-4892-87a3-2bf17c86e610/&quot;,
        &quot;sla&quot;: &quot;na&quot;,
        &quot;support_level&quot;: &quot;ss&quot;,
        &quot;uuid&quot;: &quot;fbbd06c6-ebed-4892-87a3-2bf17c86e610&quot;
@@ -121,8 +125,163 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>deleted</strong> &#8211; Boolean flag indicating if the rhic has been deleted.</li>
+<li><strong>modified_date</strong> &#8211; Date rhic was last modified.</li>
+<li><strong>created_date</strong> &#8211; Date rhic was created.</li>
+<li><strong>deletd_date</strong> &#8211; Date rhic was deleted.</li>
+</ul>
+</td>
+</tr>
 <tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
-<li><strong>200</strong> &#8211; no error</li>
+<li><strong>200</strong> &#8211; Ok</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-v1-rhic-(str-uuid)-">
+<tt class="descname">GET </tt><tt class="descname">/api/v1/rhic/</tt><big>(</big><em class="property">str: </em><em>uuid</em><big>)</big><tt class="descname">/</tt><a class="headerlink" href="#get--api-v1-rhic-(str-uuid)-" title="Permalink to this definition">¶</a></dt>
+<dd><p>An individual rhic in the system for which the user is authorized.</p>
+<p><strong>Sample request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+{
+    &quot;account_id&quot;: &quot;1190457&quot;,
+    &quot;contract&quot;: &quot;3116649&quot;,
+    &quot;created_date&quot;: &quot;2012-10-04T21:25:20.698000+00:00&quot;,
+    &quot;deleted&quot;: false,
+    &quot;deleted_date&quot;: null,
+    &quot;engineering_ids&quot;: [
+        &quot;69&quot;,
+        &quot;183&quot;
+    ],
+    &quot;id&quot;: &quot;506dfec0d046c81fd61eebe7&quot;,
+    &quot;modified_date&quot;: &quot;2012-10-04T21:25:20.698000+00:00&quot;,
+    &quot;name&quot;: &quot;rhel-server-jboss-1190457-3116649-prem-l1-l3&quot;,
+    &quot;products&quot;: [
+        &quot;RHEL Server&quot;,
+        &quot;JBoss EAP&quot;
+    ],
+    &quot;public_cert&quot;: null,
+    &quot;resource_uri&quot;: &quot;http://example.com/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8/&quot;,
+    &quot;sla&quot;: &quot;prem&quot;,
+    &quot;support_level&quot;: &quot;l1-l3&quot;,
+    &quot;uuid&quot;: &quot;fea363f5-af37-4a23-a2fd-bea8d1fff9e8&quot;
+}
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>deleted</strong> &#8211; Boolean flag indicating if the rhic has been deleted.</li>
+<li><strong>modified_date</strong> &#8211; Date rhic was last modified.</li>
+<li><strong>created_date</strong> &#8211; Date rhic was created.</li>
+<li><strong>deletd_date</strong> &#8211; Date rhic was deleted.</li>
+</ul>
+</td>
+</tr>
+<tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; Ok</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="delete">
+<dt id="delete--api-v1-rhic-(str-uuid)-">
+<tt class="descname">DELETE </tt><tt class="descname">/api/v1/rhic/</tt><big>(</big><em class="property">str: </em><em>uuid</em><big>)</big><tt class="descname">/</tt><a class="headerlink" href="#delete--api-v1-rhic-(str-uuid)-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a rhic.</p>
+<p><strong>Sample Request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">204</span> <span class="ne">NO CONTENT</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>204</strong> &#8211; NO CONTENT</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="patch">
+<dt id="patch--api-v1-rhic-(str-uuid)-">
+<tt class="descname">PATCH </tt><tt class="descname">/api/v1/rhic/</tt><big>(</big><em class="property">str: </em><em>uuid</em><big>)</big><tt class="descname">/</tt><a class="headerlink" href="#patch--api-v1-rhic-(str-uuid)-" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a rhic.</p>
+<p><strong>Sample Request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PATCH</span> <span class="nn">/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+{
+   &quot;engineering_ids&quot;: [
+      &quot;69&quot;
+   ]
+}
+</pre></div>
+</div>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+{
+    &quot;account_id&quot;: &quot;1190457&quot;,
+    &quot;contract&quot;: &quot;3116649&quot;,
+    &quot;created_date&quot;: &quot;2012-10-04T21:25:20.698000+00:00&quot;,
+    &quot;deleted&quot;: false,
+    &quot;deleted_date&quot;: null,
+    &quot;engineering_ids&quot;: [
+        &quot;69&quot;
+    ],
+    &quot;id&quot;: &quot;506dfec0d046c81fd61eebe7&quot;,
+    &quot;modified_date&quot;: &quot;2012-10-04T21:25:20.698000+00:00&quot;,
+    &quot;name&quot;: &quot;rhel-server-jboss-1190457-3116649-prem-l1-l3&quot;,
+    &quot;products&quot;: [
+        &quot;RHEL Server&quot;,
+        &quot;JBoss EAP&quot;
+    ],
+    &quot;public_cert&quot;: null,
+    &quot;resource_uri&quot;: &quot;http://example.com/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8/&quot;,
+    &quot;sla&quot;: &quot;prem&quot;,
+    &quot;support_level&quot;: &quot;l1-l3&quot;,
+    &quot;uuid&quot;: &quot;fea363f5-af37-4a23-a2fd-bea8d1fff9e8&quot;
+}
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; Ok</li>
 </ul>
 </td>
 </tr>
@@ -141,6 +300,9 @@
   <h4>Previous topic</h4>
   <p class="topless"><a href="../index.html"
                         title="previous chapter">REST API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../rhic_rcs/index.html"
+                        title="next chapter">RHIC RCS</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/rest-api/rhic_rest/index.txt"
@@ -172,6 +334,9 @@
         <li class="right" >
           <a href="../../http-routingtable.html" title="HTTP Routing Table"
              >routing table</a> |</li>
+        <li class="right" >
+          <a href="../rhic_rcs/index.html" title="RHIC RCS"
+             >next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="REST API"
              >previous</a> |</li>
