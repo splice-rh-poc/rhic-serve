@@ -6,7 +6,7 @@
 
 Name:       python-sphinx
 Version:    1.0.8
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    Python documentation generator
 
 Group:      Development/Tools
@@ -159,6 +159,9 @@ make test
 
 
 %changelog
+* Thu Oct 25 2012 James Slagle <jslagle@redhat.com> 1.0.8-2
+- Add missing tito.props, fix version number (jslagle@redhat.com)
+
 * Thu Oct 25 2012 James Slagle <jslagle@redhat.com> 1.0.9-1
 - new package built with tito
 
