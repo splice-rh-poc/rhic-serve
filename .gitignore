@@ -28,6 +28,7 @@ pip-log.txt
 
 #Vim
 *.swp
+*.swo
 
 #IDE
 *.project
