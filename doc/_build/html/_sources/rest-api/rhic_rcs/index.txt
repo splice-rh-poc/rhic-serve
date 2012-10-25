@@ -69,3 +69,10 @@ RHIC RCS
    :query created_date: Date rhic was created.
    :query deletd_date: Date rhic was deleted.
    :statuscode 200: no error
+
+
+.. http:get:: /api/v1/rhicrcs/(str:uuid)/
+
+
+   :param uuid: rhic's uuid
+   :type uuid: str
