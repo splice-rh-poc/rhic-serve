@@ -5,7 +5,7 @@
 %global upstream_name Sphinx
 
 Name:       python-sphinx
-Version:    1.0.9
+Version:    1.0.8
 Release:    1%{?dist}
 Summary:    Python documentation generator
 
