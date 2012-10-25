@@ -39,20 +39,41 @@ Requires: %{name}-selinux = %{version}-%{release}
 
 %description
 REST/Web Service for creating RHIC's
-# ----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 
 
-# rhic-serve-common subpackage --------------------------------------------------
+# rhic-serve-common subpackage ------------------------------------------------
 %package common
 Summary:    Common libraries for rhic-serve.
 Group:      Development/Languages
 
 %description common
 Common libraries for rhic-serve.
-# ----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
+# rhic-serve-rest subpackage --------------------------------------------------
+%package rest
+Summary:    API's for querying RHIC data for use by the web UI
+Group:      Development/Languages
+Requires:   rhic-serve-common = %{version}
+Requires:   mongodb-server
+Requires:   pymongo
+Requires:   pymongo-gridfs
+Requires:   httpd
+Requires:   mod_wsgi
+Requires:   mod_ssl
+Requires:   python-isodate
+Requires:   Django
+Requires:   python-django-tastypie
+Requires:   python-django-tastypie-mongoengine
+Requires:   python-mongoengine
 
 
-# rhic-serve-rcs subpackage --------------------------------------------------
+%description rest
+API's for querying RHIC data for use by the web UI
+# -----------------------------------------------------------------------------
+
+# rhic-serve-rcs subpackage ---------------------------------------------------
 %package rcs
 Summary:    API's for querying RHIC data for use by the RCS.
 Group:      Development/Languages
@@ -72,7 +93,9 @@ Requires:   python-mongoengine
 
 %description rcs
 API's for querying RHIC data for use by the RCS.
+# -----------------------------------------------------------------------------
 
+# rhic-serve-selinux subpackage -----------------------------------------------
 %package        selinux
 Summary:        Splice SELinux policy
 Group:          Development/Languages
@@ -91,11 +114,10 @@ Requires(postun): /usr/sbin/semodule
 
 %description  selinux
 SELinux policy for rhic-serve
+# -----------------------------------------------------------------------------
 
-# ----------------------------------------------------------------------------
 
-
-# rhic-serve-doc subpackage --------------------------------------------------
+# rhic-serve-doc subpackage ---------------------------------------------------
 %package doc
 Summary:    rhic-serve documentation
 Group:      Development/Languages
@@ -227,6 +249,11 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 %{_localstatedir}/www/html/rhic_webui/static
 # ----------------------------------------------------------------------------
 
+# rhic-serve-rest files ------------------------------------------------------
+%files rest
+%defattr(-,root,root,-)
+%{python_sitelib}/rhic_serve/rhic_rest
+# ----------------------------------------------------------------------------
 
 # rhic-serve-rcs files -------------------------------------------------------
 %files rcs
@@ -242,7 +269,7 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 %{_datadir}/selinux/devel/include/apps/%{name}.if
 
 %files doc
-%{_docdir}/%{name}
+%doc %{_docdir}/%{name}
 
 
 %changelog
