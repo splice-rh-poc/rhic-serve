@@ -93,11 +93,28 @@ Requires(postun): /usr/sbin/semodule
 SELinux policy for rhic-serve
 
 # ----------------------------------------------------------------------------
+
+
+# rhic-serve-doc subpackage --------------------------------------------------
+%package doc
+Summary:    rhic-serve documentation
+Group:      Development/Languages
+
+BuildRequires:  python-sphinx
+BuildRequires:  python-sphinxcontrib-httpdomain
+
+
+%description doc
+rhic-serve documentation
+# ----------------------------------------------------------------------------
+
+
 %prep
 %setup -q
 
 
 %build
+# Python 
 pushd src
 %{__python} setup.py build
 popd
@@ -106,6 +123,10 @@ cd selinux
 perl -i -pe 'BEGIN { $VER = join ".", grep /^\d+$/, split /\./, "%{version}.%{release}"; } s!0.0.0!$VER!g;' rhic-serve.te
 ./build.sh
 cd -
+# Sphinx documentation
+pushd doc
+make html
+popd
 
 %install
 rm -rf %{buildroot}
@@ -142,6 +163,10 @@ cp enable.sh %{buildroot}%{_datadir}/%{name}/selinux
 cp uninstall.sh %{buildroot}%{_datadir}/%{name}/selinux
 cp relabel.sh %{buildroot}%{_datadir}/%{name}/selinux
 cd -
+
+mkdir -p %{buildroot}/%{_docdir}/%{name}
+cp LICENSE %{buildroot}/%{_docdir}/%{name}
+cp -R doc/_build/html %{buildroot}/%{_docdir}/%{name}
 
 %clean
 rm -rf %{buildroot}
@@ -216,7 +241,8 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 %{_datadir}/selinux/*/%{name}.pp
 %{_datadir}/selinux/devel/include/apps/%{name}.if
 
-%doc
+%files doc
+%{_docdir}/%{name}
 
 
 %changelog
