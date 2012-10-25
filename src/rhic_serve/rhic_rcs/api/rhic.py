@@ -12,17 +12,23 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
 
 
-from rhic_serve.common.api import RestResource
-from rhic_serve.rhic_rcs.models import RHIC
-
+from django.conf import settings
 from tastypie.authentication import Authentication
 from tastypie.authorization import ReadOnlyAuthorization
+
+from certutils.certutils import CertFileUtils
+from rhic_serve.common.api import RestResource
+from rhic_serve.rhic_rcs.models import RHIC
+from rhic_serve.rhic_rcs.api.auth import X509CertificateAuthentication
+
+cert_utils = CertFileUtils()
+ca_cert = cert_utils.read_pem(settings.CA_CERT_PATH)
 
 class RHICRcsResource(RestResource):
 
     class Meta(RestResource.Meta):
         queryset = RHIC.objects.all()
-        authentication = Authentication()
+        authentication = X509CertificateAuthentication(ca_cert)
         authorization = ReadOnlyAuthorization()
         detail_uri_name = 'uuid'
         filtering = {
