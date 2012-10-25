@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RHIC REST &mdash; rhic-serve v0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="rhic-serve v0.1 documentation" href="../../index.html" />
+    <link rel="up" title="REST API" href="../index.html" />
+    <link rel="prev" title="REST API" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="REST API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">rhic-serve v0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">REST API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rhic-rest">
+<h1>RHIC REST<a class="headerlink" href="#rhic-rest" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<dl class="get">
+<dt id="get--api-v1-rhic-">
+<tt class="descname">GET </tt><tt class="descname">/api/v1/rhic/</tt><a class="headerlink" href="#get--api-v1-rhic-" title="Permalink to this definition">¶</a></dt>
+<dd><p>The rhic&#8217;s in the system for which the user is authorized.</p>
+<p><strong>Sample request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/v1/rhic/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+[
+   {
+       &quot;account_id&quot;: &quot;1190457&quot;,
+       &quot;contract&quot;: &quot;3116649&quot;,
+       &quot;created_date&quot;: &quot;2012-10-04T21:25:20.698000+00:00&quot;,
+       &quot;deleted&quot;: false,
+       &quot;deleted_date&quot;: null,
+       &quot;engineering_ids&quot;: [
+           &quot;69&quot;,
+           &quot;183&quot;
+       ],
+       &quot;id&quot;: &quot;506dfec0d046c81fd61eebe7&quot;,
+       &quot;modified_date&quot;: &quot;2012-10-04T21:25:20.698000+00:00&quot;,
+       &quot;name&quot;: &quot;rhel-server-jboss-1190457-3116649-prem-l1-l3&quot;,
+       &quot;products&quot;: [
+           &quot;RHEL Server&quot;,
+           &quot;JBoss EAP&quot;
+       ],
+       &quot;public_cert&quot;: null,
+       &quot;resource_uri&quot;: &quot;http://localhost:8000/api/v1/rhic/fea363f5-af37-4a23-a2fd-bea8d1fff9e8/&quot;,
+       &quot;sla&quot;: &quot;prem&quot;,
+       &quot;support_level&quot;: &quot;l1-l3&quot;,
+       &quot;uuid&quot;: &quot;fea363f5-af37-4a23-a2fd-bea8d1fff9e8&quot;
+   },
+   {
+       &quot;account_id&quot;: &quot;1190457&quot;,
+       &quot;contract&quot;: &quot;3879847&quot;,
+       &quot;created_date&quot;: &quot;2012-10-04T21:25:21.138000+00:00&quot;,
+       &quot;deleted&quot;: false,
+       &quot;deleted_date&quot;: null,
+       &quot;engineering_ids&quot;: [
+           &quot;69&quot;
+       ],
+       &quot;id&quot;: &quot;506dfec1d046c81fd61eebea&quot;,
+       &quot;modified_date&quot;: &quot;2012-10-04T21:25:21.138000+00:00&quot;,
+       &quot;name&quot;: &quot;rhel-server-education-1190457-3879847-na-ss&quot;,
+       &quot;products&quot;: [
+           &quot;RHEL Server for Education&quot;
+       ],
+       &quot;public_cert&quot;: null,
+       &quot;resource_uri&quot;: &quot;http://localhost:8000/api/v1/rhic/fbbd06c6-ebed-4892-87a3-2bf17c86e610/&quot;,
+       &quot;sla&quot;: &quot;na&quot;,
+       &quot;support_level&quot;: &quot;ss&quot;,
+       &quot;uuid&quot;: &quot;fbbd06c6-ebed-4892-87a3-2bf17c86e610&quot;
+   }
+]
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">REST API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/rest-api/rhic_rest/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="REST API"
+             >previous</a> |</li>
+        <li><a href="../../index.html">rhic-serve v0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >REST API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Splice.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>

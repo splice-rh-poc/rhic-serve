@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RHIC RCS &mdash; rhic-serve v0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="rhic-serve v0.1 documentation" href="../../index.html" />
+    <link rel="up" title="REST API" href="../index.html" />
+    <link rel="prev" title="RHIC REST" href="../rhic_rest/index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../rhic_rest/index.html" title="RHIC REST"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">rhic-serve v0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">REST API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rhic-rcs">
+<h1>RHIC RCS<a class="headerlink" href="#rhic-rcs" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<dl class="get">
+<dt id="get--api-v1-rhicrcs-">
+<tt class="descname">GET </tt><tt class="descname">/api/v1/rhicrcs/</tt><a class="headerlink" href="#get--api-v1-rhicrcs-" title="Permalink to this definition">¶</a></dt>
+<dd><p>All rhic&#8217;s available to be sync&#8217;d by an RCS.</p>
+<p><strong>Sample Request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/v1/rhicrcs/</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">example.com</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Sample Response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.0</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+[
+  {
+    &quot;created_date&quot;: &quot;2012-09-14T19:33:54.294000+00:00&quot;,
+    &quot;deleted&quot;: false,
+    &quot;deleted_date&quot;: null,
+    &quot;engineering_ids&quot;: [
+      &quot;69&quot;,
+      &quot;183&quot;
+    ],
+    &quot;id&quot;: &quot;505386a2d9c1417e41000002&quot;,
+    &quot;modified_date&quot;: &quot;2012-09-14T19:33:54.294000+00:00&quot;,
+    &quot;resource_uri&quot;: &quot;https://ec2-184-72-159-16.compute-1.amazonaws.com/api/rhicrcs/7dd72d62-fcf2-4e5c-a659-273bb88bd509/&quot;,
+    &quot;uuid&quot;: &quot;7dd72d62-fcf2-4e5c-a659-273bb88bd509&quot;
+  },
+  {
+    &quot;created_date&quot;: &quot;2012-09-14T21:04:27.090000+00:00&quot;,
+    &quot;deleted&quot;: false,
+    &quot;deleted_date&quot;: null,
+    &quot;engineering_ids&quot;: [
+      &quot;69&quot;,
+      &quot;83&quot;
+    ],
+    &quot;id&quot;: &quot;50539bdbd9c1417e42000002&quot;,
+    &quot;modified_date&quot;: &quot;2012-09-14T21:04:27.090000+00:00&quot;,
+    &quot;resource_uri&quot;: &quot;https://ec2-184-72-159-16.compute-1.amazonaws.com/api/rhicrcs/5e6a8a78-ceb9-4835-80c8-4b2b337ebec4/&quot;,
+    &quot;uuid&quot;: &quot;5e6a8a78-ceb9-4835-80c8-4b2b337ebec4&quot;
+  },
+  {
+    &quot;created_date&quot;: &quot;2012-09-14T21:13:48.752000+00:00&quot;,
+    &quot;deleted&quot;: false,
+    &quot;deleted_date&quot;: null,
+    &quot;engineering_ids&quot;: [
+      &quot;69&quot;
+    ],
+    &quot;id&quot;: &quot;50539e0cd9c1417f38000002&quot;,
+    &quot;modified_date&quot;: &quot;2012-09-14T21:13:48.752000+00:00&quot;,
+    &quot;resource_uri&quot;: &quot;https://ec2-184-72-159-16.compute-1.amazonaws.com/api/rhicrcs/cc11f76f-8f82-433f-bc37-c61b5bf43d19/&quot;,
+    &quot;uuid&quot;: &quot;cc11f76f-8f82-433f-bc37-c61b5bf43d19&quot;
+  }
+]
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../rhic_rest/index.html"
+                        title="previous chapter">RHIC REST</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/rest-api/rhic_rcs/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |</li>
+        <li class="right" >
+          <a href="../rhic_rest/index.html" title="RHIC REST"
+             >previous</a> |</li>
+        <li><a href="../../index.html">rhic-serve v0.1 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >REST API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Splice.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
+    </div>
+  </body>
+</html>
