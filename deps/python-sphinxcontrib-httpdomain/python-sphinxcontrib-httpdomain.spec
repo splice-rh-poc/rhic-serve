@@ -3,7 +3,7 @@
 
 Name:		python-sphinxcontrib-httpdomain
 Version:	1.1.7
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	Documenting RESTful HTTP APIs with sphinx
 
 Group:		Development/Languages
@@ -56,6 +56,9 @@ cp -p LICENSE README -t $RPM_BUILD_ROOT%{docdir}
 
 
 %changelog
+* Thu Oct 25 2012 James Slagle <jslagle@redhat.com> 1.1.7-3
+- Packaging Updates (jslagle@redhat.com)
+
 * Thu Oct 25 2012 James Slagle <jslagle@redhat.com> 1.1.7-2
 - new package built with tito
 
