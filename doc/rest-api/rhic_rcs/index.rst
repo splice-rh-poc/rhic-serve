@@ -64,4 +64,8 @@ RHIC RCS
         }
       ]
       
+   :query deleted: Boolean flag indicating if the rhic has been deleted.
+   :query modified_date: Date rhic was last modified.
+   :query created_date: Date rhic was created.
+   :query deletd_date: Date rhic was deleted.
    :statuscode 200: no error
