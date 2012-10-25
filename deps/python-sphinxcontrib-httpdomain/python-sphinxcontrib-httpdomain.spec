@@ -42,12 +42,13 @@ tar xzf %{SOURCE0}
 %install
 %{__python} setup.py install -O1 --skip-build --root $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{docdir}
-cp -p LICENSE README.rst -t $RPM_BUILD_ROOT%{docdir}
+cp -p LICENSE README -t $RPM_BUILD_ROOT%{docdir}
 
 
 %files
-%dir %{python_sitelib}/sphinxcontrib/httpdomain
-%{python_sitelib}/sphinxcontrib/httpdomain
+%dir %{python_sitelib}/sphinxcontrib
+%{python_sitelib}/sphinxcontrib
+%{python_sitelib}/sphinxcontrib_httpdomain*
 
 
 %files doc
