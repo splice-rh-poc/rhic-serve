@@ -89,6 +89,7 @@ Requires:   Django
 Requires:   python-django-tastypie
 Requires:   python-django-tastypie-mongoengine
 Requires:   python-mongoengine
+Requires:   splice-common
 
 
 %description rcs
@@ -106,11 +107,11 @@ BuildRequires:  selinux-policy-devel
 # el6, selinux-policy-doc is the required RPM which will bring below 'policyhelp'
 BuildRequires:  /usr/share/selinux/devel/policyhelp
 BuildRequires:  hardlink
-Requires: selinux-policy >= %{selinux_policyver}
+Requires:       selinux-policy >= %{selinux_policyver}
 Requires(post): policycoreutils-python 
 Requires(post): selinux-policy-targeted
 Requires(post): /usr/sbin/semodule, /sbin/fixfiles, /usr/sbin/semanage
-Requires(postun): /usr/sbin/semodule
+Requires(postun):   /usr/sbin/semodule
 
 %description  selinux
 SELinux policy for rhic-serve
@@ -119,11 +120,11 @@ SELinux policy for rhic-serve
 
 # rhic-serve-doc subpackage ---------------------------------------------------
 %package doc
-Summary:    rhic-serve documentation
-Group:      Development/Languages
+summary:    rhic-serve documentation
+group:      development/languages
 
-BuildRequires:  python-sphinx
-BuildRequires:  python-sphinxcontrib-httpdomain
+buildrequires:  python-sphinx
+buildrequires:  python-sphinxcontrib-httpdomain
 
 
 %description doc
@@ -186,6 +187,7 @@ cp uninstall.sh %{buildroot}%{_datadir}/%{name}/selinux
 cp relabel.sh %{buildroot}%{_datadir}/%{name}/selinux
 cd -
 
+# Documentation
 mkdir -p %{buildroot}/%{_docdir}/%{name}
 cp LICENSE %{buildroot}/%{_docdir}/%{name}
 cp -R doc/_build/html %{buildroot}/%{_docdir}/%{name}

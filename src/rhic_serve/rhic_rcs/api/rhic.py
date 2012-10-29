@@ -17,9 +17,11 @@ from tastypie.authentication import Authentication
 from tastypie.authorization import ReadOnlyAuthorization
 
 from certutils.certutils import CertFileUtils
+from splice.common import certs
+from splice.common.auth import X509CertificateAuthentication
+
 from rhic_serve.common.api import RestResource
 from rhic_serve.rhic_rcs.models import RHIC
-from rhic_serve.rhic_rcs.api.auth import X509CertificateAuthentication
 
 cert_utils = CertFileUtils()
 ca_cert = cert_utils.read_pem(settings.CA_CERT_PATH)
@@ -28,9 +30,13 @@ class RHICRcsResource(RestResource):
 
     class Meta(RestResource.Meta):
         queryset = RHIC.objects.all()
-        authentication = X509CertificateAuthentication(ca_cert)
+        authentication = X509CertificateAuthentication(
+            certs.get_splice_server_identity_ca_pem())
         authorization = ReadOnlyAuthorization()
         detail_uri_name = 'uuid'
+        # This class is likely to be subclassed, and we want the resource name
+        # preserved.
+        resource_name = 'rhicrcs'
         filtering = {
             'created_date': ['gte', 'gt', 'lte', 'lt', 'range'],
             'modified_date': ['gte', 'gt', 'lte', 'lt', 'range'],
