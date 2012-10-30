@@ -32,6 +32,8 @@ Requires:   python-django-tastypie
 Requires:   python-django-tastypie-mongoengine
 Requires:   python-mongoengine
 Requires:   python-certutils
+Requires:   m2crypto >= 0.21.1.pulp-7
+
 #
 # Our own selinux RPM
 #
@@ -69,6 +71,7 @@ Requires:   Django
 Requires:   python-django-tastypie
 Requires:   python-django-tastypie-mongoengine
 Requires:   python-mongoengine
+Requires: m2crypto >= 0.21.1.pulp-7
 
 
 %description rest
@@ -91,6 +94,7 @@ Requires:   Django
 Requires:   python-django-tastypie
 Requires:   python-django-tastypie-mongoengine
 Requires:   python-mongoengine
+Requires: m2crypto >= 0.21.1.pulp-7
 
 
 %description rcs
