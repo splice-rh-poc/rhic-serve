@@ -40,7 +40,7 @@ CA_KEY_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.key'
 CERT_DAYS = 10000
 
 SPLICE_CONFIG_FILE = '/etc/splice/server.conf'
-config.init()
+config.init(SPLICE_CONFIG_FILE)
 
 AUTHENTICATION_BACKENDS = (
     'mongoengine.django.auth.MongoEngineBackend',

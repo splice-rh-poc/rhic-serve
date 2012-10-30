@@ -19,4 +19,4 @@ if not os.path.exists(srl_path):
 DUMP_DIR = os.path.join(curr_dir, 'db_dump')
 
 SPLICE_CONFIG_FILE = os.path.join(curr_dir, 'server.conf')
-config.init()
+config.init(SPLICE_CONFIG_FILE)
