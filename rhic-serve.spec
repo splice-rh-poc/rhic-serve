@@ -4,7 +4,7 @@
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
-Version:	0.26
+Version:	0.27
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -276,6 +276,10 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Mon Oct 29 2012 James Slagle <jslagle@redhat.com> 0.27-1
+- Require splice-selinux as well and move Requires to common package
+  (jslagle@redhat.com)
+
 * Mon Oct 29 2012 James Slagle <jslagle@redhat.com> 0.26-1
 - Switch to using config from splice-common for some values
   (jslagle@redhat.com)
