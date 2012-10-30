@@ -4,7 +4,7 @@
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
-Version:	0.25
+Version:	0.26
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -275,6 +275,16 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Mon Oct 29 2012 James Slagle <jslagle@redhat.com> 0.26-1
+- Switch to using config from splice-common for some values
+  (jslagle@redhat.com)
+- update to use splice-common (jslagle@redhat.com)
+- Automatic commit of package [python-sphinx] minor release [1.0.8-2].
+  (jslagle@redhat.com)
+- Add missing tito.props, fix version number (jslagle@redhat.com)
+- Automatic commit of package [python-sphinx] release [1.0.9-1].
+  (jslagle@redhat.com)
+
 * Thu Oct 25 2012 James Slagle <jslagle@redhat.com> 0.25-1
 - Add rhic-serve-rest subpackage (jslagle@redhat.com)
 
