@@ -46,6 +46,8 @@ REST/Web Service for creating RHIC's
 %package common
 Summary:    Common libraries for rhic-serve.
 Group:      Development/Languages
+Requires:   splice-common
+Requires:   splice-selinux
 
 %description common
 Common libraries for rhic-serve.
@@ -89,7 +91,6 @@ Requires:   Django
 Requires:   python-django-tastypie
 Requires:   python-django-tastypie-mongoengine
 Requires:   python-mongoengine
-Requires:   splice-common
 
 
 %description rcs
