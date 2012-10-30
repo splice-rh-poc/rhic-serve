@@ -3,6 +3,7 @@
 import os
 
 from rhic_serve.settings import *
+from splice.common import config
 
 curr_dir = os.path.dirname(os.path.abspath(__file__))
 cert_dir = os.path.join(curr_dir, '..')
@@ -16,3 +17,6 @@ if not os.path.exists(srl_path):
     open(srl_path, 'w').write('01\n')
 
 DUMP_DIR = os.path.join(curr_dir, 'db_dump')
+
+SPLICE_CONFIG_FILE = os.path.join(curr_dir, 'server.conf')
+config.init()

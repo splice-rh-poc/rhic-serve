@@ -25,6 +25,7 @@ try:
 except ImportError:
     has_rhic_rcs = False
 
+from splice.common import config
 
 MONGO_DATABASE_NAME = 'rhic_serve'
 # Connect to the mongo db
@@ -37,6 +38,9 @@ TEST_RUNNER = 'rhic_serve.common.tests.MongoTestRunner'
 CA_CERT_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.crt'
 CA_KEY_PATH = '/etc/pki/rhic-serve/rhic-serve-ca.key'
 CERT_DAYS = 10000
+
+SPLICE_CONFIG_FILE = '/etc/splice/server.conf'
+config.init()
 
 AUTHENTICATION_BACKENDS = (
     'mongoengine.django.auth.MongoEngineBackend',

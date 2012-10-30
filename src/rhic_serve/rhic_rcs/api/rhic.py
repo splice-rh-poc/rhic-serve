@@ -23,8 +23,6 @@ from splice.common.auth import X509CertificateAuthentication
 from rhic_serve.common.api import RestResource
 from rhic_serve.rhic_rcs.models import RHIC
 
-cert_utils = CertFileUtils()
-ca_cert = cert_utils.read_pem(settings.CA_CERT_PATH)
 
 class RHICRcsResource(RestResource):
 
@@ -45,10 +43,7 @@ class RHICRcsResource(RestResource):
         }
         max_limit = 0
 
-
     def alter_list_data_to_serialize(self, request, data):
         """
         """
         return data
-
-
