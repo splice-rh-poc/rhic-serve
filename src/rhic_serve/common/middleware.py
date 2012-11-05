@@ -42,12 +42,3 @@ class RestLoginMiddleware(object):
                     login(request, request.user)
 
         return response
-
-
-class RestExceptionMiddleware(object):
-
-    def process_exception(self, request, exception):
-        ei = sys.exc_info()
-        logger.error(ei[0])
-        logger.error(ei[1])
-        logger.error(traceback.print_tb(ei[2]))

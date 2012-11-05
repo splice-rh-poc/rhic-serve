@@ -55,8 +55,7 @@ STATICFILES_DIRS = (
 
 MIDDLEWARE_CLASSES = \
     MIDDLEWARE_CLASSES + \
-    ('rhic_serve.common.middleware.RestLoginMiddleware',
-    'rhic_serve.common.middleware.RestExceptionMiddleware')
+    ('rhic_serve.common.middleware.RestLoginMiddleware',)
 
 ROOT_URLCONF = 'rhic_serve.urls'
 
