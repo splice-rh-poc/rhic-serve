@@ -132,8 +132,8 @@ class RHIC(Document):
                 raise ValidationError('account_id is not set')
 
             cu = CertUtils()
-            ca_crt_path = config.CONFIG.get('security', 'rhic_ca_crt')
-            ca_key_path = config.CONFIG.get('security', 'rhic_key_crt')
+            ca_crt_path = config.CONFIG.get('security', 'rhic_ca_cert')
+            ca_key_path = config.CONFIG.get('security', 'rhic_ca_key')
             sign_days = config.CONFIG.get('security', 'sign_days')
             public_cert, private_key = cu.generate(
                 ca_crt_path, ca_key_path,
