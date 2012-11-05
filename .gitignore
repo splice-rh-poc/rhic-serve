@@ -41,3 +41,5 @@ etc/pki/rhic-serve/rhic-serve-ca.srl
 # selinux build files
 selinux/*.pp.targeted
 
+# debug logs
+src/rhic_serve/debug_logs/*
