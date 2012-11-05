@@ -29,7 +29,7 @@ except ImportError:
 
 from splice.common import config
 
-MONGO_DATABASE_NAME = 'rhic_serve'
+MONGO_DATABASE_NAME = config.CONFIG.get('rhic_serve', 'db_name')
 # Connect to the mongo db
 connect(MONGO_DATABASE_NAME, alias=MONGO_DATABASE_NAME, tz_aware=True)
 register_connection('default', MONGO_DATABASE_NAME)
@@ -37,11 +37,13 @@ register_connection('default', MONGO_DATABASE_NAME)
 # Custom test runner to work with Mongo
 TEST_RUNNER = 'rhic_serve.common.tests.MongoTestRunner'
 
-LOGIN_URL = '/ui/'
+AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend',
+)
 
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+SESSION_ENGINE = 'mongoengine.django.sessions'
+
+LOGIN_URL = '/ui/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
@@ -50,7 +52,6 @@ STATICFILES_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     'javascript',
 )
-
 
 MIDDLEWARE_CLASSES = \
     MIDDLEWARE_CLASSES + \
