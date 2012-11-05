@@ -8,6 +8,7 @@ sys.path.insert(0, '../src')
 os.environ['DJANGO_SETTINGS_MODULE'] = 'rhic_serve.settings'
 
 from mongoengine.django.auth import User
+#from django.contrib.auth.models import Group
 
 from rhic_serve import settings
 from rhic_serve.rhic_rest.models import *
@@ -24,11 +25,11 @@ def load_lines(lines, mappings):
 
             values = line.split(',')
 
-            if len(values) != 7:
+            if len(values) != 8:
                 print "rejecting line: %s" % line
                 continue
 
-            login, account, contract, product, sla, support_level, quantity = values
+            login, account, admin_flag, contract, product, sla, support_level, quantity = values
 
             if not login:
                 print "rejecting line: %s" % line
@@ -56,10 +57,24 @@ def load_lines(lines, mappings):
 
             account_doc.save()
 
+            # Create a group first
+            admin_grp, created = SpliceAdminGroup.objects.get_or_create(name='Splice Admins')
+            admin_grp.save()
+
             # Also create a user for each account
-            u, created = User.objects.get_or_create(username=account_doc.login)
+            #u, created = User.objects.get_or_create(username=account_doc.login)
+            u, created = SpliceUserProfile.objects.get_or_create(username=account_doc.login, account=account_doc.account_id)
             if created:
                 u.set_password(account_doc.login)
+                if admin_flag == 'True':
+                    # add to admin group
+                    u.is_staff = True
+                    u.is_superuser = True
+                    admin_grp.update(add_to_set__members=u)
+                    admin_grp.save()
+                else:
+                    u.is_staff = False
+                    u.is_superuser = False
                 u.save()
         except Exception, e:
             print "Error loading line: %s" % line

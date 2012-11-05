@@ -22,12 +22,16 @@ from django.conf import settings
 from mongoengine import *
 from mongoengine import signals
 from mongoengine.base import ValidationError
+from mongoengine.django.auth import User
+#from django.contrib.auth.models import User
 from mongoengine.queryset import QuerySet
+from django.db import models
 
 from certutils.certutils import CertUtils
 from rhic_serve.common.fields import *
 
 import uuid
+
 
 class Product(EmbeddedDocument):
 
@@ -75,6 +79,19 @@ class Account(Document):
     # List of contracts associated with the account.
     contracts = ListField(EmbeddedDocumentField(Contract))
 
+class SpliceUserProfile(User):
+    meta = {
+        'db_alias': 'rhic_serve'
+    }
+    account = StringField(unique=True, required=True)
+
+class SpliceAdminGroup(Document):
+    meta = {
+        'db_alias': 'rhic_serve'
+    }
+    name = StringField(unique=True, required=True)
+    members = ListField()
+    permissions = ListField()
 
 class RHIC(Document):
 
