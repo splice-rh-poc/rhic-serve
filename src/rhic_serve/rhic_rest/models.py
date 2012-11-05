@@ -26,6 +26,7 @@ from mongoengine.queryset import QuerySet
 
 from certutils.certutils import CertUtils
 from rhic_serve.common.fields import *
+from splice.common import config
 
 import uuid
 
@@ -131,9 +132,12 @@ class RHIC(Document):
                 raise ValidationError('account_id is not set')
 
             cu = CertUtils()
+            ca_crt_path = config.CONFIG.get('security', 'rhic_ca_crt')
+            ca_key_path = config.CONFIG.get('security', 'rhic_key_crt')
+            sign_days = config.CONFIG.get('security', 'sign_days')
             public_cert, private_key = cu.generate(
-                settings.CA_CERT_PATH, settings.CA_KEY_PATH,
-                settings.CERT_DAYS, dict(CN=str(document.uuid),
+                ca_crt_path, ca_key_path,
+                sign_days, dict(CN=str(document.uuid),
                                          O=document.account_id))
             document.public_cert.new_file()
             document.public_cert.write(public_cert)
