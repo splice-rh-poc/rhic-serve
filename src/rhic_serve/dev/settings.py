@@ -9,6 +9,7 @@ config.init(SPLICE_CONFIG_FILE)
 
 from rhic_serve.settings import *
 
+TASTYPIE_FULL_DEBUG = True
 
 curr_dir = os.path.dirname(os.path.abspath(__file__))
 cert_dir = os.path.join(curr_dir, '../../..')
