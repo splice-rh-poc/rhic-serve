@@ -5,28 +5,6 @@ from mongoengine.connection import register_connection
 
 from splice.common.settings import *
 
-# Conditional imports for the various django apps that rhic-serve installs to
-# see which ones are installed.
-# We could use separate settings.py for each, but this seems easier for now.
-
-try:
-    from rhic_serve import rhic_rest
-    has_rhic_rest = True
-except ImportError:
-    has_rhic_rest = False
-
-try:
-    from rhic_serve import rhic_webui
-    has_rhic_webui = True
-except ImportError:
-    has_rhic_webui = False
-
-try:
-    from rhic_serve import rhic_rcs
-    has_rhic_rcs = True
-except ImportError:
-    has_rhic_rcs = False
-
 from splice.common import config
 
 MONGO_DATABASE_NAME = config.CONFIG.get('rhic_serve', 'db_name')
@@ -36,12 +14,6 @@ register_connection('default', MONGO_DATABASE_NAME)
 
 # Custom test runner to work with Mongo
 TEST_RUNNER = 'rhic_serve.common.tests.MongoTestRunner'
-
-AUTHENTICATION_BACKENDS = (
-    'mongoengine.django.auth.MongoEngineBackend',
-)
-
-SESSION_ENGINE = 'mongoengine.django.sessions'
 
 LOGIN_URL = '/ui/'
 
@@ -79,10 +51,3 @@ INSTALLED_APPS = (
     'tastypie',
     'tastypie_mongoengine',
 )
-
-if has_rhic_rest:
-    INSTALLED_APPS += ('rhic_serve.rhic_rest', )
-if has_rhic_webui:
-    INSTALLED_APPS += ('rhic_serve.rhic_webui', )
-if has_rhic_rcs:
-    INSTALLED_APPS += ('rhic_serve.rhic_rcs', )
