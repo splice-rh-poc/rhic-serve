@@ -243,14 +243,12 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 %defattr(-,apache,apache,-)
 %dir /srv/%{name}
 /srv/%{name}/webservices.wsgi
-%dir %{_sysconfdir}/pki/%{name}
 %{_sysconfdir}/pki/%{name}
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %defattr(-,root,root,-)
 %{python_sitelib}/rhic_serve/*.py*
 %{python_sitelib}/rhic_serve/rhic_rest
 %{python_sitelib}/rhic_serve/rhic_webui
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
 %defattr(-,apache,apache,-)
 %{_usr}/lib/rhic_webui/templates
 %{_localstatedir}/www/html/rhic_webui/static
