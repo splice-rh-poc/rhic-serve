@@ -22,5 +22,5 @@ setup(
     author_email='splice-devel@redhat.com',
     description='REST/Web Service for creating RHIC\'s',
     url='https://github.com/splice/rhic-serve.git',
-    packages=find_packages(exclude=['dev']),
+    packages=find_packages(exclude=['rhic_serve.dev']),
 )
