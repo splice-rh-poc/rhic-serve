@@ -4,7 +4,7 @@
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
-Version:	0.27
+Version:	0.28
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -280,6 +280,13 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Wed Nov 07 2012 Wes Hayutin <whayutin@redhat.com> 0.28-1
+- added SpliceAdminGroup and SpliceUserProfile to models added group support
+  when creating a user in sample-load.py changed sample-load.py to accommodate
+  new field in csv (dgao@redhat.com)
+- Explicity pass in path ot config file into config.init (jslagle@redhat.com)
+- Require patched version of m2crypto (jslagle@redhat.com)
+
 * Mon Oct 29 2012 James Slagle <jslagle@redhat.com> 0.27-1
 - Require splice-selinux as well and move Requires to common package
   (jslagle@redhat.com)
