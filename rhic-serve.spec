@@ -4,7 +4,7 @@
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
-Version:	30
+Version:	31
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -283,6 +283,10 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Thu Nov 08 2012 James Slagle <jslagle@redhat.com> 31-1
+- Read db host from config file (jslagle@redhat.com)
+- package missing rhic-serve.conf (jslagle@redhat.com)
+
 * Thu Nov 08 2012 James Slagle <jslagle@redhat.com> 30-1
 - Packaging Updates (jslagle@redhat.com)
 - No need for conditional imports anymore (jslagle@redhat.com)
