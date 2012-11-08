@@ -161,6 +161,7 @@ rm -rf %{buildroot}
 pushd src
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
 popd
+mkdir -p %{buildroot}/%{_sysconfdir}/splice/conf.d/
 mkdir -p %{buildroot}/%{_sysconfdir}/httpd/conf.d/
 mkdir -p %{buildroot}/%{_sysconfdir}/pki/%{name}
 mkdir -p %{buildroot}/%{_var}/log/%{name}
@@ -179,6 +180,9 @@ cp etc/httpd/conf.d/%{name}.conf %{buildroot}/%{_sysconfdir}/httpd/conf.d/
 
 # Install CA cert and key
 cp -R etc/pki/rhic-serve %{buildroot}/%{_sysconfdir}/pki/
+
+# Install config file
+cp etc/splice/conf.d/%{name}.conf %{buildroot}/%{_sysconfdir}/splice/conf.d/
 
 # Remove egg info
 rm -rf %{buildroot}/%{python_sitelib}/*.egg-info
@@ -245,6 +249,7 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 /srv/%{name}/webservices.wsgi
 %{_sysconfdir}/pki/%{name}
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/%{name}.conf
+%config(noreplace) %{_sysconfdir}/splice/conf.d/%{name}.conf
 %defattr(-,root,root,-)
 %{python_sitelib}/rhic_serve/*.py*
 %{python_sitelib}/rhic_serve/rhic_rest
