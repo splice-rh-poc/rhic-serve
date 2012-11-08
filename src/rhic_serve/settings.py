@@ -8,9 +8,11 @@ from splice.common.settings import *
 from splice.common import config
 
 MONGO_DATABASE_NAME = config.CONFIG.get('rhic_serve', 'db_name')
+MONGO_DATABASE_HOST = config.CONFIG.get('rhic_serve', 'db_host')
 # Connect to the mongo db
-connect(MONGO_DATABASE_NAME, alias=MONGO_DATABASE_NAME, tz_aware=True)
-register_connection('default', MONGO_DATABASE_NAME)
+connect(MONGO_DATABASE_NAME, alias=MONGO_DATABASE_NAME, tz_aware=True,
+        host=MONGO_DATABASE_HOST)
+register_connection('default', MONGO_DATABASE_NAME, host=MONGO_DATABASE_HOST)
 
 # Custom test runner to work with Mongo
 TEST_RUNNER = 'rhic_serve.common.tests.MongoTestRunner'
