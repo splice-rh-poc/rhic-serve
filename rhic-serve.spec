@@ -4,7 +4,7 @@
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
-Version:	29
+Version:	30
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -278,6 +278,14 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Thu Nov 08 2012 James Slagle <jslagle@redhat.com> 30-1
+- Packaging Updates (jslagle@redhat.com)
+- No need for conditional imports anymore (jslagle@redhat.com)
+- Set full tastypie debug in dev.settings (jslagle@redhat.com)
+- RestExceptionMiddleware no longer needed (jslagle@redhat.com)
+- Updates for config (jslagle@redhat.com)
+- Remove debug logs from git and add to .gitignore (jslagle@redhat.com)
+
 * Wed Nov 07 2012 Wes Hayutin <whayutin@redhat.com> 29-1
 - added SpliceAdminGroup and SpliceUserProfile to models added group support
   when creating a user in sample-load.py changed sample-load.py to accommodate
