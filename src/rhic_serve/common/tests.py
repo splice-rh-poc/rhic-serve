@@ -20,6 +20,8 @@ from django.test import client, simple, testcases
 
 from mongoengine import connection
 
+from splice.common import config
+
 
 MONGO_TEST_DATABASE_NAME = 'test_%s' % settings.MONGO_DATABASE_NAME
 
@@ -68,6 +70,8 @@ class MongoTestCase(testcases.TestCase):
         self.teardown_database()
         self.setup_database()
         super(MongoTestCase, self).setUp()
+        self.client.defaults['SSL_CLIENT_CERT'] = \
+            open(config.CONFIG.get('security', 'rhic_ca_cert')).read()
 
     def tearDown(self):
         self.teardown_database()
