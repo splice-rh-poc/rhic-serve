@@ -52,4 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'tastypie',
     'tastypie_mongoengine',
+    'rhic_serve.rhic_rest',
+    'rhic_serve.rhic_rcs',
+    'rhic_serve.rhic_webui',
 )
