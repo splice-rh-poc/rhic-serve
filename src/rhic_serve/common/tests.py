@@ -19,6 +19,7 @@ from django.conf import settings
 from django.test import client, simple, testcases
 
 from mongoengine import connection
+from tastypie.test import ResourceTestCase
 
 from splice.common import config
 
@@ -55,7 +56,7 @@ class PatchClient(client.Client):
         r.update(extra)
         return self.request(**r)
 
-class BaseMongoTestCase(testcases.TestCase):
+class BaseMongoTestCase(ResourceTestCase):
 
     client_class = PatchClient
 
