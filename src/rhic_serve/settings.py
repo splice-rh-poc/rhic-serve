@@ -1,11 +1,21 @@
+# Copyright  2012 Red Hat, Inc.
+#
+# This software is licensed to you under the GNU General Public
+# License as published by the Free Software Foundation; either version
+# 2 of the License (GPLv2) or (at your option) any later version.
+# There is NO WARRANTY for this software, express or implied,
+# including the implied warranties of MERCHANTABILITY,
+# NON-INFRINGEMENT, or FITNESS FOR A PARTICULAR PURPOSE. You should
+# have received a copy of GPLv2 along with this software; if not, see
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
 # Django settings for rhic_serve project.
 
 from mongoengine import connect
 from mongoengine.connection import register_connection
 
-from splice.common.settings import *
-
 from splice.common import config
+from splice.common.settings import *
 
 MONGO_DATABASE_NAME = config.CONFIG.get('rhic_serve', 'db_name')
 MONGO_DATABASE_HOST = config.CONFIG.get('rhic_serve', 'db_host')
@@ -18,14 +28,6 @@ register_connection('default', MONGO_DATABASE_NAME, host=MONGO_DATABASE_HOST)
 TEST_RUNNER = 'rhic_serve.common.tests.MongoTestRunner'
 
 LOGIN_URL = '/ui/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    'javascript',
-)
 
 MIDDLEWARE_CLASSES = \
     MIDDLEWARE_CLASSES + \

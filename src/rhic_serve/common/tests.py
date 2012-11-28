@@ -55,8 +55,7 @@ class PatchClient(client.Client):
         r.update(extra)
         return self.request(**r)
 
-
-class MongoTestCase(testcases.TestCase):
+class BaseMongoTestCase(testcases.TestCase):
 
     client_class = PatchClient
 
@@ -68,14 +67,31 @@ class MongoTestCase(testcases.TestCase):
 
     def setUp(self):
         self.teardown_database()
-        self.setup_database()
-        super(MongoTestCase, self).setUp()
-        self.client.defaults['SSL_CLIENT_CERT'] = \
-            open(config.CONFIG.get('security', 'rhic_ca_cert')).read()
+        super(BaseMongoTestCase, self).setUp()
 
     def tearDown(self):
         self.teardown_database()
-        super(MongoTestCase, self).tearDown()
+        super(BaseMongoTestCase, self).tearDown()
+
+    def teardown_database(self, *args, **kwargs):
+        self.disconnect_dbs()
+
+        # Drop the test database
+        pymongo_connection = connection.get_connection(settings.MONGO_DATABASE_NAME)
+        pymongo_connection.drop_database(MONGO_TEST_DATABASE_NAME)
+
+    def disconnect_dbs(self):
+        for alias in connection._connections.keys():
+            connection.disconnect(alias)
+
+
+class MongoTestCase(BaseMongoTestCase):
+
+    def setUp(self):
+        super(MongoTestCase, self).setUp()
+        self.setup_database()
+        self.client.defaults['SSL_CLIENT_CERT'] = \
+            open(config.CONFIG.get('security', 'rhic_ca_cert')).read()
 
     def setup_database(self, *args, **kwargs):
         # Disconnect from the default mongo db, and use a test db instead.
@@ -89,18 +105,6 @@ class MongoTestCase(testcases.TestCase):
             call(['mongoimport', '--db', MONGO_TEST_DATABASE_NAME,
                 '-c', collection, '--file', 
                 '%s.json' % os.path.join(settings.DUMP_DIR, collection)])
-
-    def teardown_database(self, *args, **kwargs):
-        self.disconnect_dbs()
-
-        # Drop the test database
-        pymongo_connection = connection.get_connection(settings.MONGO_DATABASE_NAME)
-        pymongo_connection.drop_database(MONGO_TEST_DATABASE_NAME)
-
-    def disconnect_dbs(self):
-        for alias in connection._connections.keys():
-            connection.disconnect(alias)
-
 
 class MongoApiTestCase(MongoTestCase):
 
