@@ -4,7 +4,7 @@
 %global selinux_policyver %(%{__sed} -e 's,.*selinux-policy-\\([^/]*\\)/.*,\\1,' /usr/share/selinux/devel/policyhelp || echo 0.0.0)
 
 Name:		rhic-serve
-Version:	31
+Version:	32
 Release:	1%{?dist}
 Summary:	REST/Web Service for creating RHIC's
 
@@ -283,6 +283,13 @@ chown apache:apache %{_sysconfdir}/pki/%{name}/rhic-serve-ca.srl
 
 
 %changelog
+* Wed Nov 28 2012 James Slagle <jslagle@redhat.com> 32-1
+- test refactoring (jslagle@redhat.com)
+- Update dev settings.py (jslagle@redhat.com)
+- Default a ssl client certificate for all tests (jslagle@redhat.com)
+- Remove unused file (jslagle@redhat.com)
+- Update INSTALLED_APPS (jslagle@redhat.com)
+
 * Thu Nov 08 2012 James Slagle <jslagle@redhat.com> 31-1
 - Read db host from config file (jslagle@redhat.com)
 - package missing rhic-serve.conf (jslagle@redhat.com)
